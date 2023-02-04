@@ -9,14 +9,14 @@ class MedicationForm extends React.Component {
     let { onSubmit, handleInputChange, formDetails } = this.props;
     return (
       <div>
-        <label class="label">Medication</label>
+        <label className="label">Medication</label>
 
-        <div class="field">
-          <label class="label">Medicine Name</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">Medicine Name</label>
+          <div className="control">
             <input
               name="medicine_name"
-              class="input"
+              className="input"
               type="text"
               onChange={handleInputChange}
               value={formDetails.medicine_name}
@@ -24,22 +24,22 @@ class MedicationForm extends React.Component {
           </div>
         </div>
 
-        <div class="field is-grouped">
-          <div class="control is-expanded">
-            <label class="label">Current Quantity</label>
-            <div class="control">
-              <label class="label">
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Current Quantity</label>
+            <div className="control">
+              <label className="label">
                 {formDetails.quantity == null ? 0 : formDetails.quantity}
               </label>
             </div>
           </div>
 
-          <div class="control is-expanded">
-            <label class="label">Add/ Subtract</label>
-            <div class="control">
+          <div className="control is-expanded">
+            <label className="label">Add/ Subtract</label>
+            <div className="control">
               <input
                 name="changeQuantity"
-                class="input"
+                className="input"
                 type="number"
                 onChange={handleInputChange}
                 value={formDetails.changeQuantity}
@@ -48,12 +48,12 @@ class MedicationForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          <label class="label">Notes</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">Notes</label>
+          <div className="control">
             <textarea
               name="notes"
-              class="textarea"
+              className="textarea"
               placeholder="Textarea"
               onChange={handleInputChange}
               value={formDetails.notes}
@@ -61,8 +61,8 @@ class MedicationForm extends React.Component {
           </div>
         </div>
 
-        <div class="level-left">
-          <button class="button is-dark is-medium" onClick={onSubmit}>
+        <div className="level-left">
+          <button className="button is-dark is-medium" onClick={onSubmit}>
             Submit
           </button>
         </div>

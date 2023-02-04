@@ -2,7 +2,6 @@ import React from "react";
 import { withAuthSync, logInCheck } from "../utils/auth";
 import Autosuggest from "react-autosuggest";
 import axios from "axios";
-import styles from "../styles/styles.scss";
 import _ from "lodash";
 import Modal from "react-modal";
 import Webcam from "react-webcam";
@@ -41,12 +40,12 @@ class Patients extends React.Component {
       cameraIsOpen: false,
       imageDetails: null,
       formDetails: {
-        gender: "Male"
+        gender: "Male",
       },
       scanOptions: {
-        gender: "Male"
+        gender: "Male",
       },
-      possibleOptions: []
+      possibleOptions: [],
     };
 
     this.openModal = this.openModal.bind(this);
@@ -87,7 +86,7 @@ class Patients extends React.Component {
     const imageSrc = this.webcam.getScreenshot();
     this.setState({
       imageDetails: imageSrc,
-      isCameraOpen: false
+      isCameraOpen: false,
     });
   }
 
@@ -97,7 +96,7 @@ class Patients extends React.Component {
         style={{
           height: 250,
           width: 250,
-          margin: "0 auto"
+          margin: "0 auto",
         }}
       >
         <Webcam
@@ -112,10 +111,13 @@ class Patients extends React.Component {
 
         <div
           style={{
-            textAlign: "center"
+            textAlign: "center",
           }}
         >
-          <button class="button is-dark is-medium" onClick={this.webcamCapture}>
+          <button
+            className="button is-dark is-medium"
+            onClick={this.webcamCapture}
+          >
             Capture
           </button>
         </div>
@@ -129,7 +131,7 @@ class Patients extends React.Component {
   // for noww, all we want to do is to add a filter string to this
   // perhaps in the future, we would want to let our backend do this for us
   patientsEnrich(patients) {
-    let patientsEnriched = patients.map(patient => {
+    let patientsEnriched = patients.map((patient) => {
       let patient_details = patient.fields;
       let name = patient_details.name;
       let contact_no = patient_details.contact_no;
@@ -139,7 +141,7 @@ class Patients extends React.Component {
 
       return {
         ...patient,
-        filterString: `${village}${id} ${name} ${contact_no} ${localName}`
+        filterString: `${village}${id} ${name} ${contact_no} ${localName}`,
       };
     });
 
@@ -158,7 +160,7 @@ class Patients extends React.Component {
     console.log("changes made ", formDetails);
 
     this.setState({
-      formDetails
+      formDetails,
     });
   }
 
@@ -172,7 +174,7 @@ class Patients extends React.Component {
     scanOptions[name] = value;
 
     this.setState({
-      scanOptions
+      scanOptions,
     });
   }
 
@@ -187,11 +189,11 @@ class Patients extends React.Component {
       "travelling_time_to_village",
       "date_of_birth",
       "drug_allergy",
-      "village_prefix"
+      "village_prefix",
     ];
 
     let errorCount = 0;
-    checklist.forEach(item => {
+    checklist.forEach((item) => {
       if (typeof formDetails[item] == "undefined") {
         errorCount += 1;
       }
@@ -204,7 +206,7 @@ class Patients extends React.Component {
     } else {
       let payload = {
         ...formDetails,
-        imageDetails
+        imageDetails,
       };
 
       let { data: response } = await axios.post(
@@ -212,26 +214,26 @@ class Patients extends React.Component {
         payload
       );
 
-      if(typeof response.error == 'undefined'){
+      if (typeof response.error == "undefined") {
         this.setState({
           patient: response[0],
           formDetails: {
-            gender: "Male"
+            gender: "Male",
           },
-          imageDetails: null
+          imageDetails: null,
         });
         alert("New patient registered!");
         this.closeModal();
-      }else{alert("Please retake photo!")}
-
-
+      } else {
+        alert("Please retake photo!");
+      }
     }
   }
 
   async scanPatient() {
     let { scanOptions, imageDetails } = this.state;
     let payload = {
-      imageDetails
+      imageDetails,
     };
 
     let gender = scanOptions.gender;
@@ -259,13 +261,13 @@ class Patients extends React.Component {
     let payload = {
       patient: patient.pk,
       status: "started",
-      visit_date: moment().format("YYYY-MM-DD")
+      visit_date: moment().format("YYYY-MM-DD"),
     };
 
     await axios.post(`${API_URL}/visit/new`, payload);
 
     this.setState({
-      patient: {}
+      patient: {},
     });
     alert("Patient successfully registered!");
   }
@@ -294,7 +296,7 @@ class Patients extends React.Component {
   renderScanModal() {
     let { scanOptions, possibleOptions } = this.state;
 
-    let tableContents = possibleOptions.map(option => {
+    let tableContents = possibleOptions.map((option) => {
       let fields = option.fields;
       let name = fields.name;
       let id = `${fields.village_prefix}${option.pk}`;
@@ -303,7 +305,7 @@ class Patients extends React.Component {
 
       let select = (
         <button
-          class="button is-dark level-item"
+          className="button is-dark level-item"
           onClick={() => {
             this.closeScanModal();
             this.setState({ patient: option });
@@ -317,7 +319,7 @@ class Patients extends React.Component {
         <tr>
           <td>{id}</td>
           <td>
-            <figure class="image is-96x96">
+            <figure className="image is-96x96">
               <img
                 // src="https://bulma.io/images/placeholders/96x96.png"
                 src={imageUrl}
@@ -345,15 +347,15 @@ class Patients extends React.Component {
           <h1 style={{ color: "black", fontSize: "1.5em", marginBottom: 15 }}>
             Scan Face
           </h1>
-          <div class="columns">
-            <div class="column is-4">
+          <div className="columns">
+            <div className="column is-4">
               {!this.state.isCameraOpen && (
                 <div
                   style={{
                     margin: "0 auto",
                     height: 250,
                     width: 250,
-                    backgroundColor: "grey"
+                    backgroundColor: "grey",
                   }}
                 >
                   {this.state.imageDetails != null && (
@@ -363,18 +365,18 @@ class Patients extends React.Component {
               )}
 
               {this.state.isCameraOpen && (
-                <div class="control">
+                <div className="control">
                   {/* <WebcamCapture /> */}
                   {this.renderWebcam()}
                 </div>
               )}
               <div
                 style={{
-                  textAlign: "center"
+                  textAlign: "center",
                 }}
               >
                 <button
-                  class="button is-dark is-medium"
+                  className="button is-dark is-medium"
                   onClick={() =>
                     this.setState({ isCameraOpen: !this.state.isCameraOpen })
                   }
@@ -384,11 +386,11 @@ class Patients extends React.Component {
                 </button>
               </div>
             </div>
-            <div class="column is-4">
-              <div class="field">
-                <label class="label">Gender</label>
-                <div class="control">
-                  <div class="select" style={{ margin: "0 auto" }}>
+            <div className="column is-4">
+              <div className="field">
+                <label className="label">Gender</label>
+                <div className="control">
+                  <div className="select" style={{ margin: "0 auto" }}>
                     <select
                       name="gender"
                       onChange={this.handleScanOptionsChange}
@@ -410,12 +412,12 @@ class Patients extends React.Component {
                 </div>
               </div>
 
-              <div class="field">
-                <label class="label">Village Prefix</label>
-                <div class="control">
+              <div className="field">
+                <label className="label">Village Prefix</label>
+                <div className="control">
                   <input
                     name="village_prefix"
-                    class="input"
+                    className="input"
                     type="text"
                     onChange={this.handleScanOptionsChange}
                     value={scanOptions.village_prefix}
@@ -425,7 +427,7 @@ class Patients extends React.Component {
 
               <div>
                 <button
-                  class="button is-dark is-medium"
+                  className="button is-dark is-medium"
                   onClick={() => this.scanPatient()}
                   style={{ marginTop: 10 }}
                 >
@@ -436,10 +438,10 @@ class Patients extends React.Component {
           </div>
           <hr />
 
-          <label class="label">Results</label>
+          <label className="label">Results</label>
           {possibleOptions.length > 0 ? (
             <div>
-              <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+              <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -471,15 +473,15 @@ class Patients extends React.Component {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <div class="columns">
-          <div class="column is-8">
+        <div className="columns">
+          <div className="column is-8">
             <form>
-              <div class="field">
-                <label class="label">Name</label>
-                <div class="control">
+              <div className="field">
+                <label className="label">Name</label>
+                <div className="control">
                   <input
                     name="name"
-                    class="input"
+                    className="input"
                     type="text"
                     onChange={this.handleInputChange}
                     value={formDetails.name}
@@ -487,12 +489,12 @@ class Patients extends React.Component {
                 </div>
               </div>
 
-              <div class="field">
-                <label class="label">Local Name</label>
-                <div class="control">
+              <div className="field">
+                <label className="label">Local Name</label>
+                <div className="control">
                   <input
                     name="local_name"
-                    class="input"
+                    className="input"
                     type="text"
                     onChange={this.handleInputChange}
                     value={formDetails.local_name}
@@ -500,10 +502,10 @@ class Patients extends React.Component {
                 </div>
               </div>
 
-              <div class="field">
-                <label class="label">Gender</label>
-                <div class="control">
-                  <div class="select">
+              <div className="field">
+                <label className="label">Gender</label>
+                <div className="control">
+                  <div className="select">
                     <select name="gender" onChange={this.handleInputChange}>
                       <option
                         selected={formDetails.gender === "Male"}
@@ -522,13 +524,13 @@ class Patients extends React.Component {
                 </div>
               </div>
 
-              <div class="field is-grouped">
-                <div class="control is-expanded">
-                  <label class="label">Contact Number</label>
-                  <div class="control">
+              <div className="field is-grouped">
+                <div className="control is-expanded">
+                  <label className="label">Contact Number</label>
+                  <div className="control">
                     <input
                       name="contact_no"
-                      class="input"
+                      className="input"
                       type="tel"
                       onChange={this.handleInputChange}
                       value={formDetails.contact_no}
@@ -536,12 +538,12 @@ class Patients extends React.Component {
                   </div>
                 </div>
 
-                <div class="control is-expanded">
-                  <label class="label">Date of Birth</label>
-                  <div class="control">
+                <div className="control is-expanded">
+                  <label className="label">Date of Birth</label>
+                  <div className="control">
                     <input
                       name="date_of_birth"
-                      class="input"
+                      className="input"
                       type="date"
                       onChange={this.handleInputChange}
                       value={formDetails.date_of_birth}
@@ -550,13 +552,13 @@ class Patients extends React.Component {
                 </div>
               </div>
 
-              <div class="field is-grouped">
-                <div class="control is-expanded">
-                  <label class="label">Village Prefix</label>
-                  <div class="control">
+              <div className="field is-grouped">
+                <div className="control is-expanded">
+                  <label className="label">Village Prefix</label>
+                  <div className="control">
                     <input
                       name="village_prefix"
-                      class="input"
+                      className="input"
                       type="text"
                       onChange={this.handleInputChange}
                       value={formDetails.village_prefix}
@@ -564,12 +566,12 @@ class Patients extends React.Component {
                   </div>
                 </div>
 
-                <div class="control is-expanded">
-                  <label class="label">Travelling Time to Village</label>
-                  <div class="control">
+                <div className="control is-expanded">
+                  <label className="label">Travelling Time to Village</label>
+                  <div className="control">
                     <input
                       name="travelling_time_to_village"
-                      class="input"
+                      className="input"
                       type="number"
                       onChange={this.handleInputChange}
                       value={formDetails.travelling_time_to_village}
@@ -578,12 +580,12 @@ class Patients extends React.Component {
                 </div>
               </div>
 
-              <div class="field">
-                <label class="label">Drug Allergies</label>
-                <div class="control">
+              <div className="field">
+                <label className="label">Drug Allergies</label>
+                <div className="control">
                   <textarea
                     name="drug_allergy"
-                    class="textarea"
+                    className="textarea"
                     placeholder="Textarea"
                     onChange={this.handleInputChange}
                     value={formDetails.drug_allergy}
@@ -591,20 +593,20 @@ class Patients extends React.Component {
                 </div>
               </div>
             </form>
-            <div class="levels" style={{ marginTop: 10 }}>
-              <div class="level-left">
-                <div class="level-item">
+            <div className="levels" style={{ marginTop: 10 }}>
+              <div className="level-left">
+                <div className="level-item">
                   <button
-                    class="button is-dark is-medium"
+                    className="button is-dark is-medium"
                     onClick={this.submitNewPatient}
                   >
                     Submit
                   </button>
                 </div>
 
-                <div class="level-item">
+                <div className="level-item">
                   <button
-                    class="button is-dark is-medium"
+                    className="button is-dark is-medium"
                     onClick={this.closeModal}
                   >
                     Close
@@ -614,14 +616,14 @@ class Patients extends React.Component {
             </div>
           </div>
 
-          <div class="column is-4">
+          <div className="column is-4">
             {!this.state.isCameraOpen && (
               <div
                 style={{
                   margin: "0 auto",
                   height: 250,
                   width: 250,
-                  backgroundColor: "grey"
+                  backgroundColor: "grey",
                 }}
               >
                 {this.state.imageDetails != null && (
@@ -631,18 +633,18 @@ class Patients extends React.Component {
             )}
 
             {this.state.isCameraOpen && (
-              <div class="control">
+              <div className="control">
                 {/* <WebcamCapture /> */}
                 {this.renderWebcam()}
               </div>
             )}
             <div
               style={{
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
               <button
-                class="button is-dark is-medium"
+                className="button is-dark is-medium"
                 onClick={() =>
                   this.setState({ isCameraOpen: !this.state.isCameraOpen })
                 }
@@ -672,7 +674,7 @@ class Patients extends React.Component {
     let query =
       inputLength === 0
         ? []
-        : patients.filter(patient =>
+        : patients.filter((patient) =>
             patient.filterString.toLowerCase().includes(inputValue)
           );
 
@@ -688,14 +690,14 @@ class Patients extends React.Component {
 
     return (
       <div
-        class="card"
+        className="card"
         style={{ width: 500, margin: 0, padding: 0 }}
         onClick={() => this.setState({ patient: suggestion })}
       >
-        <div class="card-content">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image is-96x96">
+        <div className="card-content">
+          <div className="media">
+            <div className="media-left">
+              <figure className="image is-96x96">
                 <img
                   // src="https://bulma.io/images/placeholders/96x96.png"
                   src={`${API_URL}/media/${imageURL}`}
@@ -704,9 +706,9 @@ class Patients extends React.Component {
                 />
               </figure>
             </div>
-            <div class="media-content">
-              <div class="title is-4">{name}</div>
-              <div class="subtitle is-6">{id}</div>
+            <div className="media-content">
+              <div className="title is-4">{name}</div>
+              <div className="subtitle is-6">{id}</div>
             </div>
           </div>
         </div>
@@ -723,7 +725,7 @@ class Patients extends React.Component {
 
   onChange = (event, { newValue }) => {
     this.setState({
-      value: newValue
+      value: newValue,
     });
   };
 
@@ -731,14 +733,14 @@ class Patients extends React.Component {
   // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
-      suggestions: this.getSuggestions(value)
+      suggestions: this.getSuggestions(value),
     });
   };
 
   // Autosuggest will call this function every time you need to clear suggestions.
   onSuggestionsClearRequested = () => {
     this.setState({
-      suggestions: []
+      suggestions: [],
     });
   };
 
@@ -770,8 +772,8 @@ class Patients extends React.Component {
       type: "search",
       value,
       onChange: this.onChange,
-      className: "input is-medium level-item",
-      style: { width: 500 }
+      classNameName: "input is-medium level-item",
+      style: { width: 500 },
     };
 
     // Finally, render it!
@@ -780,18 +782,18 @@ class Patients extends React.Component {
         style={{
           marginTop: 15,
           marginLeft: 25,
-          marginRight: 25
+          marginRight: 25,
           // position: "relative"
         }}
       >
         {this.renderModal()}
         {this.renderScanModal()}
-        <div class="column is-12">
+        <div className="column is-12">
           <h1 style={{ color: "black", fontSize: "1.5em" }}>Registration</h1>
         </div>
-        <div class="columns is-vcentered">
+        <div className="columns is-vcentered">
           <div
-            class="column is-12"
+            className="column is-12"
             style={
               {
                 // position: "absolute",
@@ -800,17 +802,17 @@ class Patients extends React.Component {
               }
             }
           >
-            <div class="levels" style={{ marginBottom: 10 }}>
-              <div class="level-left">
+            <div className="levels" style={{ marginBottom: 10 }}>
+              <div className="level-left">
                 <button
-                  class="button is-dark is-medium level-item"
+                  className="button is-dark is-medium level-item"
                   style={{ display: "inline-block", verticalAlign: "top" }}
                   onClick={this.openScanModal}
                 >
                   Scan Face
                 </button>
                 <button
-                  class="button is-dark is-medium level-item"
+                  className="button is-dark is-medium level-item"
                   onClick={this.openModal}
                 >
                   New Patient
@@ -831,56 +833,60 @@ class Patients extends React.Component {
           </div>
         </div>
         {typeof patient.pk !== "undefined" && (
-          <div class="columns">
-            <div class="column is-2">
-              <figure class="image is-1by1">
+          <div className="columns">
+            <div className="column is-2">
+              <figure className="image is-1by1">
                 <img
                   src={`${API_URL}/media/${patient.fields.picture}`}
                   alt="Placeholder image"
-                  class="has-ratio"
+                  className="has-ratio"
                   style={{ height: 200, width: 200, objectFit: "cover" }}
                 />
               </figure>
             </div>
-            <div class="column is-5">
-              <label class="label">ID</label>
-              <article class="message">
-                <div class="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
+            <div className="column is-5">
+              <label className="label">ID</label>
+              <article className="message">
+                <div className="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
               </article>
-              <label class="label">Name</label>
-              <article class="message">
-                <div class="message-body">{patient.fields.name}</div>
+              <label className="label">Name</label>
+              <article className="message">
+                <div className="message-body">{patient.fields.name}</div>
               </article>
-              <label class="label">Local Name</label>
-              <article class="message">
-                <div class="message-body">{patient.fields.local_name}</div>
+              <label className="label">Local Name</label>
+              <article className="message">
+                <div className="message-body">{patient.fields.local_name}</div>
               </article>
-              <label class="label">Gender</label>
-              <article class="message">
-                <div class="message-body">{patient.fields.gender}</div>
+              <label className="label">Gender</label>
+              <article className="message">
+                <div className="message-body">{patient.fields.gender}</div>
               </article>
-              <label class="label">Date of Birth</label>
-              <article class="message">
-                <div class="message-body">{patient.fields.date_of_birth}</div>
+              <label className="label">Date of Birth</label>
+              <article className="message">
+                <div className="message-body">
+                  {patient.fields.date_of_birth}
+                </div>
               </article>
-              <label class="label">Travelling Time to Village</label>
-              <article class="message">
-                <div class="message-body">
+              <label className="label">Travelling Time to Village</label>
+              <article className="message">
+                <div className="message-body">
                   {patient.fields.travelling_time_to_village}
                 </div>
               </article>
-              <label class="label">Drug Allergies</label>
-              <article class="message">
-                <div class="message-body">{patient.fields.drug_allergy}</div>
+              <label className="label">Drug Allergies</label>
+              <article className="message">
+                <div className="message-body">
+                  {patient.fields.drug_allergy}
+                </div>
               </article>
             </div>
             <div
-              class="column is-5"
+              className="column is-5"
               // style={{ backgroundColor: "yellow" }}
             >
-              <label class="label">Start a Visit</label>
+              <label className="label">Start a Visit</label>
               <button
-                class="button is-dark is-medium level-item"
+                className="button is-dark is-medium level-item"
                 onClick={() => this.submitNewVisit()}
               >
                 Start
@@ -896,14 +902,14 @@ class Patients extends React.Component {
 const customStyles = {
   content: {
     left: "25%",
-    right: "7.5%"
-  }
+    right: "7.5%",
+  },
 };
 
 const videoConstraints = {
   width: 720,
   height: 720,
-  facingMode: "user"
+  facingMode: "user",
 };
 
 export default withAuthSync(Patients);

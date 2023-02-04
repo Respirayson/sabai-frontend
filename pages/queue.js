@@ -22,8 +22,8 @@ class Queue extends React.Component {
       filterString: "",
       formChoices: {
         triageChoice: "medicalTriage",
-        consultChoice: "medical"
-      }
+        consultChoice: "medical",
+      },
     };
 
     this.onFilterChange = this.onFilterChange.bind(this);
@@ -48,34 +48,34 @@ class Queue extends React.Component {
     );
     let activePatients = new Set();
 
-    visits.forEach(visit => {
+    visits.forEach((visit) => {
       let patient = visit.fields.patient;
       activePatients.add(patient);
     });
 
     let { data: patients } = await axios.get(`${API_URL}/patients/get`);
-    let patientsFiltered = patients.filter(patient => {
+    let patientsFiltered = patients.filter((patient) => {
       let patientId = patient.pk;
       return activePatients.has(patientId);
     });
 
     let patientsObj = {};
 
-    patientsFiltered.forEach(patient => {
+    patientsFiltered.forEach((patient) => {
       let patientId = patient.pk;
 
       patientsObj[patientId] = {
-        ...patient
+        ...patient,
       };
     });
 
-    let visitsEnriched = visits.map(visit => {
+    let visitsEnriched = visits.map((visit) => {
       let patientId = visit.fields.patient;
       let patient = patientsObj[patientId];
 
       return {
         ...visit,
-        patient
+        patient,
       };
     });
 
@@ -92,20 +92,20 @@ class Queue extends React.Component {
     formChoices[name] = value;
 
     this.setState({
-      formChoices
+      formChoices,
     });
   }
 
   renderTableContent() {
     let { visitsFiltered, formChoices } = this.state;
-    let visitsRows = visitsFiltered.map(visit => {
+    let visitsRows = visitsFiltered.map((visit) => {
       let Id = `${visit.patient.fields.village_prefix}${visit.patient.pk}`;
       let imageUrl = `${API_URL}/media/${visit.patient.fields.picture}`;
       let fullName = visit.patient.fields.name;
 
       let progress = (
         <button
-          class="button is-dark level-item"
+          className="button is-dark level-item"
           onClick={() => Router.push(`/record?id=${visit.patient.pk}`)}
         >
           View
@@ -113,9 +113,9 @@ class Queue extends React.Component {
       );
 
       let triage = (
-        <div class="field is-grouped">
-          <div class="control is-expanded">
-            <div class="select is-fullwidth">
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <div className="select is-fullwidth">
               <select
                 name={"triageChoice"}
                 onChange={this.handleFormChoiceChange}
@@ -127,7 +127,7 @@ class Queue extends React.Component {
           </div>
 
           <button
-            class="button is-dark level-item"
+            className="button is-dark level-item"
             onClick={() =>
               Router.push(
                 `/patient?id=${visit.patient.pk}&form=${formChoices.triageChoice}`
@@ -140,9 +140,9 @@ class Queue extends React.Component {
       );
 
       let consultation = (
-        <div class="field is-grouped">
-          <div class="control is-expanded">
-            <div class="select is-fullwidth">
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <div className="select is-fullwidth">
               <select
                 name={"consultChoice"}
                 onChange={this.handleFormChoiceChange}
@@ -154,7 +154,7 @@ class Queue extends React.Component {
           </div>
 
           <button
-            class="button is-dark level-item"
+            className="button is-dark level-item"
             onClick={() =>
               Router.push(
                 `/patient?id=${visit.patient.pk}&form=${formChoices.consultChoice}`
@@ -175,7 +175,7 @@ class Queue extends React.Component {
         <tr>
           <td>{Id}</td>
           <td>
-            <figure class="image is-96x96">
+            <figure className="image is-96x96">
               <img
                 // src="https://bulma.io/images/placeholders/96x96.png"
                 src={imageUrl}
@@ -201,8 +201,9 @@ class Queue extends React.Component {
     let { visits } = this.state;
     // console.log("event.value", event.target.value);
 
-    let filteredVisits = visits.filter(visit => {
-      let patientId = `${visit.patient.fields.village_prefix}${visit.patient.pk}`.toLowerCase();
+    let filteredVisits = visits.filter((visit) => {
+      let patientId =
+        `${visit.patient.fields.village_prefix}${visit.patient.pk}`.toLowerCase();
 
       return patientId.includes(event.target.value.toLowerCase());
     });
@@ -216,23 +217,23 @@ class Queue extends React.Component {
         style={{
           marginTop: 15,
           marginLeft: 25,
-          marginRight: 25
+          marginRight: 25,
           // position: "relative"
         }}
       >
-        <div class="column is-12">
+        <div className="column is-12">
           <h1 style={{ color: "black", fontSize: "1.5em" }}>Queue</h1>
-          <div class="field">
-            <div class="control">
+          <div className="field">
+            <div className="control">
               <input
-                class="input is-medium"
+                className="input is-medium"
                 type="text"
                 placeholder="Search Patient"
                 onChange={this.onFilterChange}
               />
             </div>
           </div>
-          <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
               <tr>
                 <th>ID</th>

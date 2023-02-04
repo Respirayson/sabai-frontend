@@ -11,14 +11,14 @@ import {
   MedicalTriageForm,
   DentalForm,
   MedicalForm,
-  PrescriptionForm
+  PrescriptionForm,
 } from "../components/forms/patient";
 import {
   ConsultationsTable,
   ConsultationsView,
   DentalTriageView,
   MedicalTriageView,
-  VisitPrescriptionsTable
+  VisitPrescriptionsTable,
 } from "../components/views/patient";
 import { API_URL } from "../utils/constants";
 
@@ -51,7 +51,7 @@ class Patient extends React.Component {
       formModalOpen: false,
       isEditing: false,
       viewModalOpen: false,
-      modalContent: {}
+      modalContent: {},
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -87,7 +87,7 @@ class Patient extends React.Component {
 
     this.setState({
       patient: patient[0],
-      visits: visitsSorted
+      visits: visitsSorted,
     });
 
     let visitID = visitsSorted[0].pk;
@@ -101,18 +101,13 @@ class Patient extends React.Component {
     this.setState({
       viewModalOpen: !this.state.viewModalOpen,
       viewType,
-      consult
+      consult,
     });
   }
 
   renderViewModal() {
-    let {
-      medicalTriage,
-      dentalTriage,
-      viewModalOpen,
-      consult,
-      viewType
-    } = this.state;
+    let { medicalTriage, dentalTriage, viewModalOpen, consult, viewType } =
+      this.state;
 
     let modalContent =
       viewType == "medicalTriage" ? (
@@ -141,7 +136,7 @@ class Patient extends React.Component {
     this.setState({
       formModalIsOpen: !this.state.formModalIsOpen,
       medicationDetails: order,
-      isEditing: Object.keys(order).length > 0
+      isEditing: Object.keys(order).length > 0,
     });
   }
 
@@ -155,7 +150,7 @@ class Patient extends React.Component {
     // key -> medicine pk
     // value -> total reserved
     let reservedMedications = {};
-    orders.forEach(order => {
+    orders.forEach((order) => {
       let medicationID = order.fields.medicine;
       let quantityReserved = order.fields.quantity;
 
@@ -177,10 +172,10 @@ class Patient extends React.Component {
       medications,
       medicationDetails,
       formModalIsOpen,
-      reservedMedications
+      reservedMedications,
     } = this.state;
 
-    let options = medications.map(medication => {
+    let options = medications.map((medication) => {
       let name = medication.fields.medicine_name;
       let pKey = medication.pk;
 
@@ -227,10 +222,7 @@ class Patient extends React.Component {
 
     if (name === "medication") {
       let pKey = value.split(" ")[0];
-      let medicineName = value
-        .split(" ")
-        .slice(1)
-        .join(" ");
+      let medicineName = value.split(" ").slice(1).join(" ");
 
       medicationDetails["medicine"] = pKey;
       medicationDetails["medicine_name"] = medicineName;
@@ -239,7 +231,7 @@ class Patient extends React.Component {
     }
 
     this.setState({
-      medicationDetails
+      medicationDetails,
     });
   }
 
@@ -248,7 +240,7 @@ class Patient extends React.Component {
 
     if (isEditing) {
       // go find that order
-      let index = orders.findIndex(order => {
+      let index = orders.findIndex((order) => {
         order.medication == medicationDetails.medication;
       });
       orders[index] = medicationDetails;
@@ -258,7 +250,7 @@ class Patient extends React.Component {
     this.setState({
       orders: orders,
       medicationDetails: {},
-      formModalIsOpen: false
+      formModalIsOpen: false,
     });
   }
 
@@ -273,15 +265,15 @@ class Patient extends React.Component {
       `${API_URL}/order/get?visit=${visitID}`
     );
 
-    let consultsEnriched = consults.map(consult => {
+    let consultsEnriched = consults.map((consult) => {
       let consultID = consult.pk;
-      let consultPrescriptions = prescriptions.filter(prescription => {
+      let consultPrescriptions = prescriptions.filter((prescription) => {
         return prescription.fields.consult == consultID;
       });
 
       return {
         ...consult,
-        prescriptions: consultPrescriptions
+        prescriptions: consultPrescriptions,
       };
     });
 
@@ -302,7 +294,7 @@ class Patient extends React.Component {
       dentalTriage: dentalTriage[0] || {},
       visitPrescriptions: prescriptions,
       mounted: true,
-      visitID
+      visitID,
     });
   }
 
@@ -312,7 +304,7 @@ class Patient extends React.Component {
 
     var formPayload = {
       visit: visitID,
-      ...formDetails
+      ...formDetails,
     };
 
     var consultId;
@@ -335,7 +327,7 @@ class Patient extends React.Component {
           {
             ...formPayload,
             doctor: cookie.get("name"),
-            type: "medical"
+            type: "medical",
           }
         );
 
@@ -344,12 +336,12 @@ class Patient extends React.Component {
         consultId = medicalConsult[0].pk;
         orderPromises = [];
 
-        orders.forEach(order => {
+        orders.forEach((order) => {
           let orderPayload = {
             ...order,
             visit: visitID,
             consult: consultId,
-            doctor: cookie.get("name")
+            doctor: cookie.get("name"),
           };
           orderPromises.push(axios.post(`${API_URL}/order/new`, orderPayload));
         });
@@ -364,19 +356,19 @@ class Patient extends React.Component {
           {
             ...formPayload,
             doctor: cookie.get("name"),
-            type: "dental"
+            type: "dental",
           }
         );
         consultId = dentalConsult[0].pk;
 
         orderPromises = [];
 
-        orders.forEach(order => {
+        orders.forEach((order) => {
           let orderPayload = {
             ...order,
             consult: consultId,
             visit: visitID,
-            doctor: cookie.get("name")
+            doctor: cookie.get("name"),
           };
           orderPromises.push(axios.post(`${API_URL}/order/new`, orderPayload));
         });
@@ -401,7 +393,7 @@ class Patient extends React.Component {
     console.log("changes made ", formDetails);
 
     this.setState({
-      formDetails
+      formDetails,
     });
   }
 
@@ -416,7 +408,7 @@ class Patient extends React.Component {
 
   renderHeader() {
     let { patient, visits } = this.state;
-    let visitOptions = visits.map(visit => {
+    let visitOptions = visits.map((visit) => {
       let date = moment(visit.fields.visit_date).format("DD MMMM YYYY");
       let pk = visit.pk;
 
@@ -424,64 +416,62 @@ class Patient extends React.Component {
     });
 
     return (
-      <div class="column is-12">
-        <div class="columns is-12">
-          <div class="column is-2">
+      <div className="column is-12">
+        <div className="columns is-12">
+          <div className="column is-2">
             <img
               src={`${API_URL}/media/${patient.fields.picture}`}
               alt="Placeholder image"
-              class="has-ratio"
+              className="has-ratio"
               style={{
                 height: 200,
                 width: 200,
                 objectFit: "cover",
-                backgroundColor: "red"
+                backgroundColor: "red",
               }}
             />
           </div>
-          <div class="column is-3">
-            <label class="label">Village ID</label>
-            <article class="message">
-              <div class="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
+          <div className="column is-3">
+            <label className="label">Village ID</label>
+            <article className="message">
+              <div className="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
             </article>
-            <label class="label">Visit on</label>
-            <div class="select is-fullwidth">
+            <label className="label">Visit on</label>
+            <div className="select is-fullwidth">
               <select name={"medication"} onChange={this.handleVisitChange}>
                 {visitOptions}
               </select>
             </div>
           </div>
-          <div class="column is-3">
-            <label class="label">Name</label>
-            <article class="message">
-              <div class="message-body">{patient.fields.name}</div>
+          <div className="column is-3">
+            <label className="label">Name</label>
+            <article className="message">
+              <div className="message-body">{patient.fields.name}</div>
             </article>
           </div>
-          <div class="column is-3">
-            <label class="label">Visited Before?</label>
-            <article class="message">
-              <div class="message-body">{visits.length > 1 ? 'Yes' : 'No'}</div>
+          <div className="column is-3">
+            <label className="label">Visited Before?</label>
+            <article className="message">
+              <div className="message-body">
+                {visits.length > 1 ? "Yes" : "No"}
+              </div>
             </article>
           </div>
-          <div class="column is-3"></div>
+          <div className="column is-3"></div>
         </div>
       </div>
     );
   }
 
   renderFirstColumn() {
-    let {
-      dentalTriage,
-      medicalTriage,
-      consults,
-      visitPrescriptions
-    } = this.state;
+    let { dentalTriage, medicalTriage, consults, visitPrescriptions } =
+      this.state;
 
     // let consultList = visit.fields.consultations;
     let medicalVitals = medicalTriage.fields;
     let dentalVitals = dentalTriage.fields;
 
-    let consultRows = consults.map(consult => {
+    let consultRows = consults.map((consult) => {
       let type = consult.fields.type;
       let subType =
         consult.fields.sub_type == null ? "General" : consult.fields.sub_type;
@@ -499,7 +489,7 @@ class Patient extends React.Component {
           <td>{referredFor}</td>
           <td>
             <button
-              class="button is-dark level-item"
+              className="button is-dark level-item"
               onClick={() => this.toggleViewModal("consult", consult)}
             >
               View
@@ -510,15 +500,15 @@ class Patient extends React.Component {
     });
 
     return (
-      <div class="column is-7">
-        <div class="columns">
-          <div class="column is-6">
-            <label class="label">Medical Triage</label>
+      <div className="column is-7">
+        <div className="columns">
+          <div className="column is-6">
+            <label className="label">Medical Triage</label>
             {typeof medicalVitals === "undefined" ? (
               <h2>Not Done</h2>
             ) : (
               <button
-                class="button is-dark level-item"
+                className="button is-dark level-item"
                 style={{ marginTop: 15 }}
                 onClick={() => {
                   this.toggleViewModal("medicalTriage");
@@ -528,13 +518,13 @@ class Patient extends React.Component {
               </button>
             )}
           </div>
-          <div class="column is-6">
-            <label class="label">Dental Triage</label>
+          <div className="column is-6">
+            <label className="label">Dental Triage</label>
             {typeof dentalVitals === "undefined" ? (
               <h2>Not Done</h2>
             ) : (
               <button
-                class="button is-dark level-item"
+                className="button is-dark level-item"
                 style={{ marginTop: 15 }}
                 onClick={() => {
                   this.toggleViewModal("dentalTriage");
@@ -547,7 +537,7 @@ class Patient extends React.Component {
         </div>
 
         <hr />
-        <label class="label">Consultations</label>
+        <label className="label">Consultations</label>
         {consults.length > 0 ? (
           <ConsultationsTable consultRows={consultRows} />
         ) : (
@@ -555,7 +545,7 @@ class Patient extends React.Component {
         )}
 
         <hr />
-        <label class="label">Prescriptions</label>
+        <label className="label">Prescriptions</label>
         {visitPrescriptions.length > 0 ? (
           <VisitPrescriptionsTable content={visitPrescriptions} />
         ) : (
@@ -594,10 +584,10 @@ class Patient extends React.Component {
                 handleInputChange={this.handleInputChange}
               />
               <hr />
-              <label class="label">Prescriptions</label>
+              <label className="label">Prescriptions</label>
               {orders.length > 0 ? this.renderPrescriptionTable() : "None"}
               <button
-                class="button is-dark level-item"
+                className="button is-dark level-item"
                 style={{ marginTop: 15 }}
                 onClick={() => this.toggleFormModal()}
               >
@@ -613,10 +603,10 @@ class Patient extends React.Component {
                 handleInputChange={this.handleInputChange}
               />
               <hr />
-              <label class="label">Prescriptions</label>
+              <label className="label">Prescriptions</label>
               {orders.length > 0 ? this.renderPrescriptionTable() : "None"}
               <button
-                class="button is-dark level-item"
+                className="button is-dark level-item"
                 style={{ marginTop: 15 }}
                 onClick={() => this.toggleFormModal()}
               >
@@ -628,13 +618,13 @@ class Patient extends React.Component {
     };
 
     return (
-      <div class="column is-5">
+      <div className="column is-5">
         {formContent()}
 
         <hr />
 
         <button
-          class="button is-dark is-medium level-item"
+          className="button is-dark is-medium level-item"
           style={{ marginTop: 15 }}
           onClick={() => this.submitForm()}
         >
@@ -658,16 +648,16 @@ class Patient extends React.Component {
           <td>{name}</td>
           <td>{quantity}</td>
           <td>
-            <div class="levels">
-              <div class="level-left">
+            <div className="levels">
+              <div className="level-left">
                 <button
-                  class="button is-dark level-item"
+                  className="button is-dark level-item"
                   onClick={() => this.toggleFormModal(order)}
                 >
                   Edit
                 </button>
                 <button
-                  class="button is-dark level-item"
+                  className="button is-dark level-item"
                   onClick={() => {
                     orders.splice(index, 1);
                     this.setState({ orders });
@@ -683,7 +673,7 @@ class Patient extends React.Component {
     });
 
     return (
-      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+      <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
           <tr>
             <th>Medicine Name</th>
@@ -704,7 +694,7 @@ class Patient extends React.Component {
         style={{
           marginTop: 27.5,
           marginLeft: 25,
-          marginRight: 25
+          marginRight: 25,
         }}
       >
         {this.renderFormModal()}
@@ -717,8 +707,8 @@ class Patient extends React.Component {
 
         <hr />
 
-        <div class="column is-12">
-          <div class="columns is-12">
+        <div className="column is-12">
+          <div className="columns is-12">
             {this.renderFirstColumn()}
             {this.renderSecondColumn()}
           </div>
@@ -733,8 +723,8 @@ const formModalStyles = {
     left: "35%",
     right: "17.5%",
     top: "12.5%",
-    bottom: "12.5%"
-  }
+    bottom: "12.5%",
+  },
 };
 
 const viewModalStyles = {
@@ -742,8 +732,8 @@ const viewModalStyles = {
     left: "30%",
     right: "12.5%",
     top: "12.5%",
-    bottom: "12.5%"
-  }
+    bottom: "12.5%",
+  },
 };
 
 export default withAuthSync(Patient);

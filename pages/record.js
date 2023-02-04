@@ -12,7 +12,7 @@ import {
   DentalTriageView,
   MedicalTriageView,
   VisitPrescriptionsTable,
-  PatientView
+  PatientView,
 } from "../components/views/patient";
 import { API_URL } from "../utils/constants";
 
@@ -45,7 +45,7 @@ class Record extends React.Component {
       formModalOpen: false,
       isEditing: false,
       viewModalOpen: false,
-      modalContent: {}
+      modalContent: {},
     };
 
     this.handleVisitChange = this.handleVisitChange.bind(this);
@@ -79,7 +79,7 @@ class Record extends React.Component {
 
     this.setState({
       patient: patient[0],
-      visits: visitsSorted
+      visits: visitsSorted,
     });
 
     let visitID = visitsSorted[0].pk;
@@ -93,18 +93,13 @@ class Record extends React.Component {
     this.setState({
       viewModalOpen: !this.state.viewModalOpen,
       viewType,
-      consult
+      consult,
     });
   }
 
   renderViewModal() {
-    let {
-      medicalTriage,
-      dentalTriage,
-      viewModalOpen,
-      consult,
-      viewType
-    } = this.state;
+    let { medicalTriage, dentalTriage, viewModalOpen, consult, viewType } =
+      this.state;
 
     let modalContent =
       viewType == "medicalTriage" ? (
@@ -130,12 +125,14 @@ class Record extends React.Component {
   async loadMedicationStock() {
     let { data: medications } = await axios.get(`${API_URL}/medication/get`);
 
-    let { data: orders } = await axios.get(`${API_URL}/order/get?order_status=PENDING`);
+    let { data: orders } = await axios.get(
+      `${API_URL}/order/get?order_status=PENDING`
+    );
 
     // key -> medicine pk
     // value -> total reserved
     let reservedMedications = {};
-    orders.forEach(order => {
+    orders.forEach((order) => {
       let medicationID = order.fields.medicine;
       let quantityReserved = order.fields.quantity;
 
@@ -161,15 +158,15 @@ class Record extends React.Component {
       `${API_URL}/order/get?visit=${visitID}`
     );
 
-    let consultsEnriched = consults.map(consult => {
+    let consultsEnriched = consults.map((consult) => {
       let consultID = consult.pk;
-      let consultPrescriptions = prescriptions.filter(prescription => {
+      let consultPrescriptions = prescriptions.filter((prescription) => {
         return prescription.fields.consult == consultID;
       });
 
       return {
         ...consult,
-        prescriptions: consultPrescriptions
+        prescriptions: consultPrescriptions,
       };
     });
 
@@ -190,11 +187,9 @@ class Record extends React.Component {
       dentalTriage: dentalTriage[0] || {},
       visitPrescriptions: prescriptions,
       mounted: true,
-      visitID
+      visitID,
     });
   }
-
-
 
   handleVisitChange(event) {
     const value = event.target.value;
@@ -207,7 +202,7 @@ class Record extends React.Component {
 
   renderHeader() {
     let { patient, visits } = this.state;
-    let visitOptions = visits.map(visit => {
+    let visitOptions = visits.map((visit) => {
       let date = moment(visit.fields.visit_date).format("DD MMMM YYYY");
       let pk = visit.pk;
 
@@ -215,68 +210,60 @@ class Record extends React.Component {
     });
 
     return (
-      <div class="column is-12">
-        <div class="columns is-12">
-          <div class="column is-2">
+      <div className="column is-12">
+        <div className="columns is-12">
+          <div className="column is-2">
             <img
               src={`${API_URL}/media/${patient.fields.picture}`}
               alt="Placeholder image"
-              class="has-ratio"
+              className="has-ratio"
               style={{
                 height: 200,
                 width: 200,
                 objectFit: "cover",
-                backgroundColor: "red"
+                backgroundColor: "red",
               }}
             />
           </div>
-          <div class="column is-3">
-            <label class="label">Village ID</label>
-            <article class="message">
-              <div class="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
+          <div className="column is-3">
+            <label className="label">Village ID</label>
+            <article className="message">
+              <div className="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
             </article>
-            <label class="label">Visit on</label>
-            <div class="select is-fullwidth">
+            <label className="label">Visit on</label>
+            <div className="select is-fullwidth">
               <select name={"medication"} onChange={this.handleVisitChange}>
                 {visitOptions}
               </select>
             </div>
           </div>
-          <div class="column is-3">
-            <label class="label">Name</label>
-            <article class="message">
-              <div class="message-body">{patient.fields.name}</div>
+          <div className="column is-3">
+            <label className="label">Name</label>
+            <article className="message">
+              <div className="message-body">{patient.fields.name}</div>
             </article>
           </div>
-          <div class="column is-3"></div>
+          <div className="column is-3"></div>
         </div>
       </div>
     );
   }
 
-  renderFirstColumn(){
-    let {patient} = this.state  
-    
-    return(
-        <PatientView
-            content={patient}
-        />
-      )
+  renderFirstColumn() {
+    let { patient } = this.state;
+
+    return <PatientView content={patient} />;
   }
 
   renderSecondColumn() {
-    let {
-      dentalTriage,
-      medicalTriage,
-      consults,
-      visitPrescriptions
-    } = this.state;
+    let { dentalTriage, medicalTriage, consults, visitPrescriptions } =
+      this.state;
 
     // let consultList = visit.fields.consultations;
     let medicalVitals = medicalTriage.fields;
     let dentalVitals = dentalTriage.fields;
 
-    let consultRows = consults.map(consult => {
+    let consultRows = consults.map((consult) => {
       let type = consult.fields.type;
       let subType =
         consult.fields.sub_type == null ? "General" : consult.fields.sub_type;
@@ -294,7 +281,7 @@ class Record extends React.Component {
           <td>{referredFor}</td>
           <td>
             <button
-              class="button is-dark level-item"
+              className="button is-dark level-item"
               onClick={() => this.toggleViewModal("consult", consult)}
             >
               View
@@ -305,15 +292,15 @@ class Record extends React.Component {
     });
 
     return (
-      <div class="column is-9">
-        <div class="columns">
-          <div class="column is-6">
-            <label class="label">Medical Triage</label>
+      <div className="column is-9">
+        <div className="columns">
+          <div className="column is-6">
+            <label className="label">Medical Triage</label>
             {typeof medicalVitals === "undefined" ? (
               <h2>Not Done</h2>
             ) : (
               <button
-                class="button is-dark level-item"
+                className="button is-dark level-item"
                 style={{ marginTop: 15 }}
                 onClick={() => {
                   this.toggleViewModal("medicalTriage");
@@ -323,13 +310,13 @@ class Record extends React.Component {
               </button>
             )}
           </div>
-          <div class="column is-6">
-            <label class="label">Dental Triage</label>
+          <div className="column is-6">
+            <label className="label">Dental Triage</label>
             {typeof dentalVitals === "undefined" ? (
               <h2>Not Done</h2>
             ) : (
               <button
-                class="button is-dark level-item"
+                className="button is-dark level-item"
                 style={{ marginTop: 15 }}
                 onClick={() => {
                   this.toggleViewModal("dentalTriage");
@@ -342,7 +329,7 @@ class Record extends React.Component {
         </div>
 
         <hr />
-        <label class="label">Consultations</label>
+        <label className="label">Consultations</label>
         {consults.length > 0 ? (
           <ConsultationsTable consultRows={consultRows} />
         ) : (
@@ -350,7 +337,7 @@ class Record extends React.Component {
         )}
 
         <hr />
-        <label class="label">Prescriptions</label>
+        <label className="label">Prescriptions</label>
         {visitPrescriptions.length > 0 ? (
           <VisitPrescriptionsTable content={visitPrescriptions} />
         ) : (
@@ -372,16 +359,16 @@ class Record extends React.Component {
           <td>{name}</td>
           <td>{quantity}</td>
           <td>
-            <div class="levels">
-              <div class="level-left">
+            <div className="levels">
+              <div className="level-left">
                 <button
-                  class="button is-dark level-item"
+                  className="button is-dark level-item"
                   onClick={() => this.toggleFormModal(order)}
                 >
                   Edit
                 </button>
                 <button
-                  class="button is-dark level-item"
+                  className="button is-dark level-item"
                   onClick={() => {
                     orders.splice(index, 1);
                     this.setState({ orders });
@@ -397,7 +384,7 @@ class Record extends React.Component {
     });
 
     return (
-      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+      <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
           <tr>
             <th>Medicine Name</th>
@@ -418,7 +405,7 @@ class Record extends React.Component {
         style={{
           marginTop: 27.5,
           marginLeft: 25,
-          marginRight: 25
+          marginRight: 25,
         }}
       >
         {this.renderViewModal()}
@@ -427,8 +414,8 @@ class Record extends React.Component {
 
         <hr />
 
-        <div class="column is-12">
-          <div class="columns is-12">
+        <div className="column is-12">
+          <div className="columns is-12">
             {this.renderFirstColumn()}
             {this.renderSecondColumn()}
           </div>
@@ -443,8 +430,8 @@ const viewModalStyles = {
     left: "30%",
     right: "12.5%",
     top: "12.5%",
-    bottom: "12.5%"
-  }
+    bottom: "12.5%",
+  },
 };
 
 export default withAuthSync(Record);

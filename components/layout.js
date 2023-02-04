@@ -3,7 +3,6 @@ import Sidebar from "react-sidebar";
 import Head from "next/head";
 import Header from "./header";
 import SideMenu from "./sideMenu";
-import styles from "../styles/styles.scss";
 
 export default class Layout extends React.Component {
   constructor(props) {
@@ -11,7 +10,7 @@ export default class Layout extends React.Component {
     this.state = {
       mql: null,
       sidebarDocked: null,
-      sidebarOpen: false
+      sidebarOpen: false,
     };
 
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
@@ -42,8 +41,8 @@ export default class Layout extends React.Component {
   }
 
   render() {
-    console.log('this one is ', this.props.children)
-    
+    console.log("this one is ", this.props.children);
+
     return (
       <React.Fragment>
         <Head>

@@ -3,7 +3,6 @@ import { withAuthSync, logInCheck } from "../../utils/auth";
 import Modal from "react-modal";
 import moment from "moment";
 import axios from "axios";
-import styles from "../../styles/styles.scss";
 import _ from "lodash";
 import { MedicationForm } from "../../components/forms/stock";
 import { API_URL } from "../../utils/constants";
@@ -24,10 +23,10 @@ class Stock extends React.Component {
       medicationsFiltered: [],
       medicationDetails: {},
       modalIsOpen: false,
-      filterString: ''
+      filterString: "",
     };
 
-    this.onFilterChange = this.onFilterChange.bind(this)
+    this.onFilterChange = this.onFilterChange.bind(this);
     this.handleMedicationChange = this.handleMedicationChange.bind(this);
   }
 
@@ -36,13 +35,11 @@ class Stock extends React.Component {
   }
 
   async onRefresh() {
-    let { data: medications } = await axios.get(
-      `${API_URL}/medication/get`
-    );
+    let { data: medications } = await axios.get(`${API_URL}/medication/get`);
 
     console.log("look what we have here ", medications);
 
-    this.setState({ medications, medicationsFiltered: medications});
+    this.setState({ medications, medicationsFiltered: medications });
   }
 
   async onSubmitForm() {
@@ -71,10 +68,7 @@ class Stock extends React.Component {
     } else {
       medicationDetails.quantity = changeQuantity;
       console.log("new entry", medicationDetails);
-      await axios.post(
-        `${API_URL}/medication/new`,
-        medicationDetails
-      );
+      await axios.post(`${API_URL}/medication/new`, medicationDetails);
       alert("New Medication created!");
     }
 
@@ -86,8 +80,8 @@ class Stock extends React.Component {
     // get
     let { medications } = this.state;
 
-    let medicationsFiltered = medications.filter(medication => {
-      let medicineName = medication.fields.medicine_name.toLowerCase()
+    let medicationsFiltered = medications.filter((medication) => {
+      let medicineName = medication.fields.medicine_name.toLowerCase();
 
       return medicineName.includes(event.target.value.toLowerCase());
     });
@@ -101,7 +95,7 @@ class Stock extends React.Component {
    */
   toggleModal(modal = "", medication = {}) {
     let changes = {
-      modalIsOpen: !this.state.modalIsOpen
+      modalIsOpen: !this.state.modalIsOpen,
     };
 
     switch (modal) {
@@ -150,17 +144,17 @@ class Stock extends React.Component {
     medicationDetails[name] = value;
 
     this.setState({
-      medicationDetails
+      medicationDetails,
     });
   }
 
   renderRows() {
-    let { medicationsFiltered : medications } = this.state;
+    let { medicationsFiltered: medications } = this.state;
 
-    let tableRows = medications.map(medication => {
+    let tableRows = medications.map((medication) => {
       let medicationDetails = {
         ...medication.fields,
-        pk: medication.pk
+        pk: medication.pk,
       };
       let name = medicationDetails.medicine_name;
       let quantity = medicationDetails.quantity;
@@ -170,10 +164,10 @@ class Stock extends React.Component {
           <td>{name}</td>
           <td>{quantity}</td>
           <td>
-            <div class="levels">
-              <div class="level-left">
+            <div className="levels">
+              <div className="level-left">
                 <button
-                  class="button is-dark level-item"
+                  className="button is-dark level-item"
                   onClick={() => this.toggleModal("edit", medicationDetails)}
                 >
                   Edit
@@ -194,25 +188,25 @@ class Stock extends React.Component {
         style={{
           marginTop: 15,
           marginLeft: 25,
-          marginRight: 25
+          marginRight: 25,
           // position: "relative"
         }}
       >
         {this.renderModal()}
-        <div class="column is-12">
+        <div className="column is-12">
           <h1 style={{ color: "black", fontSize: "1.5em" }}>Medicine Stock</h1>
-          <div class="control">
+          <div className="control">
             <input
-              class="input is-medium"
+              className="input is-medium"
               type="text"
               placeholder="Search Medications"
               onChange={this.onFilterChange}
             />
           </div>
-          <div class="levels" style={{ marginBottom: 10, marginTop: 10 }}>
-            <div class="level-left">
+          <div className="levels" style={{ marginBottom: 10, marginTop: 10 }}>
+            <div className="level-left">
               <button
-                class="button is-dark level-item"
+                className="button is-dark level-item"
                 style={{ display: "inline-block", verticalAlign: "top" }}
                 onClick={() => this.toggleModal("add")}
               >
@@ -221,7 +215,7 @@ class Stock extends React.Component {
             </div>
           </div>
 
-          <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
               <tr>
                 <th>Name</th>
@@ -242,8 +236,8 @@ const prescriptionModalStyles = {
     left: "35%",
     right: "17.5%",
     top: "25%",
-    bottom: "25%"
-  }
+    bottom: "25%",
+  },
 };
 
 export default withAuthSync(Stock);

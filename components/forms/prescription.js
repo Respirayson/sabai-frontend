@@ -8,7 +8,7 @@ class PrescriptionForm extends React.Component {
   calculateMedicineCurrentStock(medicine) {
     let { medications } = this.props;
 
-    let medication = medications.filter(med => {
+    let medication = medications.filter((med) => {
       // console.log('... ', med.pk, medicine)
       return medicine == med.pk;
     });
@@ -34,17 +34,17 @@ class PrescriptionForm extends React.Component {
     } = this.props;
 
     return (
-      <div class="column is-12">
+      <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Prescription</h1>
 
-        <div class="field">
-          <label class="label">Allergies</label>
+        <div className="field">
+          <label className="label">Allergies</label>
           <h2 style={{ color: "red" }}>{allergies}</h2>
         </div>
 
-        <div class="field">
-          <label class="label">Medicine</label>
-          <div class="select is-fullwidth">
+        <div className="field">
+          <label className="label">Medicine</label>
+          <div className="select is-fullwidth">
             <select name={"medication"} onChange={handleInputChange}>
               <option value={"0 Dummy"}>-</option>
               {medicationOptions}
@@ -52,23 +52,23 @@ class PrescriptionForm extends React.Component {
           </div>
         </div>
 
-        <div class="field is-grouped">
-          <div class="control is-expanded">
-            <label class="label">In Stock</label>
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">In Stock</label>
             <h2>{this.calculateMedicineCurrentStock(formDetails.medicine)}</h2>
           </div>
 
-          <div class="control is-expanded">
-            <label class="label">Currently Reserved</label>
+          <div className="control is-expanded">
+            <label className="label">Currently Reserved</label>
             <h2>{this.calculateMedicineReservedStock(formDetails.medicine)}</h2>
           </div>
 
-          <div class="control is-expanded">
-            <label class="label">Quantity to be ordered</label>
-            <div class="control">
+          <div className="control is-expanded">
+            <label className="label">Quantity to be ordered</label>
+            <div className="control">
               <input
                 name="quantity"
-                class="input"
+                className="input"
                 type="number"
                 onChange={handleInputChange}
                 value={formDetails.quantity}
@@ -77,12 +77,12 @@ class PrescriptionForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          <label class="label">Notes</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">Notes</label>
+          <div className="control">
             <textarea
               name="notes"
-              class="textarea"
+              className="textarea"
               placeholder="Textarea"
               onChange={handleInputChange}
               value={formDetails.notes}
@@ -91,7 +91,7 @@ class PrescriptionForm extends React.Component {
         </div>
 
         <button
-          class="button is-dark is-medium level-item"
+          className="button is-dark is-medium level-item"
           style={{ marginTop: 15 }}
           onClick={onSubmit}
         >

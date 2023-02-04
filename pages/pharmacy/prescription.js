@@ -27,7 +27,7 @@ class Prescription extends React.Component {
       order: {},
       medicationsDict: {},
       mounted: false,
-      editModalOpen: false
+      editModalOpen: false,
     };
 
     this.handleOrderChange = this.handleOrderChange.bind(this);
@@ -57,7 +57,7 @@ class Prescription extends React.Component {
     let { data: medications } = await axios.get(`${API_URL}/medication/get`);
 
     let medicationsDict = {};
-    medications.forEach(medication => {
+    medications.forEach((medication) => {
       let medicationId = medication.pk;
       let quantity = medication.fields.quantity;
 
@@ -68,7 +68,7 @@ class Prescription extends React.Component {
       patient: patient[0],
       visit: visit[visit.length - 1],
       medicationsDict,
-      consultations
+      consultations,
     });
 
     this.loadMedicationStock();
@@ -89,7 +89,7 @@ class Prescription extends React.Component {
     // key -> medicine pk
     // value -> total reserved
     let reservedMedications = {};
-    allOrders.forEach(order => {
+    allOrders.forEach((order) => {
       let medicationID = order.fields.medicine;
       let quantityReserved = order.fields.quantity;
 
@@ -108,27 +108,30 @@ class Prescription extends React.Component {
     let { orders, visit } = this.state;
     let promises = [];
 
-    orders.forEach(order => {
+    orders.forEach((order) => {
       let orderId = order.pk;
       let payload = {
-        order_status: flag
+        order_status: flag,
       };
 
-      let medicineId = order.fields.medicine
+      let medicineId = order.fields.medicine;
       let medPayload = {
-        quantityChange: order.fields.quantity
-      }
+        quantityChange: order.fields.quantity,
+      };
 
       promises.push(
-        axios.patch(`${API_URL}/medication/quantity?pk=${medicineId}`, medPayload)
-      )
+        axios.patch(
+          `${API_URL}/medication/quantity?pk=${medicineId}`,
+          medPayload
+        )
+      );
       promises.push(
         axios.patch(`${API_URL}/order/update?pk=${orderId}`, payload)
       );
     });
 
     let visitPayload = {
-      status: "finished"
+      status: "finished",
     };
     promises.push(
       axios.patch(`${API_URL}/visit/update?pk=${visit.pk}`, visitPayload)
@@ -167,10 +170,7 @@ class Prescription extends React.Component {
 
     if (name === "medication") {
       let pKey = value.split(" ")[0];
-      let medicineName = value
-        .split(" ")
-        .slice(1)
-        .join(" ");
+      let medicineName = value.split(" ").slice(1).join(" ");
 
       order["medicine"] = pKey;
       order["medicine_name"] = medicineName;
@@ -179,7 +179,7 @@ class Prescription extends React.Component {
     }
 
     this.setState({
-      order
+      order,
     });
   }
 
@@ -187,22 +187,17 @@ class Prescription extends React.Component {
     this.loadMedicationStock();
     this.setState({
       editModalOpen: !this.state.editModalOpen,
-      order
+      order,
     });
   }
 
   renderEditModal() {
-    let {
-      patient,
-      medications,
-      order,
-      reservedMedications,
-      editModalOpen
-    } = this.state;
+    let { patient, medications, order, reservedMedications, editModalOpen } =
+      this.state;
 
     console.log("meidince ", medications);
 
-    let options = medications.map(medication => {
+    let options = medications.map((medication) => {
       let name = medication.fields.medicine_name;
       let pKey = medication.pk;
 
@@ -241,34 +236,34 @@ class Prescription extends React.Component {
     let { patient } = this.state;
 
     return (
-      <div class="column is-12">
-        <div class="columns is-12">
-          <div class="column is-2">
+      <div className="column is-12">
+        <div className="columns is-12">
+          <div className="column is-2">
             <img
               src={`${API_URL}/media/${patient.fields.picture}`}
               alt="Placeholder image"
-              class="has-ratio"
+              className="has-ratio"
               style={{
                 height: 200,
                 width: 200,
                 objectFit: "cover",
-                backgroundColor: "red"
+                backgroundColor: "red",
               }}
             />
           </div>
-          <div class="column is-3">
-            <label class="label">Village ID</label>
-            <article class="message">
-              <div class="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
+          <div className="column is-3">
+            <label className="label">Village ID</label>
+            <article className="message">
+              <div className="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
             </article>
           </div>
-          <div class="column is-3">
-            <label class="label">Name</label>
-            <article class="message">
-              <div class="message-body">{patient.fields.name}</div>
+          <div className="column is-3">
+            <label className="label">Name</label>
+            <article className="message">
+              <div className="message-body">{patient.fields.name}</div>
             </article>
           </div>
-          <div class="column is-3"></div>
+          <div className="column is-3"></div>
         </div>
       </div>
     );
@@ -277,7 +272,7 @@ class Prescription extends React.Component {
   renderTable() {
     let { orders, medicationsDict } = this.state;
 
-    let orderRows = orders.map(order => {
+    let orderRows = orders.map((order) => {
       let name = order.fields.medicine_name;
       let current_stock = medicationsDict[order.fields.medicine];
       let quantity = order.fields.quantity;
@@ -285,7 +280,7 @@ class Prescription extends React.Component {
 
       let orderEnriched = {
         ...order.fields,
-        pk: order.pk
+        pk: order.pk,
       };
 
       return (
@@ -295,16 +290,16 @@ class Prescription extends React.Component {
           <td>{quantity}</td>
           <td>{doctor}</td>
           <td>
-            <div class="levels">
-              <div class="level-left">
+            <div className="levels">
+              <div className="level-left">
                 <button
-                  class="button is-dark level-item"
+                  className="button is-dark level-item"
                   onClick={() => this.toggleEditModal(orderEnriched)}
                 >
                   Edit
                 </button>
                 <button
-                  class="button is-dark level-item"
+                  className="button is-dark level-item"
                   onClick={() => this.cancelOrder(orderEnriched)}
                 >
                   Cancel
@@ -317,7 +312,7 @@ class Prescription extends React.Component {
     });
 
     return (
-      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+      <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
           <tr>
             <th>Medicine Name</th>
@@ -335,7 +330,7 @@ class Prescription extends React.Component {
   renderConsultationsTable() {
     let { consultations } = this.state;
 
-    let consultRows = consultations.map(consult => {
+    let consultRows = consultations.map((consult) => {
       let type = consult.fields.type;
       let subType =
         consult.fields.sub_type == null ? "General" : consult.fields.sub_type;
@@ -356,7 +351,7 @@ class Prescription extends React.Component {
     });
 
     return (
-      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+      <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
           <tr>
             <th>Type</th>
@@ -375,20 +370,20 @@ class Prescription extends React.Component {
 
     if (!this.state.mounted) return null;
 
-    console.log('uno ', this.state.consultations)
-    console.log('dos ', this.state.orders)
+    console.log("uno ", this.state.consultations);
+    console.log("dos ", this.state.orders);
 
     return (
       <div
         style={{
           marginTop: 15,
           marginLeft: 25,
-          marginRight: 25
+          marginRight: 25,
           // position: "relative"
         }}
       >
         {this.renderEditModal()}
-        <div class="column is-12">
+        <div className="column is-12">
           <h1 style={{ color: "black", fontSize: "1.5em" }}>
             Approve/ Reject Orders
           </h1>
@@ -398,13 +393,17 @@ class Prescription extends React.Component {
           </b>
           <hr />
 
-          <div class="column is-12">
-            <label class="label">Consultations</label>
-            {this.state.consultations.length > 0 ? this.renderConsultationsTable() : <h2>None</h2>}
+          <div className="column is-12">
+            <label className="label">Consultations</label>
+            {this.state.consultations.length > 0 ? (
+              this.renderConsultationsTable()
+            ) : (
+              <h2>None</h2>
+            )}
 
             <hr />
 
-            <label class="label">Prescriptions</label>
+            <label className="label">Prescriptions</label>
             {this.state.orders.length > 0 ? this.renderTable() : <h2>None</h2>}
             {/* {this.renderFirstColumn()}
             {this.renderSecondColumn()} */}
@@ -412,16 +411,16 @@ class Prescription extends React.Component {
 
           <hr />
 
-          <div class="levels">
-            <div class="level-left">
+          <div className="levels">
+            <div className="level-left">
               <button
-                class="button is-dark level-item"
+                className="button is-dark level-item"
                 onClick={() => this.massUpdate("APPROVED")}
               >
                 Approve All
               </button>
               <button
-                class="button is-dark level-item"
+                className="button is-dark level-item"
                 onClick={() => this.massUpdate("REJECTED")}
               >
                 Reject All
@@ -439,8 +438,8 @@ const editModalStyles = {
     left: "30%",
     right: "12.5%",
     top: "12.5%",
-    bottom: "12.5%"
-  }
+    bottom: "12.5%",
+  },
 };
 
 export default withAuthSync(Prescription);

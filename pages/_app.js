@@ -4,6 +4,7 @@ import Layout from "../components/layout";
 import cookie from "js-cookie";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
+import "../styles/styles.scss";
 
 /**
  * Future implementation
@@ -16,7 +17,7 @@ const options = {
   timeout: 5000,
   offset: "30px",
   // you can also just use 'scale'
-  transition: transitions.SCALE
+  transition: transitions.SCALE,
 };
 
 class MyApp extends App {

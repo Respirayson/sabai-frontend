@@ -19,7 +19,7 @@ class Records extends React.Component {
     this.state = {
       patients: [],
       patientsFiltered: [],
-      filterString: ""
+      filterString: "",
     };
 
     this.onFilterChange = this.onFilterChange.bind(this);
@@ -43,14 +43,14 @@ class Records extends React.Component {
 
   renderTableContent() {
     let { patientsFiltered, formChoices } = this.state;
-    let patientsRows = patientsFiltered.map(patient => {
+    let patientsRows = patientsFiltered.map((patient) => {
       let Id = `${patient.fields.village_prefix}${patient.pk}`;
       let imageUrl = `${API_URL}/media/${patient.fields.picture}`;
       let fullName = patient.fields.name;
 
       let progress = (
         <button
-          class="button is-dark level-item"
+          className="button is-dark level-item"
           onClick={() => {
             Router.push(`/record?id=${patient.pk}`);
           }}
@@ -63,7 +63,7 @@ class Records extends React.Component {
         <tr>
           <td>{Id}</td>
           <td>
-            <figure class="image is-96x96">
+            <figure className="image is-96x96">
               <img
                 // src="https://bulma.io/images/placeholders/96x96.png"
                 src={imageUrl}
@@ -87,7 +87,7 @@ class Records extends React.Component {
     let { patients } = this.state;
     // console.log("event.value", event.target.value);
 
-    let patientsFiltered = patients.filter(patient => {
+    let patientsFiltered = patients.filter((patient) => {
       let patient_details = patient.fields;
       let name = patient_details.name;
       let contact_no = patient_details.contact_no;
@@ -108,23 +108,23 @@ class Records extends React.Component {
         style={{
           marginTop: 15,
           marginLeft: 25,
-          marginRight: 25
+          marginRight: 25,
           // position: "relative"
         }}
       >
-        <div class="column is-12">
+        <div className="column is-12">
           <h1 style={{ color: "black", fontSize: "1.5em" }}>Records</h1>
-          <div class="field">
-            <div class="control">
+          <div className="field">
+            <div className="control">
               <input
-                class="input is-medium"
+                className="input is-medium"
                 type="text"
                 placeholder="Search Patient"
                 onChange={this.onFilterChange}
               />
             </div>
           </div>
-          <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
               <tr>
                 <th>ID</th>

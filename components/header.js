@@ -1,11 +1,9 @@
 import Link from "next/link";
 import { logout } from "../utils/auth";
-import styles from "../styles/styles.scss";
 
-const Header = props => (
-  // <header class=".example">
-  <nav class="navbar is-dark">
-    <div class="navbar-brand">
+const Header = (props) => (
+  <nav className="navbar is-dark">
+    <div className="navbar-brand">
       <div>
         <h1>Project Sa'bai</h1>
       </div>

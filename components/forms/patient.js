@@ -10,13 +10,13 @@ class DentalTriageForm extends React.Component {
 
     return (
       <div>
-        <label class="label">Dental Triage Form</label>
-        <div class="field">
-          <label class="label">Complaints</label>
-          <div class="control">
+        <label className="label">Dental Triage Form</label>
+        <div className="field">
+          <label className="label">Complaints</label>
+          <div className="control">
             <textarea
               name="complaints"
-              class="textarea"
+              className="textarea"
               placeholder="Textarea"
               onChange={handleInputChange}
               value={formDetails.complaints}
@@ -24,12 +24,12 @@ class DentalTriageForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          <label class="label">Intraoral</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">Intraoral</label>
+          <div className="control">
             <textarea
               name="intraoral"
-              class="textarea"
+              className="textarea"
               placeholder="Textarea"
               onChange={handleInputChange}
               value={formDetails.intraoral}
@@ -37,12 +37,12 @@ class DentalTriageForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          <label class="label">Diagnosis</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">Diagnosis</label>
+          <div className="control">
             <textarea
               name="diagnosis"
-              class="textarea"
+              className="textarea"
               placeholder="Textarea"
               onChange={handleInputChange}
               value={formDetails.diagnosis}
@@ -51,14 +51,14 @@ class DentalTriageForm extends React.Component {
         </div>
 
         <hr />
-        <label class="label">Treatments Needed</label>
+        <label className="label">Treatments Needed</label>
 
-        <div class="field">
-          <label class="label">EXO</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">EXO</label>
+          <div className="control">
             <input
               name="exo"
-              class="input"
+              className="input"
               type="text"
               onChange={handleInputChange}
               value={formDetails.exo}
@@ -66,12 +66,12 @@ class DentalTriageForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          <label class="label">CAP</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">CAP</label>
+          <div className="control">
             <input
               name="cap"
-              class="input"
+              className="input"
               type="text"
               onChange={handleInputChange}
               value={formDetails.cap}
@@ -79,12 +79,12 @@ class DentalTriageForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          <label class="label">SDF</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">SDF</label>
+          <div className="control">
             <input
               name="sdf"
-              class="input"
+              className="input"
               type="text"
               onChange={handleInputChange}
               value={formDetails.sdf}
@@ -92,12 +92,12 @@ class DentalTriageForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          <label class="label">F</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">F</label>
+          <div className="control">
             <input
               name="f"
-              class="input"
+              className="input"
               type="text"
               onChange={handleInputChange}
               value={formDetails.f}
@@ -105,12 +105,12 @@ class DentalTriageForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          <label class="label">Others</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">Others</label>
+          <div className="control">
             <input
               name="others"
-              class="input"
+              className="input"
               type="text"
               onChange={handleInputChange}
               value={formDetails.others}
@@ -132,14 +132,14 @@ class MedicalTriageForm extends React.Component {
 
     return (
       <div>
-        <label class="label">Medical Triage Form</label>
-        <div class="field is-grouped">
-          <div class="control is-expanded">
-            <label class="label">Height</label>
-            <div class="control">
+        <label className="label">Medical Triage Form</label>
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Height</label>
+            <div className="control">
               <input
                 name="height"
-                class="input"
+                className="input"
                 type="number"
                 onChange={handleInputChange}
                 value={formDetails.height}
@@ -147,12 +147,12 @@ class MedicalTriageForm extends React.Component {
             </div>
           </div>
 
-          <div class="control is-expanded">
-            <label class="label">Weight</label>
-            <div class="control">
+          <div className="control is-expanded">
+            <label className="label">Weight</label>
+            <div className="control">
               <input
                 name="weight"
-                class="input"
+                className="input"
                 type="number"
                 onChange={handleInputChange}
                 value={formDetails.weight}
@@ -161,13 +161,13 @@ class MedicalTriageForm extends React.Component {
           </div>
         </div>
 
-        <div class="field is-grouped">
-          <div class="control is-expanded">
-            <label class="label">Systolic</label>
-            <div class="control">
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Systolic</label>
+            <div className="control">
               <input
                 name="systolic"
-                class="input"
+                className="input"
                 type="number"
                 onChange={handleInputChange}
                 value={formDetails.systolic}
@@ -175,12 +175,12 @@ class MedicalTriageForm extends React.Component {
             </div>
           </div>
 
-          <div class="control is-expanded">
-            <label class="label">Diastolic</label>
-            <div class="control">
+          <div className="control is-expanded">
+            <label className="label">Diastolic</label>
+            <div className="control">
               <input
                 name="diastolic"
-                class="input"
+                className="input"
                 type="number"
                 onChange={handleInputChange}
                 value={formDetails.diastolic}
@@ -189,13 +189,13 @@ class MedicalTriageForm extends React.Component {
           </div>
         </div>
 
-        <div class="field is-grouped">
-          <div class="control is-expanded">
-            <label class="label">Temperature</label>
-            <div class="control">
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Temperature</label>
+            <div className="control">
               <input
                 name="temperature"
-                class="input"
+                className="input"
                 type="number"
                 onChange={handleInputChange}
                 value={formDetails.temperature}
@@ -203,12 +203,12 @@ class MedicalTriageForm extends React.Component {
             </div>
           </div>
 
-          <div class="control is-expanded">
-            <label class="label">Heart Rate</label>
-            <div class="control">
+          <div className="control is-expanded">
+            <label className="label">Heart Rate</label>
+            <div className="control">
               <input
                 name="heart_rate"
-                class="input"
+                className="input"
                 type="number"
                 onChange={handleInputChange}
                 value={formDetails.heart_rate}
@@ -217,10 +217,10 @@ class MedicalTriageForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          {/* <label class="label">HIV Po</label> */}
-          <div class="control">
-            <label class="checkbox">
+        <div className="field">
+          {/* <label className="label">HIV Po</label> */}
+          <div className="control">
+            <label className="checkbox">
               <input
                 type="checkbox"
                 name="hiv_positive"
@@ -232,9 +232,9 @@ class MedicalTriageForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
+        <div className="field">
+          <div className="control">
+            <label className="checkbox">
               <input
                 type="checkbox"
                 name="ptb_positive"
@@ -246,9 +246,9 @@ class MedicalTriageForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
+        <div className="field">
+          <div className="control">
+            <label className="checkbox">
               <input
                 type="checkbox"
                 name="hepc_positive"
@@ -274,59 +274,59 @@ class DentalForm extends React.Component {
 
     return (
       <div>
-        <label class="label">Dental Consultation Form</label>
+        <label className="label">Dental Consultation Form</label>
 
         <div>
-          <label class="label">Treatments Done</label>
-          <label class="label">EXO</label>
-          <div class="control" style={{ marginBottom: 20 }}>
+          <label className="label">Treatments Done</label>
+          <label className="label">EXO</label>
+          <div className="control" style={{ marginBottom: 20 }}>
             <input
               name="exo"
-              class="input"
+              className="input"
               type="text"
               onChange={handleInputChange}
               value={formDetails.exo}
             />
           </div>
 
-          <label class="label">CAP</label>
-          <div class="control" style={{ marginBottom: 20 }}>
+          <label className="label">CAP</label>
+          <div className="control" style={{ marginBottom: 20 }}>
             <input
               name="cap"
-              class="input"
+              className="input"
               type="text"
               onChange={handleInputChange}
               value={formDetails.cap}
             />
           </div>
 
-          <label class="label">SDF</label>
-          <div class="control" style={{ marginBottom: 20 }}>
+          <label className="label">SDF</label>
+          <div className="control" style={{ marginBottom: 20 }}>
             <input
               name="sdf"
-              class="input"
+              className="input"
               type="text"
               onChange={handleInputChange}
               value={formDetails.sdf}
             />
           </div>
 
-          <label class="label">F</label>
-          <div class="control" style={{ marginBottom: 20 }}>
+          <label className="label">F</label>
+          <div className="control" style={{ marginBottom: 20 }}>
             <input
               name="f"
-              class="input"
+              className="input"
               type="text"
               onChange={handleInputChange}
               value={formDetails.f}
             />
           </div>
 
-          <label class="label">Others</label>
-          <div class="control" style={{ marginBottom: 20 }}>
+          <label className="label">Others</label>
+          <div className="control" style={{ marginBottom: 20 }}>
             <input
               name="others"
-              class="input"
+              className="input"
               type="text"
               onChange={handleInputChange}
               value={formDetails.others}
@@ -336,12 +336,12 @@ class DentalForm extends React.Component {
 
         <hr />
 
-        <div class="field">
-          <label class="label">Notes</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">Notes</label>
+          <div className="control">
             <textarea
               name="notes"
-              class="textarea"
+              className="textarea"
               placeholder="Textarea"
               onChange={handleInputChange}
               value={formDetails.notes}
@@ -351,12 +351,12 @@ class DentalForm extends React.Component {
 
         <hr />
 
-        <div class="field">
-          <label class="label">Referred for (within clinic)</label>
-          <div class="control" style={{ marginBottom: 20 }}>
+        <div className="field">
+          <label className="label">Referred for (within clinic)</label>
+          <div className="control" style={{ marginBottom: 20 }}>
             <input
               name="referred_for"
-              class="input"
+              className="input"
               type="text"
               placeholder="Type specialty here..."
               onChange={handleInputChange}
@@ -379,13 +379,13 @@ class MedicalForm extends React.Component {
 
     return (
       <div>
-        <label class="label">Medical Consultation Form</label>
+        <label className="label">Medical Consultation Form</label>
 
-        <label class="label">Sub-type</label>
-        <div class="control" style={{ marginBottom: 20 }}>
+        <label className="label">Sub-type</label>
+        <div className="control" style={{ marginBottom: 20 }}>
           <input
             name="sub_type"
-            class="input"
+            className="input"
             type="text"
             placeholder="General"
             onChange={handleInputChange}
@@ -393,12 +393,12 @@ class MedicalForm extends React.Component {
           />
         </div>
 
-        <div class="field">
-          <label class="label">Problems</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">Problems</label>
+          <div className="control">
             <textarea
               name="problems"
-              class="textarea"
+              className="textarea"
               placeholder="Type your problems here..."
               onChange={handleInputChange}
               value={formDetails.problems}
@@ -406,12 +406,12 @@ class MedicalForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          <label class="label">Diagnosis</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">Diagnosis</label>
+          <div className="control">
             <textarea
               name="diagnosis"
-              class="textarea"
+              className="textarea"
               placeholder="Type your diagnosis here..."
               onChange={handleInputChange}
               value={formDetails.diagnosis}
@@ -419,12 +419,12 @@ class MedicalForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          <label class="label">Notes</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">Notes</label>
+          <div className="control">
             <textarea
               name="notes"
-              class="textarea"
+              className="textarea"
               placeholder="Type your notes here..."
               onChange={handleInputChange}
               value={formDetails.notes}
@@ -434,12 +434,12 @@ class MedicalForm extends React.Component {
 
         <hr />
 
-        <div class="field">
-          <label class="label">Referred for (within clinic)</label>
-          <div class="control" style={{ marginBottom: 20 }}>
+        <div className="field">
+          <label className="label">Referred for (within clinic)</label>
+          <div className="control" style={{ marginBottom: 20 }}>
             <input
               name="referred_for"
-              class="input"
+              className="input"
               type="text"
               placeholder="Type specialty here..."
               onChange={handleInputChange}
@@ -460,7 +460,7 @@ class PrescriptionForm extends React.Component {
   calculateMedicineCurrentStock(medicine) {
     let { medications } = this.props;
 
-    let medication = medications.filter(med => {
+    let medication = medications.filter((med) => {
       // console.log('... ', med.pk, medicine)
       return medicine == med.pk;
     });
@@ -483,21 +483,21 @@ class PrescriptionForm extends React.Component {
       formDetails,
       medicationOptions,
       onSubmit,
-      isEditing
+      isEditing,
     } = this.props;
 
     return (
-      <div class="column is-12">
+      <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Prescription</h1>
 
-        <div class="field">
-          <label class="label">Allergies</label>
+        <div className="field">
+          <label className="label">Allergies</label>
           <h2 style={{ color: "red" }}>{allergies}</h2>
         </div>
 
-        <div class="field">
-          <label class="label">Medicine</label>
-          <div class="select is-fullwidth">
+        <div className="field">
+          <label className="label">Medicine</label>
+          <div className="select is-fullwidth">
             <select name={"medication"} onChange={handleInputChange}>
               <option value={"0 Dummy"}>-</option>
               {medicationOptions}
@@ -505,23 +505,23 @@ class PrescriptionForm extends React.Component {
           </div>
         </div>
 
-        <div class="field is-grouped">
-          <div class="control is-expanded">
-            <label class="label">In Stock</label>
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">In Stock</label>
             <h2>{this.calculateMedicineCurrentStock(formDetails.medicine)}</h2>
           </div>
 
-          <div class="control is-expanded">
-            <label class="label">Currently Reserved</label>
+          <div className="control is-expanded">
+            <label className="label">Currently Reserved</label>
             <h2>{this.calculateMedicineReservedStock(formDetails.medicine)}</h2>
           </div>
 
-          <div class="control is-expanded">
-            <label class="label">Quantity to be ordered</label>
-            <div class="control">
+          <div className="control is-expanded">
+            <label className="label">Quantity to be ordered</label>
+            <div className="control">
               <input
                 name="quantity"
-                class="input"
+                className="input"
                 type="number"
                 onChange={handleInputChange}
                 value={formDetails.quantity}
@@ -530,12 +530,12 @@ class PrescriptionForm extends React.Component {
           </div>
         </div>
 
-        <div class="field">
-          <label class="label">Dosage Instructions</label>
-          <div class="control">
+        <div className="field">
+          <label className="label">Dosage Instructions</label>
+          <div className="control">
             <textarea
               name="notes"
-              class="textarea"
+              className="textarea"
               placeholder="Textarea"
               onChange={handleInputChange}
               value={formDetails.notes}
@@ -544,7 +544,7 @@ class PrescriptionForm extends React.Component {
         </div>
 
         <button
-          class="button is-dark is-medium level-item"
+          className="button is-dark is-medium level-item"
           style={{ marginTop: 15 }}
           onClick={onSubmit}
         >
@@ -560,5 +560,5 @@ export {
   MedicalTriageForm,
   DentalForm,
   MedicalForm,
-  PrescriptionForm
+  PrescriptionForm,
 };

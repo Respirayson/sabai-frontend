@@ -18,17 +18,17 @@ const SideMenu = (props) => (
     <ul className="menu-list">
       <li>
         <Link href="/patients" replace>
-          <a>Registration</a>
+          Registration
         </Link>
       </li>
       <li>
         <Link href="/queue" replace>
-          <a>Queue</a>
+          Queue
         </Link>
       </li>
       <li>
         <Link href="/records" replace>
-          <a>Records</a>
+          Records
         </Link>
       </li>
     </ul>
@@ -36,12 +36,12 @@ const SideMenu = (props) => (
     <ul className="menu-list">
       <li>
         <Link href="/pharmacy/orders" replace>
-          <a>Orders</a>
+          Orders
         </Link>
       </li>
       <li>
         <Link href="/pharmacy/stock" replace>
-          <a>Stock</a>
+          Stock
         </Link>
       </li>
     </ul>
@@ -49,7 +49,7 @@ const SideMenu = (props) => (
     <ul className="menu-list">
       <li>
         <Link href="/users" replace>
-          <a>Users</a>
+          Users
         </Link>
       </li>
       <li onClick={logout}>

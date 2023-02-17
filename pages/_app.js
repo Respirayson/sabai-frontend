@@ -36,8 +36,7 @@ class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props;
     let isLoggedIn = typeof cookie.get("token") !== "undefined";
-
-    if (!isLoggedIn) return <Component {...pageProps} />;
+    // if (!isLoggedIn) return <Component {...pageProps} />;
 
     return (
       <AlertProvider template={AlertTemplate} {...options}>

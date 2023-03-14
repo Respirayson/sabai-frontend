@@ -8,7 +8,6 @@ import { API_URL } from "../utils/constants";
 
 function Login() {
   const [userData, setUserData] = useState({ username: "", error: "" });
-
   async function handleSubmit(event) {
     event.preventDefault();
     setUserData(Object.assign({}, userData, { error: "" }));
@@ -27,19 +26,19 @@ function Login() {
         body: JSON.stringify({ username, password }),
       });
 
-      const { data: userInfo } = await axios.get(userInfoUrl);
-      console.log("url check ", userInfoUrl);
+      // const { data: userInfo } = await axios.get(userInfoUrl);
+      // console.log("url check ", userInfoUrl);
 
       console.log("this is the response ", response);
 
       if (response.status === 200) {
         console.log("Login successful");
         let token = await response.json();
-        let fullUserName = `${userInfo[0].fields.first_name} ${userInfo[0].fields.last_name}`;
+        // let fullUserName = `${userInfo[0].fields.first_name} ${userInfo[0].fields.last_name}`;
 
-        console.log("and your name is ", fullUserName);
+        // console.log("and your name is ", fullUserName);
 
-        await login({ token: token.access, name: fullUserName });
+        await login({ token: token.access, name: "testing" });
       } else {
         console.log("Login failed.");
         // https://github.com/developit/unfetch#caveats
@@ -64,20 +63,12 @@ function Login() {
 
   return (
     <React.Fragment>
-      <Head>
-        <title>Project Sa'bai</title>
-        <link
-          rel="stylesheet"
-          href="https://combinatronics.com/kiwicopple/quick-font/master/css/circular.css"
-        />
-      </Head>
-
-      <main>
+      <div>
         <div className="columns is-centered m-lg font">
           <div className="column is-4 is-vcentered form">
             <div className="level-left field">
               <figure className="image is-64x64 level-item">
-                <img src={"../static/sabaiLogo.png"} />
+                <img src={"sabaiLogo.png"} />
               </figure>
               <h1 className="level-item" style={{ fontSize: "2em" }}>
                 Project Sa'bai
@@ -134,13 +125,13 @@ function Login() {
                 </div>
 
                 {userData.error && (
-                  <p classNameName="error">Error: {userData.error}</p>
+                  <p className="error">Error: {userData.error}</p>
                 )}
               </form>
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </React.Fragment>
   );
 }

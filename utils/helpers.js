@@ -1,5 +1,5 @@
-import nextCookie from "next-cookies"
-import getHost from '../get-host'
+import nextCookie from "next-cookies";
+import getHost from "./get-host";
 
 export async function logInCheck(ctx) {
   const { token } = nextCookie(ctx);
@@ -14,9 +14,9 @@ export async function logInCheck(ctx) {
     const response = await fetch(apiUrl, {
       credentials: "include",
       headers: {
-        Authorization: JSON.stringify({ token })
-      }
-    })
+        Authorization: JSON.stringify({ token }),
+      },
+    });
 
     if (response.ok) {
       const js = await response.json();
@@ -24,10 +24,21 @@ export async function logInCheck(ctx) {
       return js;
     } else {
       // https://github.com/developit/unfetch#caveats
-      return await redirectOnError()
+      return await redirectOnError();
     }
   } catch (error) {
     // Implementation or Network error
-    return redirectOnError()
+    return redirectOnError();
   }
+}
+
+// convert base64 url screenshot to file
+export function urltoFile(url, filename, mimeType) {
+  return fetch(url)
+    .then(function (res) {
+      return res.arrayBuffer();
+    })
+    .then(function (buf) {
+      return new File([buf], filename, { type: mimeType });
+    });
 }

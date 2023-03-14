@@ -19,7 +19,7 @@ function logout() {
 }
 
 // Gets the display name of a JSX component for dev tools
-const getDisplayName = Component =>
+const getDisplayName = (Component) =>
   Component.displayName || Component.name || "Component";
 
 function withAuthSync(WrappedComponent) {
@@ -68,15 +68,13 @@ async function auth(ctx) {
   const { token } = nextCookie(ctx);
 
   // verify cookie first
-  let isVerified = await verifyCookie(token)
+  let isVerified = await verifyCookie(token);
 
-  if(!isVerified){
-    cookie.remove('token')
-    ctx.res.writeHead(302, { Location: "/login" });
-    ctx.res.end();
-
+  if (!isVerified) {
+    // cookie.remove("token");
+    // ctx.res.writeHead(302, { Location: "/login" });
+    // ctx.res.end();
     // return undefined
-
   }
 
   /*
@@ -112,11 +110,11 @@ async function logInCheck(ctx) {
   const apiUrl = `${API_URL}/api/token/verify/`;
 
   const redirectOnError = () => {
-    typeof window !== "undefined"
-      ? Router.push("/login")
-      : ctx.res.writeHead(302, { Location: "/login" }).end();
-    cookie.remove("token");
-    cookie.remove("name");
+    // typeof window !== "undefined"
+    //   ? Router.push("/login")
+    //   : ctx.res.writeHead(302, { Location: "/login" }).end();
+    // cookie.remove("token");
+    // cookie.remove("name");
   };
 
   try {
@@ -124,7 +122,7 @@ async function logInCheck(ctx) {
       method: "POST",
 
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token })
+      body: JSON.stringify({ token }),
     });
 
     console.log("this was the response ", response);
@@ -145,17 +143,17 @@ async function logInCheck(ctx) {
 
 async function verifyCookie(token) {
   try {
-    const apiUrl = `${API_URL}/api/token/verify/`
+    const apiUrl = `${API_URL}/api/token/verify/`;
     const response = await fetch(apiUrl, {
       method: "POST",
 
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token })
+      body: JSON.stringify({ token }),
     });
 
-    return response.ok
+    return response.ok;
   } catch {
-    return false
+    return false;
   }
 }
 

@@ -8,9 +8,7 @@ class Consultation extends React.Component {
   }
 
   render() {
-    return (
-        <h1>Consultation page under construction</h1>
-    );
+    return <h1>Consultation page under construction</h1>;
   }
 }
 

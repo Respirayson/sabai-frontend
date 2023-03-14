@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import Webcam from "react-webcam";
 import moment from "moment";
 import { API_URL } from "../utils/constants";
+import { urltoFile } from "../utils/helpers";
 
 // put id
 
@@ -67,10 +68,9 @@ class Patients extends React.Component {
   async onRefresh() {
     console.log("loading data now");
 
-    let { data: patients } = await axios.get(`${API_URL}/patients/get`);
-    // console.log('this is the data ', patients)
+    let { data: patients } = await axios.get(`${API_URL}/patients`);
     let patientsEnriched = this.patientsEnrich(patients);
-
+    console.log(patientsEnriched);
     this.setState({ patients: patientsEnriched });
   }
 
@@ -206,12 +206,25 @@ class Patients extends React.Component {
     } else {
       let payload = {
         ...formDetails,
-        imageDetails,
+        picture: await urltoFile(
+          imageDetails,
+          "patient_screenshot.jpg",
+          "image/jpg"
+        ),
       };
+      const patientFormData = new FormData();
+      Object.keys(payload).forEach((key) =>
+        patientFormData.append(key, payload[key])
+      );
 
       let { data: response } = await axios.post(
-        `${API_URL}/patients/new`,
-        payload
+        `${API_URL}/patients`,
+        patientFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
       if (typeof response.error == "undefined") {
@@ -300,7 +313,7 @@ class Patients extends React.Component {
       let fields = option.fields;
       let name = fields.name;
       let id = `${fields.village_prefix}${option.pk}`;
-      let imageUrl = `${API_URL}/media/${fields.picture}`;
+      let imageUrl = `${API_URL}/${fields.picture}`;
       let dateOfBirth = moment(fields.date_of_birth).format("DD MMM YYYY");
 
       let select = (
@@ -700,7 +713,7 @@ class Patients extends React.Component {
               <figure className="image is-96x96">
                 <img
                   // src="https://bulma.io/images/placeholders/96x96.png"
-                  src={`${API_URL}/media/${imageURL}`}
+                  src={`${API_URL}/${imageURL}`}
                   alt="Placeholder image"
                   style={{ height: 96, width: 96, objectFit: "cover" }}
                 />
@@ -772,7 +785,7 @@ class Patients extends React.Component {
       type: "search",
       value,
       onChange: this.onChange,
-      classNameName: "input is-medium level-item",
+      className: "input is-medium level-item",
       style: { width: 500 },
     };
 
@@ -837,7 +850,7 @@ class Patients extends React.Component {
             <div className="column is-2">
               <figure className="image is-1by1">
                 <img
-                  src={`${API_URL}/media/${patient.fields.picture}`}
+                  src={`${API_URL}/${patient.fields.picture}`}
                   alt="Placeholder image"
                   className="has-ratio"
                   style={{ height: 200, width: 200, objectFit: "cover" }}

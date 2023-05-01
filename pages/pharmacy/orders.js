@@ -49,8 +49,8 @@ class Orders extends React.Component {
       activePatients.add(patient);
     });
 
-    let { data: patients } = await axios.get(`${API_URL}/patients/get`);
-    let patientsFiltered = patients.filter((patient) => {
+    let { data: patients } = await axios.get(`${API_URL}/patients`);
+    let patientsFiltered = patients.filter((patient) => {ì
       let patientId = patient.pk;
       return activePatients.has(patientId);
     });

@@ -28,12 +28,9 @@ class Stock extends React.Component {
 
     this.onFilterChange = this.onFilterChange.bind(this);
     this.handleMedicationChange = this.handleMedicationChange.bind(this);
-    this.onSubmitForm = this.onSubmitForm.bind(this);
-    this.onRefresh = this.onRefresh.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.onRefresh();
   }
 
@@ -59,6 +56,7 @@ class Stock extends React.Component {
       delete medicationDetails["changeQuantity"];
       delete medicationDetails["pk"];
 
+      console.log("editing entry", medicationDetails);
       await axios.patch(
         `${API_URL}/medication/update?pk=${key}`,
         medicationDetails
@@ -66,6 +64,7 @@ class Stock extends React.Component {
       alert("Medication updated!");
     } else {
       medicationDetails.quantity = changeQuantity;
+      console.log("new entry", medicationDetails);
       await axios.post(`${API_URL}/medications`, medicationDetails);
       alert("New Medication created!");
     }

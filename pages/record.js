@@ -59,9 +59,7 @@ class Record extends React.Component {
     let { id: patientId } = this.props.query;
 
     // gets patient data
-    let { data: patient } = await axios.get(
-      `${API_URL}/patients/${patientId}`
-    );
+    let { data: patient } = await axios.get(`${API_URL}/patients/${patientId}`);
 
     // gets all visit data
     let { data: visits } = await axios.get(
@@ -72,10 +70,6 @@ class Record extends React.Component {
     let visitsSorted = visits.sort((a, b) => {
       return b.pk - a.pk;
     });
-
-    console.log("this is the patient ", patient[0]);
-    console.log("this are the visits ", visitsSorted);
-    console.log("first of their name ", visitsSorted[0]);
 
     this.setState({
       patient: patient[0],
@@ -88,8 +82,6 @@ class Record extends React.Component {
   }
 
   toggleViewModal(viewType = null, consult = {}) {
-    console.log("this is happening ", consult);
-
     this.setState({
       viewModalOpen: !this.state.viewModalOpen,
       viewType,
@@ -178,8 +170,6 @@ class Record extends React.Component {
     let { data: dentalTriage } = await axios.get(
       `${API_URL}/dentalvitals/get?visit=${visitID}`
     );
-
-    console.log("??<", consults[0]);
 
     this.setState({
       consults: consultsEnriched,

@@ -6,7 +6,7 @@ export async function logInCheck(ctx) {
   const apiUrl = getHost(ctx.req) + "/api/profile";
 
   const redirectOnError = () =>
-     typeof window !== "undefined"
+    typeof window !== "undefined"
       ? Router.push("/login")
       : ctx.res.writeHead(302, { Location: "/login" }).end();
 
@@ -20,7 +20,6 @@ export async function logInCheck(ctx) {
 
     if (response.ok) {
       const js = await response.json();
-      console.log("js", js);
       return js;
     } else {
       // https://github.com/developit/unfetch#caveats

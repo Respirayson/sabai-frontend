@@ -39,20 +39,18 @@ export default class Layout extends React.Component {
   }
 
   render() {
-    console.log("this one is ", this.props.children);
-
     return (
       <React.Fragment>
-          <Sidebar
-            sidebar={<SideMenu />}
-            open={this.state.sidebarOpen}
-            docked={this.state.sidebarDocked}
-            onSetOpen={this.onSetSidebarOpen}
-            styles={{ sidebar: { background: "#180424" } }}
-            transitions={false}
-          >
-            <div>{this.props.children}</div>
-          </Sidebar>
+        <Sidebar
+          sidebar={<SideMenu />}
+          open={this.state.sidebarOpen}
+          docked={this.state.sidebarDocked}
+          onSetOpen={this.onSetSidebarOpen}
+          styles={{ sidebar: { background: "#180424" } }}
+          transitions={false}
+        >
+          <div>{this.props.children}</div>
+        </Sidebar>
       </React.Fragment>
     );
   }

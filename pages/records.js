@@ -85,8 +85,6 @@ class Records extends React.Component {
   onFilterChange(event) {
     // get
     let { patients } = this.state;
-    // console.log("event.value", event.target.value);
-
     let patientsFiltered = patients.filter((patient) => {
       let patient_details = patient.fields;
       let name = patient_details.name;

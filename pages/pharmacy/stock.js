@@ -28,17 +28,17 @@ class Stock extends React.Component {
 
     this.onFilterChange = this.onFilterChange.bind(this);
     this.handleMedicationChange = this.handleMedicationChange.bind(this);
+    this.onSubmitForm = this.onSubmitForm.bind(this);
+    this.onRefresh = this.onRefresh.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.onRefresh();
   }
 
   async onRefresh() {
-    let { data: medications } = await axios.get(`${API_URL}/medication/get`);
-
-    console.log("look what we have here ", medications);
-
+    let { data: medications } = await axios.get(`${API_URL}/medication/`);
     this.setState({ medications, medicationsFiltered: medications });
   }
 
@@ -59,7 +59,6 @@ class Stock extends React.Component {
       delete medicationDetails["changeQuantity"];
       delete medicationDetails["pk"];
 
-      console.log("editing entry", medicationDetails);
       await axios.patch(
         `${API_URL}/medication/update?pk=${key}`,
         medicationDetails
@@ -67,8 +66,7 @@ class Stock extends React.Component {
       alert("Medication updated!");
     } else {
       medicationDetails.quantity = changeQuantity;
-      console.log("new entry", medicationDetails);
-      await axios.post(`${API_URL}/medication/new`, medicationDetails);
+      await axios.post(`${API_URL}/medications`, medicationDetails);
       alert("New Medication created!");
     }
 
@@ -77,7 +75,6 @@ class Stock extends React.Component {
   }
 
   onFilterChange(event) {
-    // get
     let { medications } = this.state;
 
     let medicationsFiltered = medications.filter((medication) => {
@@ -111,8 +108,6 @@ class Stock extends React.Component {
       default:
         break;
     }
-
-    console.log("look here now ", changes);
 
     this.setState(changes);
   }
@@ -220,7 +215,7 @@ class Stock extends React.Component {
               <tr>
                 <th>Name</th>
                 <th>Quantity</th>
-                <th>Actions</th>
+                <th>Actions</th>z
               </tr>
             </thead>
             <tbody>{this.renderRows()}</tbody>

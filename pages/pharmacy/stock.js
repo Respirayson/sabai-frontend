@@ -38,7 +38,7 @@ class Stock extends React.Component {
   }
 
   async onRefresh() {
-    let { data: medications } = await axios.get(`${API_URL}/medication/`);
+    let { data: medications } = await axios.get(`${API_URL}/medications`);
     this.setState({ medications, medicationsFiltered: medications });
   }
 
@@ -215,7 +215,7 @@ class Stock extends React.Component {
               <tr>
                 <th>Name</th>
                 <th>Quantity</th>
-                <th>Actions</th>z
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>{this.renderRows()}</tbody>

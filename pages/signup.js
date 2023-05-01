@@ -11,7 +11,7 @@ function SignUp() {
 
     const username = userData.username;
     const password = userData.password;
-    const url = `${API_URL}/signup/`;
+    const url = `${API_URL}/signup`;
 
     try {
       const response = await fetch(url, {

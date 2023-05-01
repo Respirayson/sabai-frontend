@@ -11,7 +11,7 @@ function Login() {
 
     const username = userData.username;
     const password = userData.password;
-    const url = `${API_URL}/api/token/`;
+    const url = `${API_URL}/api/token`;
     const userInfoUrl = `${API_URL}/user/get?username=${username}`;
 
     try {

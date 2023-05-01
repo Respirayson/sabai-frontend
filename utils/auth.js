@@ -105,7 +105,7 @@ async function logInCheck(ctx) {
   // basically, initial token has a very short lifespan
   // should aim to use a longer-lived one
   // aim for one day access
-  const apiUrl = `${API_URL}/api/token/verify/`;
+  const apiUrl = `${API_URL}/api/token/verify`;
 
   const redirectOnError = () => {
     // typeof window !== "undefined"
@@ -137,7 +137,7 @@ async function logInCheck(ctx) {
 
 async function verifyCookie(token) {
   try {
-    const apiUrl = `${API_URL}/api/token/verify/`;
+    const apiUrl = `${API_URL}/api/token/verify`;
     const response = await fetch(apiUrl, {
       method: "POST",
 

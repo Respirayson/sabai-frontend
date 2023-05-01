@@ -60,12 +60,12 @@ class Record extends React.Component {
 
     // gets patient data
     let { data: patient } = await axios.get(
-      `${API_URL}/patients/get?pk=${patientId}`
+      `${API_URL}/patients/${patientId}`
     );
 
     // gets all visit data
     let { data: visits } = await axios.get(
-      `${API_URL}/visit/get?patient=${patientId}`
+      `${API_URL}/visits?patient=${patientId}`
     );
 
     // sorts

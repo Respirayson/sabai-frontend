@@ -120,12 +120,9 @@ async function logInCheck(ctx) {
   try {
     const response = await fetch(apiUrl, {
       method: "POST",
-
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token }),
     });
-
-    console.log("this was the response ", response);
 
     if (response.ok) {
       const js = await response.json();

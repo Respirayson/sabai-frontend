@@ -35,17 +35,8 @@ class Queue extends React.Component {
   }
 
   async onRefresh() {
-    /**
-     * NOTE
-     * this method is very inefficient
-     * next time, let the backend do this
-     */
 
-    let dateToday = moment().format("YYYY-MM-DD");
-
-    let { data: visits } = await axios.get(
-      `${API_URL}/visit/get?status=started&visit_date=${dateToday}`
-    );
+    let { data: visits } = await axios.get(`${API_URL}/visits?status=started`);
     let activePatients = new Set();
 
     visits.forEach((visit) => {
@@ -53,7 +44,7 @@ class Queue extends React.Component {
       activePatients.add(patient);
     });
 
-    let { data: patients } = await axios.get(`${API_URL}/patients/get`);
+    let { data: patients } = await axios.get(`${API_URL}/patients`);
     let patientsFiltered = patients.filter((patient) => {
       let patientId = patient.pk;
       return activePatients.has(patientId);
@@ -100,7 +91,7 @@ class Queue extends React.Component {
     let { visitsFiltered, formChoices } = this.state;
     let visitsRows = visitsFiltered.map((visit) => {
       let Id = `${visit.patient.fields.village_prefix}${visit.patient.pk}`;
-      let imageUrl = `${API_URL}/media/${visit.patient.fields.picture}`;
+      let imageUrl = `${API_URL}/${visit.patient.fields.picture}`;
       let fullName = visit.patient.fields.name;
 
       let progress = (

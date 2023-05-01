@@ -17,7 +17,7 @@ export default class Layout extends React.Component {
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
 
-  // componentWillMount() {}
+  componentWillMount() {}
   componentDidMount() {
     let mql = window.matchMedia(`(min-width: 800px)`);
     mql.addListener(this.mediaQueryChanged);
@@ -43,7 +43,6 @@ export default class Layout extends React.Component {
 
     return (
       <React.Fragment>
-        <>
           <Sidebar
             sidebar={<SideMenu />}
             open={this.state.sidebarOpen}
@@ -54,7 +53,6 @@ export default class Layout extends React.Component {
           >
             <div>{this.props.children}</div>
           </Sidebar>
-        </>
       </React.Fragment>
     );
   }

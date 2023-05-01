@@ -6,7 +6,7 @@ export async function logInCheck(ctx) {
   const apiUrl = getHost(ctx.req) + "/api/profile";
 
   const redirectOnError = () =>
-    typeof window !== "undefined"
+     typeof window !== "undefined"
       ? Router.push("/login")
       : ctx.res.writeHead(302, { Location: "/login" }).end();
 

@@ -35,7 +35,6 @@ class Queue extends React.Component {
   }
 
   async onRefresh() {
-
     let { data: visits } = await axios.get(`${API_URL}/visits?status=started`);
     let activePatients = new Set();
 
@@ -188,10 +187,7 @@ class Queue extends React.Component {
   }
 
   onFilterChange(event) {
-    // get
     let { visits } = this.state;
-    // console.log("event.value", event.target.value);
-
     let filteredVisits = visits.filter((visit) => {
       let patientId =
         `${visit.patient.fields.village_prefix}${visit.patient.pk}`.toLowerCase();

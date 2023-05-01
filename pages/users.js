@@ -101,9 +101,6 @@ class Users extends React.Component {
     const name = target.name;
 
     userForm[name] = value;
-
-    console.log("changes made ", userForm);
-
     this.setState({
       userForm,
     });

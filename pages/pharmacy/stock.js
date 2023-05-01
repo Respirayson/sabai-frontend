@@ -31,7 +31,10 @@ class Stock extends React.Component {
     this.onSubmitForm = this.onSubmitForm.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8c5505481a598cb8e98e9bcc9da48b2c24d1c16f
   }
 
   async componentDidMount() {
@@ -39,7 +42,11 @@ class Stock extends React.Component {
   }
 
   async onRefresh() {
+<<<<<<< HEAD
     let { data: medications } = await axios.get(`${API_URL}/medication/get`);
+=======
+    let { data: medications } = await axios.get(`${API_URL}/medication/`);
+>>>>>>> 8c5505481a598cb8e98e9bcc9da48b2c24d1c16f
     this.setState({ medications, medicationsFiltered: medications });
   }
 
@@ -60,7 +67,6 @@ class Stock extends React.Component {
       delete medicationDetails["changeQuantity"];
       delete medicationDetails["pk"];
 
-      console.log("editing entry", medicationDetails);
       await axios.patch(
         `${API_URL}/medication/update?pk=${key}`,
         medicationDetails
@@ -68,7 +74,10 @@ class Stock extends React.Component {
       alert("Medication updated!");
     } else {
       medicationDetails.quantity = changeQuantity;
+<<<<<<< HEAD
       console.log("new entry", medicationDetails);
+=======
+>>>>>>> 8c5505481a598cb8e98e9bcc9da48b2c24d1c16f
       await axios.post(`${API_URL}/medications`, medicationDetails);
       alert("New Medication created!");
     }
@@ -218,7 +227,7 @@ class Stock extends React.Component {
               <tr>
                 <th>Name</th>
                 <th>Quantity</th>
-                <th>Actions</th>
+                <th>Actions</th>z
               </tr>
             </thead>
             <tbody>{this.renderRows()}</tbody>

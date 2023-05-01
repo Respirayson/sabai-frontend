@@ -5,9 +5,8 @@ import cookie from "js-cookie";
 import getHost from "../utils/get-host";
 import { API_URL } from "../utils/constants";
 
-function login({ token, name }) {
+function setCookie(token) {
   cookie.set("token", token, { expires: 1 });
-  cookie.set("name", name);
   Router.push("/patients");
 }
 
@@ -53,7 +52,6 @@ function withAuthSync(WrappedComponent) {
 
     syncLogout(event) {
       if (event.key === "logout") {
-        console.log("logged out from storage!");
         Router.push("/login");
       }
     }
@@ -126,7 +124,6 @@ async function logInCheck(ctx) {
 
     if (response.ok) {
       const js = await response.json();
-      console.log("js", js);
       return js;
     } else {
       // https://github.com/developit/unfetch#caveats
@@ -154,4 +151,4 @@ async function verifyCookie(token) {
   }
 }
 
-export { login, logout, withAuthSync, auth, logInCheck };
+export { setCookie, logout, withAuthSync, auth, logInCheck };

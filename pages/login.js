@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import Head from "next/head";
 import fetch from "isomorphic-unfetch";
-import Layout from "../components/layout";
-import { login } from "../utils/auth";
-import axios from "axios";
+import { setCookie } from "../utils/auth";
 import { API_URL } from "../utils/constants";
 
 function Login() {
@@ -18,40 +15,21 @@ function Login() {
     const userInfoUrl = `${API_URL}/user/get?username=${username}`;
 
     try {
-      console.log("fetching data");
       const response = await fetch(url, {
         method: "POST",
 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-
-      // const { data: userInfo } = await axios.get(userInfoUrl);
-      // console.log("url check ", userInfoUrl);
-
-      console.log("this is the response ", response);
-
-      if (response.status === 200) {
-        console.log("Login successful");
+      if (200 <= response.status && response.status <= 299) {
         let token = await response.json();
-        // let fullUserName = `${userInfo[0].fields.first_name} ${userInfo[0].fields.last_name}`;
-
-        // console.log("and your name is ", fullUserName);
-
-        await login({ token: token.access, name: "testing" });
+        setCookie(token.access);
       } else {
-        console.log("Login failed.");
-        // https://github.com/developit/unfetch#caveats
         let error = new Error(response.statusText);
         error.response = response;
         throw error;
       }
     } catch (error) {
-      console.error(
-        "You have an error in your code or there are Network issues.",
-        error
-      );
-
       const { response } = error;
       setUserData(
         Object.assign({}, userData, {
@@ -70,11 +48,14 @@ function Login() {
               <figure className="image is-64x64 level-item">
                 <img src={"sabaiLogo.png"} />
               </figure>
-              <h1 className="level-item" style={{ fontSize: "2em" }}>
+              <h1
+                className="level-item"
+                style={{ fontSize: "2em", fontWeight: "bold" }}
+              >
                 Project Sa'bai
               </h1>
             </div>
-            <div className="login">
+            <div className="login" style={{ fontWeight: "bold" }}>
               <form onSubmit={handleSubmit}>
                 <div className="field">
                   <label htmlFor="username" className="label">
@@ -124,6 +105,9 @@ function Login() {
                   </button>
                 </div>
 
+                <div className="field" style={{ fontWeight: "bold" }}>
+                  Don't have an account yet? <a href="/signup">Sign Up</a>{" "}
+                </div>
                 {userData.error && (
                   <p className="error">Error: {userData.error}</p>
                 )}

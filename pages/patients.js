@@ -16,7 +16,6 @@ Modal.setAppElement("#__next");
 class Patients extends React.Component {
   static async getInitialProps(ctx) {
     let authentication = await logInCheck(ctx);
-    console.log("what is this ", authentication);
 
     let { query } = ctx;
 
@@ -66,11 +65,8 @@ class Patients extends React.Component {
   }
 
   async onRefresh() {
-    console.log("loading data now");
-
     let { data: patients } = await axios.get(`${API_URL}/patients`);
     let patientsEnriched = this.patientsEnrich(patients);
-    console.log(patientsEnriched);
     this.setState({ patients: patientsEnriched });
   }
 
@@ -156,8 +152,6 @@ class Patients extends React.Component {
     const name = target.name;
 
     formDetails[name] = value;
-
-    console.log("changes made ", formDetails);
 
     this.setState({
       formDetails,
@@ -299,7 +293,6 @@ class Patients extends React.Component {
 
   openScanModal() {
     this.setState({ scanModalIsOpen: true });
-    console.log("hey");
   }
 
   closeScanModal() {
@@ -680,18 +673,12 @@ class Patients extends React.Component {
     let { patients } = this.state;
     let inputValue = filter.trim().toLowerCase();
     let inputLength = inputValue.length;
-
-    console.log("working this thing", inputLength);
-    console.log(patients);
-
     let query =
       inputLength === 0
         ? []
         : patients.filter((patient) =>
             patient.filterString.toLowerCase().includes(inputValue)
           );
-
-    console.log("this ", query);
 
     return query;
   }
@@ -772,12 +759,6 @@ class Patients extends React.Component {
 
   render() {
     const { value, suggestions, patient } = this.state;
-
-    console.log("formdetails ", Object.keys(this.state.formDetails));
-
-    console.log("this is our patient ", patient);
-
-    console.log("this is the props query ", this.props.query);
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {

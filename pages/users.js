@@ -120,17 +120,16 @@ class Users extends React.Component {
 
   renderRows() {
     let { usersFiltered: users } = this.state;
-  
     let tableRows = users.map((user) => {
       let username = user.fields.username;
-  
+
       return (
         <tr key={user}>
           <td>{username}</td>
           <td>
             <button
               className="button is-danger"
-              onClick={() => this.handleDelete(user.id)}
+              onClick={() => this.handleDelete(user.pk)}
             >
               Delete
             </button>
@@ -138,28 +137,29 @@ class Users extends React.Component {
         </tr>
       );
     });
-  
+
     return tableRows;
   }
-  
 
-  async handleDelete(id) {
+  async handleDelete(pk) {
     const { users } = this.state;
-  
-    const confirmed = window.confirm("Are you sure you want to delete this user?");
+
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
     if (!confirmed) {
       return;
     }
-  
+
     try {
-      await axios.delete(`${API_URL}/users/${id}`);
-      const updatedUsers = users.filter(user => user.id !== id);
+      await axios.delete(`${API_URL}/users/${pk}`);
+      const updatedUsers = users.filter((user) => user.pk !== pk);
       this.setState({ users: updatedUsers });
     } catch (error) {
       console.error(error);
     }
   }
-  
+
 
   render() {
     return (
@@ -168,7 +168,6 @@ class Users extends React.Component {
           marginTop: 15,
           marginLeft: 25,
           marginRight: 25,
-          // position: "relative"
         }}
       >
         <div className="column is-12">
@@ -181,24 +180,13 @@ class Users extends React.Component {
               onChange={this.onFilterChange}
             />
           </div>
-          <div className="levels" style={{ marginBottom: 10, marginTop: 10 }}>
-            <div className="level-left">
-              <button
-                className="button is-dark level-item"
-                style={{ display: "inline-block", verticalAlign: "top" }}
-                onClick={() => {
-                  Router.push("/signup");
-                }}
-              >
-                New User
-              </button>
-            </div>
-          </div>
+    
+          <br></br>
 
           <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
               <tr>
-                <th colSpan = "2">Username</th>
+                <th colSpan="2">Username</th>
               </tr>
             </thead>
             <tbody>{this.renderRows()}</tbody>

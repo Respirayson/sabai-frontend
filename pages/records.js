@@ -36,7 +36,7 @@ class Records extends React.Component {
      * next time, let the backend do this
      */
 
-    let { data: patients } = await axios.get(`${API_URL}/patients/get`);
+    let { data: patients } = await axios.get(`${API_URL}/patients`);
 
     this.setState({ patients, patientsFiltered: patients });
   }
@@ -45,7 +45,7 @@ class Records extends React.Component {
     let { patientsFiltered, formChoices } = this.state;
     let patientsRows = patientsFiltered.map((patient) => {
       let Id = `${patient.fields.village_prefix}${patient.pk}`;
-      let imageUrl = `${API_URL}/media/${patient.fields.picture}`;
+      let imageUrl = `${API_URL}/${patient.fields.picture}`;
       let fullName = patient.fields.name;
 
       let progress = (

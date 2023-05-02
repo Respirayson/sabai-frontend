@@ -1,8 +1,6 @@
 import React from "react";
-import Router from "next/router";
 import Modal from "react-modal";
 import axios from "axios";
-import _ from "lodash";
 import { API_URL } from "../utils/constants";
 import { withAuthSync, logInCheck } from "../utils/auth";
 
@@ -71,9 +69,9 @@ class Users extends React.Component {
     let { users } = this.state;
 
     let usersFiltered = users.filter((user) => {
-      let name =
-        `${user.fields.first_name} ${user.fields.last_name}`.toLowerCase();
-
+      // let name =
+      //   `${user.fields.first_name} ${user.fields.last_name}`.toLowerCase();
+      let name = `${user.fields.username}`.toLowerCase();
       return name.includes(event.target.value.toLowerCase());
     });
 
@@ -122,9 +120,8 @@ class Users extends React.Component {
     let { usersFiltered: users } = this.state;
     let tableRows = users.map((user) => {
       let username = user.fields.username;
-
       return (
-        <tr key={user}>
+        <tr key={user.pk}>
           <td>{username}</td>
           <td>
             <button
@@ -142,7 +139,7 @@ class Users extends React.Component {
   }
 
   async handleDelete(pk) {
-    const { users } = this.state;
+    const { users, usersFiltered } = this.state;
 
     const confirmed = window.confirm(
       "Are you sure you want to delete this user?"
@@ -154,12 +151,17 @@ class Users extends React.Component {
     try {
       await axios.delete(`${API_URL}/users/${pk}`);
       const updatedUsers = users.filter((user) => user.pk !== pk);
-      this.setState({ users: updatedUsers });
+      const updatedUsersFiltered = usersFiltered.filter(
+        (user) => user.pk !== pk
+      );
+      this.setState({
+        users: updatedUsers,
+        usersFiltered: updatedUsersFiltered,
+      });
     } catch (error) {
       console.error(error);
     }
   }
-
 
   render() {
     return (
@@ -180,7 +182,7 @@ class Users extends React.Component {
               onChange={this.onFilterChange}
             />
           </div>
-    
+
           <br></br>
 
           <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">

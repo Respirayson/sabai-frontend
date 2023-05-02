@@ -57,7 +57,6 @@ class Record extends React.Component {
 
   async onRefresh() {
     let { id: patientId } = this.props.query;
-
     // gets patient data
     let { data: patient } = await axios.get(`${API_URL}/patients/${patientId}`);
 
@@ -115,10 +114,10 @@ class Record extends React.Component {
   }
 
   async loadMedicationStock() {
-    let { data: medications } = await axios.get(`${API_URL}/medication/get`);
+    let { data: medications } = await axios.get(`${API_URL}/medication`);
 
     let { data: orders } = await axios.get(
-      `${API_URL}/order/get?order_status=PENDING`
+      `${API_URL}/orders?order_status=PENDING`
     );
 
     // key -> medicine pk
@@ -143,11 +142,11 @@ class Record extends React.Component {
     // load
     // consultations
     let { data: consults } = await axios.get(
-      `${API_URL}/consults/get?visit=${visitID}`
+      `${API_URL}/consults?visit=${visitID}`
     );
 
     let { data: prescriptions } = await axios.get(
-      `${API_URL}/order/get?visit=${visitID}`
+      `${API_URL}/orders?visit=${visitID}`
     );
 
     let consultsEnriched = consults.map((consult) => {

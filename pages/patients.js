@@ -271,7 +271,7 @@ class Patients extends React.Component {
       visit_date: moment().format("YYYY-MM-DD"),
     };
 
-    await axios.post(`${API_URL}/visit/new`, payload);
+    await axios.post(`${API_URL}/visits`, payload);
 
     this.setState({
       patient: {},

@@ -9,7 +9,6 @@ function Login() {
     event.preventDefault();
     setUserData(Object.assign({}, userData, { error: "" }));
 
-    const first_name = userData.first_name;
     const username = userData.username;
     const password = userData.password;
     const url = `${API_URL}/api/token`;
@@ -20,7 +19,7 @@ function Login() {
         method: "POST",
 
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({first_name, username, password }),
+        body: JSON.stringify({username, password}),
       });
       if (200 <= response.status && response.status <= 299) {
         let token = await response.json();
@@ -58,27 +57,6 @@ function Login() {
             </div>
             <div className="login" style={{ fontWeight: "bold" }}>
               <form onSubmit={handleSubmit}>
-
-              <div className="field">
-                  <label htmlFor="first_name" className="label">
-                    First Name
-                  </label>
-
-                  <input
-                    type="text"
-                    className="input"
-                    id="first_name"
-                    name="first_name"
-                    value={userData.first_name}
-                    onChange={(event) =>
-                      setUserData(
-                        Object.assign({}, userData, {
-                          first_name: event.target.value,
-                        })
-                      )
-                    }
-                  />
-                </div>
 
                 <div className="field">
                   <label htmlFor="username" className="label">

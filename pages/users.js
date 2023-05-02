@@ -110,7 +110,6 @@ class Users extends React.Component {
 
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
 
     userDetails[name] = value;
 
@@ -123,12 +122,10 @@ class Users extends React.Component {
     let { usersFiltered: users } = this.state;
 
     let tableRows = users.map((user) => {
-      let name = `${user.fields.first_name} ${user.fields.last_name}`;
       let username = user.fields.username;
 
       return (
-        <tr key = {user.id}>
-          <td>{name}</td>
+        <tr key = {user}>
           <td>{username}</td>
         </tr>
       );
@@ -174,7 +171,6 @@ class Users extends React.Component {
           <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
               <tr>
-                <th>Name</th>
                 <th>Username</th>
               </tr>
             </thead>

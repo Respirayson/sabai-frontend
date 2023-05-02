@@ -120,19 +120,46 @@ class Users extends React.Component {
 
   renderRows() {
     let { usersFiltered: users } = this.state;
-
+  
     let tableRows = users.map((user) => {
       let username = user.fields.username;
-
+  
       return (
-        <tr key = {user}>
+        <tr key={user}>
           <td>{username}</td>
+          <td>
+            <button
+              className="button is-danger"
+              onClick={() => this.handleDelete(user.id)}
+            >
+              Delete
+            </button>
+          </td>
         </tr>
       );
     });
-
+  
     return tableRows;
   }
+  
+
+  async handleDelete(id) {
+    const { users } = this.state;
+  
+    const confirmed = window.confirm("Are you sure you want to delete this user?");
+    if (!confirmed) {
+      return;
+    }
+  
+    try {
+      await axios.delete(`${API_URL}/users/${id}`);
+      const updatedUsers = users.filter(user => user.id !== id);
+      this.setState({ users: updatedUsers });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
 
   render() {
     return (
@@ -171,7 +198,7 @@ class Users extends React.Component {
           <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
               <tr>
-                <th>Username</th>
+                <th colSpan = "2">Username</th>
               </tr>
             </thead>
             <tbody>{this.renderRows()}</tbody>

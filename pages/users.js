@@ -127,7 +127,7 @@ class Users extends React.Component {
       let username = user.fields.username;
 
       return (
-        <tr>
+        <tr key = {user.id}>
           <td>{name}</td>
           <td>{username}</td>
         </tr>

@@ -9,6 +9,7 @@ function SignUp() {
     event.preventDefault();
     setUserData(Object.assign({}, userData, { error: "" }));
 
+    const name = userData.name;
     const username = userData.username;
     const password = userData.password;
     const url = `${API_URL}/signup`;
@@ -18,7 +19,7 @@ function SignUp() {
         method: "POST",
 
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ name, username, password }),
       });
 
       if (200 <= response.status && response.status <= 299) {
@@ -52,11 +53,33 @@ function SignUp() {
                 className="level-item"
                 style={{ fontSize: "2em", fontWeight: "bold" }}
               >
-                Project Sa'bai
+                Project Sa'Bai
               </h1>
             </div>
             <div className="signup" style={{ fontWeight: "bold" }}>
               <form onSubmit={handleSubmit}>
+
+              <div className="field">
+                  <label htmlFor="name" className="label">
+                    Name
+                  </label>
+
+                  <input
+                    type="name"
+                    className="input"
+                    id="name"
+                    name="name"
+                    value={userData.name}
+                    onChange={(event) =>
+                      setUserData(
+                        Object.assign({}, userData, {
+                          name: event.target.value,
+                        })
+                      )
+                    }
+                  />
+                </div>
+
                 <div className="field">
                   <label htmlFor="username" className="label">
                     Username

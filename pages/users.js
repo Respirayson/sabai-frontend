@@ -1,11 +1,10 @@
 import React from "react";
-import { withAuthSync, logInCheck } from "../utils/auth";
+import Router from "next/router";
 import Modal from "react-modal";
-import moment from "moment";
 import axios from "axios";
 import _ from "lodash";
 import { API_URL } from "../utils/constants";
-// import { MedicationForm } from "../../components/forms/stock";
+import { withAuthSync, logInCheck } from "../utils/auth";
 
 Modal.setAppElement("#__next");
 
@@ -39,7 +38,7 @@ class Users extends React.Component {
   }
 
   async onRefresh() {
-    let { data: users } = await axios.get(`${API_URL}/user/get`);
+    let { data: users } = await axios.get(`${API_URL}/users`);
 
     this.setState({
       users,
@@ -48,24 +47,24 @@ class Users extends React.Component {
     });
   }
 
-  async onSubmitForm() {
-    let { userForm } = this.state;
+  // async onSubmitForm() {
+  //   let { userForm } = this.state;
 
-    let first_name = userForm.isDoctor ? "Dr." : "";
-    let username = userForm.name.split(" ").join("");
-    let password = userForm.name.split(" ").join("_");
-    let payload = {
-      username,
-      password,
-      first_name,
-      last_name: userForm.name,
-    };
+  //   let first_name = userForm.isDoctor ? "Dr." : "";
+  //   let username = userForm.name.split(" ").join("");
+  //   let password = userForm.name.split(" ").join("_");
+  //   let payload = {
+  //     username,
+  //     password,
+  //     first_name,
+  //     last_name: userForm.name,
+  //   };
 
-    await axios.post(`${API_URL}/user/new`, payload);
+  //   await axios.post(`${API_URL}/users`, payload);
 
-    this.toggleModal();
-    this.onRefresh();
-  }
+  //   this.toggleModal();
+  //   this.onRefresh();
+  // }
 
   onFilterChange(event) {
     // get
@@ -104,57 +103,6 @@ class Users extends React.Component {
     this.setState({
       userForm,
     });
-  }
-
-  renderModal() {
-    let { modalIsOpen, userForm } = this.state;
-    return (
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => this.toggleModal()}
-        style={userModalStyles}
-      >
-        <div className="column is-12">
-          <h1 style={{ color: "black", fontSize: "1.5em" }}>Add New User</h1>
-
-          <div className="field">
-            <label className="label">Name</label>
-            <div className="control">
-              <input
-                name="name"
-                className="input"
-                type="text"
-                onChange={this.handleInputChange}
-                value={userForm.name}
-              />
-            </div>
-          </div>
-
-          <label className="checkbox">
-            <input
-              type="checkbox"
-              name="isDoctor"
-              onChange={this.handleInputChange}
-            />
-            Is a doctor?
-          </label>
-
-          <button
-            className="button is-dark is-medium level-item"
-            style={{ marginTop: 15 }}
-            onClick={() => this.onSubmitForm()}
-          >
-            Submit
-          </button>
-        </div>
-
-        {/* <UserForm
-          formDetails={userDetails}
-          handleInputChange={this.handleUserChange}
-          onSubmit={() => this.onSubmitForm()}
-        /> */}
-      </Modal>
-    );
   }
 
   handleUserChange(event) {
@@ -199,7 +147,6 @@ class Users extends React.Component {
           // position: "relative"
         }}
       >
-        {this.renderModal()}
         <div className="column is-12">
           <h1 style={{ color: "black", fontSize: "1.5em" }}>Users</h1>
           <div className="control">
@@ -215,7 +162,9 @@ class Users extends React.Component {
               <button
                 className="button is-dark level-item"
                 style={{ display: "inline-block", verticalAlign: "top" }}
-                onClick={() => this.toggleModal()}
+                onClick={() => {
+                  Router.push("/signup");
+                }}
               >
                 New User
               </button>

@@ -21,7 +21,14 @@ class Stock extends React.Component {
     this.state = {
       medications: [],
       medicationsFiltered: [],
-      medicationDetails: {},
+      medicationDetails: {
+        medicine_name: "",
+        reserve_quantity: 0,
+        quantity: 0,
+        changeQuantity: 0,
+        notes: "",
+        remarks: "",
+      },
       modalIsOpen: false,
       filterString: "",
     };
@@ -50,21 +57,22 @@ class Stock extends React.Component {
 
     if (typeof medicationDetails.pk != "undefined") {
       let key = medicationDetails.pk;
-      medicationDetails.quantity =
+      let quantity =
         parseInt(medicationDetails.quantity) + parseInt(changeQuantity);
 
-      delete medicationDetails["changeQuantity"];
-      delete medicationDetails["pk"];
+      if (quantity >= 0) {
+        medicationDetails.quantity = quantity;
 
-      console.log("editing entry", medicationDetails);
-      await axios.patch(
-        `${API_URL}/medication/update?pk=${key}`,
-        medicationDetails
-      );
-      alert("Medication updated!");
+        medicationDetails.changeQuantity = 0;
+        delete medicationDetails["pk"];
+
+        await axios.patch(`${API_URL}/medications/${key}`, medicationDetails);
+        alert("Medication updated!");
+      } else {
+        alert("Not enough medication left!");
+      }
     } else {
       medicationDetails.quantity = changeQuantity;
-      console.log("new entry", medicationDetails);
       await axios.post(`${API_URL}/medications`, medicationDetails);
       alert("New Medication created!");
     }
@@ -89,23 +97,13 @@ class Stock extends React.Component {
    * open the modal
    * load the appropriate medication
    */
-  toggleModal(modal = "", medication = {}) {
+  toggleModal(edit = false, medication = {}) {
     let changes = {
       modalIsOpen: !this.state.modalIsOpen,
     };
-
-    switch (modal) {
-      case "add":
-        // this means that we are opening the modal
-        // we want to have a clear page
-        if (!this.state.modalIsOpen) changes.medicationDetails = {};
-        break;
-      case "edit":
-        // load up what we have chosen
-        changes.medicationDetails = medication;
-        break;
-      default:
-        break;
+    if (edit) {
+      // load up what we have chosen
+      changes.medicationDetails = medication;
     }
 
     this.setState(changes);
@@ -149,6 +147,7 @@ class Stock extends React.Component {
       let medicationDetails = {
         ...medication.fields,
         pk: medication.pk,
+        changeQuantity: 0,
       };
       let name = medicationDetails.medicine_name;
       let quantity = medicationDetails.quantity;
@@ -162,7 +161,7 @@ class Stock extends React.Component {
               <div className="level-left">
                 <button
                   className="button is-dark level-item"
-                  onClick={() => this.toggleModal("edit", medicationDetails)}
+                  onClick={() => this.toggleModal(true, medicationDetails)}
                 >
                   Edit
                 </button>
@@ -202,7 +201,7 @@ class Stock extends React.Component {
               <button
                 className="button is-dark level-item"
                 style={{ display: "inline-block", verticalAlign: "top" }}
-                onClick={() => this.toggleModal("add")}
+                onClick={() => this.toggleModal()}
               >
                 New Medicine
               </button>

@@ -40,10 +40,14 @@ class MyApp extends App {
 
     return (
       // <AlertProvider template={AlertTemplate} {...options}>
+      // <Layout>
+      //   <Component {...pageProps} />
+      // </Layout>
+      // </AlertProvider>
+
       <Layout>
         <Component {...pageProps} />
       </Layout>
-      // </AlertProvider>
     );
   }
 }

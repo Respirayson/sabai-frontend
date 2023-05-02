@@ -7,7 +7,7 @@ const SideMenu = (props) => (
     <div className="level sideMenuTop">
       <div className="level-left">
         <figure className="image is-64x64 level-item">
-          <img src={"sabaiLogo.png"} />
+          <img src="/sabaiLogo.png" />
         </figure>
 
         <h1 className="level-item sideMenuTitle">Biometrics</h1>

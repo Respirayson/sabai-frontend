@@ -46,7 +46,7 @@ function Login() {
           <div className="column is-4 is-vcentered form">
             <div className="level-left field">
               <figure className="image is-64x64 level-item">
-                <img src={"sabaiLogo.png"} />
+                <img src="/sabaiLogo.png" />
               </figure>
               <h1
                 className="level-item"

@@ -40,8 +40,22 @@ export default class Layout extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Sidebar
+      <Sidebar
+        sidebar={<SideMenu />}
+        open={this.state.sidebarOpen}
+        docked={this.state.sidebarDocked}
+        onSetOpen={this.onSetSidebarOpen}
+        styles={{ sidebar: { background: "#180424" } }}
+        transitions={false}
+        suppressHydrationWarning={true}
+      >
+        <div>{this.props.children}</div>
+      </Sidebar>
+    );
+  }
+}
+
+/* <Sidebar
           sidebar={<SideMenu />}
           open={this.state.sidebarOpen}
           docked={this.state.sidebarDocked}
@@ -50,8 +64,4 @@ export default class Layout extends React.Component {
           transitions={false}
         >
           <div>{this.props.children}</div>
-        </Sidebar>
-      </React.Fragment>
-    );
-  }
-}
+        </Sidebar> */

@@ -43,6 +43,9 @@ $button-color: white;
 .form {
   margin-top: 100px;
 }
+.modal {
+  z-index: 2;
+}
 
 .react-autosuggest__container {
   position: relative;
@@ -72,7 +75,7 @@ $button-color: white;
   display: none;
 }
 
-.react-autosuggest__container--open .react-autosuggest__suggestions-container {
+.react-autosuggest__container--open .react-autosuggest__suggestions-container{
   display: block;
   position: absolute;
   top: 51px;

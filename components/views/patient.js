@@ -229,7 +229,7 @@ class DentalTriageView extends React.Component {
   }
 }
 
-class MedicalTriageView extends React.Component {
+class VitalsView extends React.Component {
   constructor() {
     super();
   }
@@ -239,14 +239,14 @@ class MedicalTriageView extends React.Component {
 
     return (
       <div className="column is-12">
-        <h1 style={{ color: "black", fontSize: "1.5em" }}>Medical Triage</h1>
+        <h1 style={{ color: "black", fontSize: "1.5em" }}>Vital Signs</h1>
 
         <div className="field is-grouped">
           <div className="control is-expanded">
             <label className="label">Height</label>
             <div className="control">
               <article className="message">
-                <div className="message-body">{content.fields.height}</div>
+                <div className="message-body">{content.height}</div>
               </article>
             </div>
           </div>
@@ -255,7 +255,7 @@ class MedicalTriageView extends React.Component {
             <label className="label">Weight</label>
             <div className="control">
               <article className="message">
-                <div className="message-body">{content.fields.weight}</div>
+                <div className="message-body">{content.weight}</div>
               </article>
             </div>
           </div>
@@ -266,7 +266,7 @@ class MedicalTriageView extends React.Component {
             <label className="label">Systolic</label>
             <div className="control">
               <article className="message">
-                <div className="message-body">{content.fields.systolic}</div>
+                <div className="message-body">{content.systolic}</div>
               </article>
             </div>
           </div>
@@ -275,7 +275,7 @@ class MedicalTriageView extends React.Component {
             <label className="label">Diastolic</label>
             <div className="control">
               <article className="message">
-                <div className="message-body">{content.fields.diastolic}</div>
+                <div className="message-body">{content.diastolic}</div>
               </article>
             </div>
           </div>
@@ -286,7 +286,7 @@ class MedicalTriageView extends React.Component {
             <label className="label">Temperature</label>
             <div className="control">
               <article className="message">
-                <div className="message-body">{content.fields.temperature}</div>
+                <div className="message-body">{content.temperature}</div>
               </article>
             </div>
           </div>
@@ -295,7 +295,7 @@ class MedicalTriageView extends React.Component {
             <label className="label">Heart Rate</label>
             <div className="control">
               <article className="message">
-                <div className="message-body">{content.fields.heart_rate}</div>
+                <div className="message-body">{content.heart_rate}</div>
               </article>
             </div>
           </div>
@@ -307,7 +307,7 @@ class MedicalTriageView extends React.Component {
           <label className="label">HIV Positive</label>
           <article className="message">
             <div className="message-body">
-              {content.fields.hiv_positive ? "Positive" : "Negative"}
+              {content.hiv_positive ? "Positive" : "Negative"}
             </div>
           </article>
         </div>
@@ -316,7 +316,7 @@ class MedicalTriageView extends React.Component {
           <label className="label">PTB Positive</label>
           <article className="message">
             <div className="message-body">
-              {content.fields.ptb_positive ? "Positive" : "Negative"}
+              {content.ptb_positive ? "Positive" : "Negative"}
             </div>
           </article>
         </div>
@@ -325,7 +325,7 @@ class MedicalTriageView extends React.Component {
           <label className="label">HEPC Positive</label>
           <article className="message">
             <div className="message-body">
-              {content.fields.hepc_positive ? "Positive" : "Negative"}
+              {content.hepc_positive ? "Positive" : "Negative"}
             </div>
           </article>
         </div>
@@ -343,15 +343,15 @@ class VisitPrescriptionsTable extends React.Component {
     let { content: prescriptions } = this.props;
 
     let prescriptionRows = prescriptions.map((prescription) => {
-      let name = prescription.fields.medicine_name;
-      let quantity = prescription.fields.quantity;
-      let doctor = prescription.fields.doctor;
+      let name = prescription.medicine.medicine_name;
+      let quantity = prescription.quantity;
+      // let doctor = prescription.doctor
 
       return (
         <tr>
           <td>{name}</td>
           <td>{quantity}</td>
-          <td>{doctor}</td>
+          {/* <td>{doctor}</td> */}
         </tr>
       );
     });
@@ -362,7 +362,7 @@ class VisitPrescriptionsTable extends React.Component {
           <tr>
             <th>Medicine Name</th>
             <th>Quantity</th>
-            <th>Doctor</th>
+            {/* <th>Doctor</th> */}
           </tr>
         </thead>
         <tbody>{prescriptionRows}</tbody>
@@ -426,7 +426,7 @@ export {
   ConsultationsTable,
   ConsultationsView,
   DentalTriageView,
-  MedicalTriageView,
+  VitalsView,
   VisitPrescriptionsTable,
   PatientView,
 };

@@ -36,40 +36,8 @@ class Queue extends React.Component {
 
   async onRefresh() {
     let { data: visits } = await axios.get(`${API_URL}/visits?status=started`);
-    let activePatients = new Set();
 
-    visits.forEach((visit) => {
-      let patient = visit.fields.patient;
-      activePatients.add(patient);
-    });
-
-    let { data: patients } = await axios.get(`${API_URL}/patients`);
-    let patientsFiltered = patients.filter((patient) => {
-      let patientId = patient.pk;
-      return activePatients.has(patientId);
-    });
-
-    let patientsObj = {};
-
-    patientsFiltered.forEach((patient) => {
-      let patientId = patient.pk;
-
-      patientsObj[patientId] = {
-        ...patient,
-      };
-    });
-
-    let visitsEnriched = visits.map((visit) => {
-      let patientId = visit.fields.patient;
-      let patient = patientsObj[patientId];
-
-      return {
-        ...visit,
-        patient,
-      };
-    });
-
-    this.setState({ visits: visitsEnriched, visitsFiltered: visitsEnriched });
+    this.setState({ visits, visitsFiltered: visits });
   }
 
   handleFormChoiceChange() {
@@ -89,14 +57,14 @@ class Queue extends React.Component {
   renderTableContent() {
     let { visitsFiltered, formChoices } = this.state;
     let visitsRows = visitsFiltered.map((visit) => {
-      let Id = `${visit.patient.fields.village_prefix}${visit.patient.pk}`;
-      let imageUrl = `${API_URL}/${visit.patient.fields.picture}`;
-      let fullName = visit.patient.fields.name;
-
+      let Id = `${visit.patient.village_prefix}${visit.patient.id}`;
+      let imageUrl = `${API_URL}/${visit.patient.picture}`;
+      let fullName = visit.patient.name;
+      console.log(imageUrl);
       let progress = (
         <button
           className="button is-dark level-item"
-          onClick={() => Router.push(`/record?id=${visit.patient.pk}`)}
+          onClick={() => Router.push(`/record?id=${visit.patient.id}`)}
         >
           View
         </button>
@@ -156,18 +124,12 @@ class Queue extends React.Component {
         </div>
       );
 
-      // let medical;
-      // let dentalTriage;
-      // let dental;
-
-      // let medicalStatus = visit.fields.
       return (
         <tr>
           <td>{Id}</td>
           <td>
             <figure className="image is-96x96">
               <img
-                // src="https://bulma.io/images/placeholders/96x96.png"
                 src={imageUrl}
                 alt="Placeholder image"
                 style={{ height: 96, width: 96, objectFit: "cover" }}
@@ -190,7 +152,7 @@ class Queue extends React.Component {
     let { visits } = this.state;
     let filteredVisits = visits.filter((visit) => {
       let patientId =
-        `${visit.patient.fields.village_prefix}${visit.patient.pk}`.toLowerCase();
+        `${visit.patient.village_prefix}${visit.patient.id}`.toLowerCase();
 
       return patientId.includes(event.target.value.toLowerCase());
     });

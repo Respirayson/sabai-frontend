@@ -2,15 +2,12 @@ import React from "react";
 import { withAuthSync, logInCheck } from "../utils/auth";
 import axios from "axios";
 import _ from "lodash";
-import Router from "next/router";
 import Modal from "react-modal";
 import moment from "moment";
-import cookie from "js-cookie";
 import {
   ConsultationsTable,
   ConsultationsView,
-  DentalTriageView,
-  MedicalTriageView,
+  VitalsView,
   VisitPrescriptionsTable,
   PatientView,
 } from "../components/views/patient";
@@ -38,8 +35,7 @@ class Record extends React.Component {
       consults: [],
       orders: [],
       referrals: [],
-      medicalTriage: {},
-      dentalTriage: {},
+      vitals: {},
       formDetails: {},
       medicationDetails: {},
       formModalOpen: false,
@@ -67,7 +63,7 @@ class Record extends React.Component {
 
     // sorts
     let visitsSorted = visits.sort((a, b) => {
-      return b.pk - a.pk;
+      return b.id - a.id;
     });
 
     this.setState({
@@ -75,7 +71,7 @@ class Record extends React.Component {
       visits: visitsSorted,
     });
 
-    let visitID = visitsSorted[0].pk;
+    let visitID = visitsSorted[0].id;
     this.loadVisitDetails(visitID);
     this.loadMedicationStock();
   }
@@ -89,14 +85,10 @@ class Record extends React.Component {
   }
 
   renderViewModal() {
-    let { medicalTriage, dentalTriage, viewModalOpen, consult, viewType } =
-      this.state;
-
+    let { vitals, viewModalOpen, consult, viewType } = this.state;
     let modalContent =
-      viewType == "medicalTriage" ? (
-        <MedicalTriageView content={medicalTriage} />
-      ) : viewType == "dentalTriage" ? (
-        <DentalTriageView content={dentalTriage} />
+      viewType == "vitals" ? (
+        <VitalsView content={vitals} />
       ) : (
         <ConsultationsView content={consult} />
       );
@@ -106,7 +98,6 @@ class Record extends React.Component {
         isOpen={viewModalOpen}
         onRequestClose={() => this.toggleViewModal()}
         style={viewModalStyles}
-        contentLabel="Example Modal"
       >
         {modalContent}
       </Modal>
@@ -114,7 +105,7 @@ class Record extends React.Component {
   }
 
   async loadMedicationStock() {
-    let { data: medications } = await axios.get(`${API_URL}/medication`);
+    let { data: medications } = await axios.get(`${API_URL}/medications`);
 
     let { data: orders } = await axios.get(
       `${API_URL}/orders?order_status=PENDING`
@@ -161,19 +152,13 @@ class Record extends React.Component {
       };
     });
 
-    // medical triage details
-    let { data: medicalTriage } = await axios.get(
-      `${API_URL}/medicalvitals/get?visit=${visitID}`
-    );
-    // dental triage details
-    let { data: dentalTriage } = await axios.get(
-      `${API_URL}/dentalvitals/get?visit=${visitID}`
+    let { data: vitals } = await axios.get(
+      `${API_URL}/vitals?visit=${visitID}`
     );
 
     this.setState({
       consults: consultsEnriched,
-      medicalTriage: medicalTriage[0] || {},
-      dentalTriage: dentalTriage[0] || {},
+      vitals: vitals[0] || {},
       visitPrescriptions: prescriptions,
       mounted: true,
       visitID,
@@ -182,20 +167,16 @@ class Record extends React.Component {
 
   handleVisitChange(event) {
     const value = event.target.value;
-
-    // pull the latest visit
-
-    // this.setState({ visitID: value });
     this.loadVisitDetails(value);
   }
 
   renderHeader() {
     let { patient, visits } = this.state;
     let visitOptions = visits.map((visit) => {
-      let date = moment(visit.fields.visit_date).format("DD MMMM YYYY");
-      let pk = visit.pk;
+      let date = moment(visit.date).format("DD MMMM YYYY");
+      let id = visit.id;
 
-      return <option value={pk}>{date}</option>;
+      return <option value={id}>{date}</option>;
     });
 
     return (
@@ -203,14 +184,13 @@ class Record extends React.Component {
         <div className="columns is-12">
           <div className="column is-2">
             <img
-              src={`${API_URL}/media/${patient.fields.picture}`}
+              src={`${API_URL}/${patient.fields.picture}`}
               alt="Placeholder image"
               className="has-ratio"
               style={{
                 height: 200,
                 width: 200,
                 objectFit: "cover",
-                backgroundColor: "red",
               }}
             />
           </div>
@@ -240,17 +220,11 @@ class Record extends React.Component {
 
   renderFirstColumn() {
     let { patient } = this.state;
-
     return <PatientView content={patient} />;
   }
 
   renderSecondColumn() {
-    let { dentalTriage, medicalTriage, consults, visitPrescriptions } =
-      this.state;
-
-    // let consultList = visit.fields.consultations;
-    let medicalVitals = medicalTriage.fields;
-    let dentalVitals = dentalTriage.fields;
+    let { vitals, consults, visitPrescriptions } = this.state;
 
     let consultRows = consults.map((consult) => {
       let type = consult.fields.type;
@@ -284,31 +258,15 @@ class Record extends React.Component {
       <div className="column is-9">
         <div className="columns">
           <div className="column is-6">
-            <label className="label">Medical Triage</label>
-            {typeof medicalVitals === "undefined" ? (
+            <label className="label">Vital Signs</label>
+            {typeof vitals === "undefined" ? (
               <h2>Not Done</h2>
             ) : (
               <button
                 className="button is-dark level-item"
                 style={{ marginTop: 15 }}
                 onClick={() => {
-                  this.toggleViewModal("medicalTriage");
-                }}
-              >
-                View
-              </button>
-            )}
-          </div>
-          <div className="column is-6">
-            <label className="label">Dental Triage</label>
-            {typeof dentalVitals === "undefined" ? (
-              <h2>Not Done</h2>
-            ) : (
-              <button
-                className="button is-dark level-item"
-                style={{ marginTop: 15 }}
-                onClick={() => {
-                  this.toggleViewModal("dentalTriage");
+                  this.toggleViewModal("vitals");
                 }}
               >
                 View
@@ -420,6 +378,9 @@ const viewModalStyles = {
     right: "12.5%",
     top: "12.5%",
     bottom: "12.5%",
+  },
+  overlay: {
+    zIndex: 4,
   },
 };
 

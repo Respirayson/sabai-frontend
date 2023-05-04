@@ -42,7 +42,7 @@ class Records extends React.Component {
   }
 
   renderTableContent() {
-    let { patientsFiltered, formChoices } = this.state;
+    let { patientsFiltered } = this.state;
     let patientsRows = patientsFiltered.map((patient) => {
       let Id = `${patient.fields.village_prefix}${patient.pk}`;
       let imageUrl = `${API_URL}/${patient.fields.picture}`;

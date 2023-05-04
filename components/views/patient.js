@@ -32,9 +32,9 @@ class ConsultationsView extends React.Component {
 
   renderPrescriptions(prescriptions) {
     let prescriptionRows = prescriptions.map((prescription) => {
-      let name = prescription.fields.medicine_name;
-      let quantity = prescription.fields.quantity;
-      let notes = prescription.fields.notes;
+      let name = prescription.medicine_name;
+      let quantity = prescription.quantity;
+      let notes = prescription.notes;
 
       return (
         <tr>
@@ -348,7 +348,7 @@ class VisitPrescriptionsTable extends React.Component {
       // let doctor = prescription.doctor
 
       return (
-        <tr>
+        <tr key={prescription.id}>
           <td>{name}</td>
           <td>{quantity}</td>
           {/* <td>{doctor}</td> */}

@@ -18,12 +18,11 @@ function SignUp() {
         method: "POST",
 
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({username, password }),
+        body: JSON.stringify({ username, password }),
       });
 
       if (200 <= response.status && response.status <= 299) {
-        let token = await response.json();
-        setCookie(token.access);
+        setCookie(await response.json());
       } else {
         let error = new Error(response.statusText);
         error.response = response;
@@ -57,7 +56,6 @@ function SignUp() {
             </div>
             <div className="signup" style={{ fontWeight: "bold" }}>
               <form onSubmit={handleSubmit}>
-
                 <div className="field">
                   <label htmlFor="username" className="label">
                     Username

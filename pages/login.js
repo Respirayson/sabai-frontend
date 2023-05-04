@@ -11,19 +11,17 @@ function Login() {
 
     const username = userData.username;
     const password = userData.password;
-    const url = `${API_URL}/api/token`;
-    const userInfoUrl = `${API_URL}/user/get?username=${username}`;
+    const url = `${API_URL}/login`;
 
     try {
       const response = await fetch(url, {
         method: "POST",
 
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({username, password}),
+        body: JSON.stringify({ username, password }),
       });
       if (200 <= response.status && response.status <= 299) {
-        let token = await response.json();
-        setCookie(token.access);
+        setCookie(await response.json());
       } else {
         let error = new Error(response.statusText);
         error.response = response;
@@ -57,7 +55,6 @@ function Login() {
             </div>
             <div className="login" style={{ fontWeight: "bold" }}>
               <form onSubmit={handleSubmit}>
-
                 <div className="field">
                   <label htmlFor="username" className="label">
                     Username

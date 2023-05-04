@@ -40,21 +40,19 @@ class Prescription extends React.Component {
   async onRefresh() {
     let { id: patientId } = this.props.query;
 
-    let { data: patient } = await axios.get(
-      `${API_URL}/patients/get?pk=${patientId}`
-    );
+    let { data: patient } = await axios.get(`${API_URL}/patients/${patientId}`);
 
     let { data: visit } = await axios.get(
-      `${API_URL}/visit/get?patient=${patientId}`
+      `${API_URL}/visits?patient=${patientId}`
     );
 
     let visitId = visit[visit.length - 1].pk;
 
     let { data: consultations } = await axios.get(
-      `${API_URL}/consults/get?visit=${visitId}`
+      `${API_URL}/consults?visit=${visitId}`
     );
 
-    let { data: medications } = await axios.get(`${API_URL}/medication/get`);
+    let { data: medications } = await axios.get(`${API_URL}/medications`);
 
     let medicationsDict = {};
     medications.forEach((medication) => {
@@ -76,22 +74,22 @@ class Prescription extends React.Component {
 
   async loadMedicationStock() {
     let { visit } = this.state;
-    let visitId = visit.pk;
+    let visitId = visit.id;
 
     let { data: orders } = await axios.get(
-      `${API_URL}/order/get?visit=${visitId}&order_status=PENDING`
+      `${API_URL}/orders?visit=${visitId}&order_status=PENDING`
     );
-    let { data: medications } = await axios.get(`${API_URL}/medication/get`);
+    let { data: medications } = await axios.get(`${API_URL}/medications`);
     let { data: allOrders } = await axios.get(
-      `${API_URL}/order/get?order_status=PENDING`
+      `${API_URL}/orders?order_status=PENDING`
     );
 
     // key -> medicine pk
     // value -> total reserved
     let reservedMedications = {};
     allOrders.forEach((order) => {
-      let medicationID = order.fields.medicine;
-      let quantityReserved = order.fields.quantity;
+      let medicationID = order.medicine;
+      let quantityReserved = order.quantity;
 
       if (typeof reservedMedications[medicationID] === "undefined") {
         reservedMedications[medicationID] = quantityReserved;
@@ -108,33 +106,26 @@ class Prescription extends React.Component {
     let promises = [];
 
     orders.forEach((order) => {
-      let orderId = order.pk;
+      let orderId = order.id;
       let payload = {
         order_status: flag,
       };
 
-      let medicineId = order.fields.medicine;
+      let medicineId = order.medicine;
       let medPayload = {
-        quantityChange: order.fields.quantity,
+        quantityChange: order.quantity,
       };
 
       promises.push(
-        axios.patch(
-          `${API_URL}/medication/quantity?pk=${medicineId}`,
-          medPayload
-        )
+        axios.patch(`${API_URL}/medications/${medicineId}`, medPayload)
       );
-      promises.push(
-        axios.patch(`${API_URL}/order/update?pk=${orderId}`, payload)
-      );
+      promises.push(axios.patch(`${API_URL}/orders/${orderId}`, payload));
     });
 
     let visitPayload = {
       status: "finished",
     };
-    promises.push(
-      axios.patch(`${API_URL}/visit/update?pk=${visit.pk}`, visitPayload)
-    );
+    promises.push(axios.patch(`${API_URL}/visits/${visit.pk}`, visitPayload));
 
     await Promise.all(promises);
     alert("Order Completed!");
@@ -143,20 +134,20 @@ class Prescription extends React.Component {
   async submitOrderEdit() {
     let { order } = this.state;
 
-    let orderId = order.pk;
-    delete order.pk;
+    let orderId = order.id;
+    delete order.id;
 
-    await axios.patch(`${API_URL}/order/update?pk=${orderId}`, order);
+    await axios.patch(`${API_URL}/orders${orderId}`, order);
     this.toggleEditModal();
   }
 
   async cancelOrder(order) {
-    let orderId = order.pk;
+    let orderId = order.id;
 
     order.order_status = "REJECTED";
-    delete order.pk;
+    delete order.id;
 
-    await axios.patch(`${API_URL}/order/update?pk=${orderId}`, order);
+    await axios.patch(`${API_URL}/orders/${orderId}`, order);
     this.loadMedicationStock();
   }
 
@@ -217,7 +208,7 @@ class Prescription extends React.Component {
         contentLabel="Example Modal"
       >
         <PrescriptionForm
-          allergies={patient.fields.drug_allergy}
+          allergies={patient.drug_allergy}
           handleInputChange={this.handleOrderChange}
           formDetails={order}
           medicationOptions={options}
@@ -237,14 +228,13 @@ class Prescription extends React.Component {
         <div className="columns is-12">
           <div className="column is-2">
             <img
-              src={`${API_URL}/media/${patient.fields.picture}`}
+              src={`${API_URL}/${patient.fields.picture}`}
               alt="Placeholder image"
               className="has-ratio"
               style={{
                 height: 200,
                 width: 200,
                 objectFit: "cover",
-                backgroundColor: "red",
               }}
             />
           </div>
@@ -270,14 +260,14 @@ class Prescription extends React.Component {
     let { orders, medicationsDict } = this.state;
 
     let orderRows = orders.map((order) => {
-      let name = order.fields.medicine_name;
-      let current_stock = medicationsDict[order.fields.medicine];
-      let quantity = order.fields.quantity;
-      let doctor = order.fields.doctor;
+      let name = order.medicine_name;
+      let current_stock = medicationsDict[order.medicine];
+      let quantity = order.quantity;
+      let doctor = order.doctor;
 
       let orderEnriched = {
-        ...order.fields,
-        pk: order.pk,
+        ...order,
+        pk: order.id,
       };
 
       return (

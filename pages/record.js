@@ -71,9 +71,11 @@ class Record extends React.Component {
       visits: visitsSorted,
     });
 
-    let visitID = visitsSorted[0].id;
-    this.loadVisitDetails(visitID);
-    this.loadMedicationStock();
+    if (visitsSorted.length > 0) {
+      let visitID = visitsSorted[0].id;
+      this.loadVisitDetails(visitID);
+      this.loadMedicationStock();
+    }
   }
 
   toggleViewModal(viewType = null, consult = {}) {
@@ -115,8 +117,8 @@ class Record extends React.Component {
     // value -> total reserved
     let reservedMedications = {};
     orders.forEach((order) => {
-      let medicationID = order.fields.medicine;
-      let quantityReserved = order.fields.quantity;
+      let medicationID = order.medicine;
+      let quantityReserved = order.quantity;
 
       if (typeof reservedMedications[medicationID] === "undefined") {
         reservedMedications[medicationID] = quantityReserved;
@@ -130,8 +132,6 @@ class Record extends React.Component {
   }
 
   async loadVisitDetails(visitID) {
-    // load
-    // consultations
     let { data: consults } = await axios.get(
       `${API_URL}/consults?visit=${visitID}`
     );
@@ -141,9 +141,8 @@ class Record extends React.Component {
     );
 
     let consultsEnriched = consults.map((consult) => {
-      let consultID = consult.pk;
       let consultPrescriptions = prescriptions.filter((prescription) => {
-        return prescription.fields.consult == consultID;
+        return prescription.consult == consult.id;
       });
 
       return {
@@ -174,9 +173,12 @@ class Record extends React.Component {
     let { patient, visits } = this.state;
     let visitOptions = visits.map((visit) => {
       let date = moment(visit.date).format("DD MMMM YYYY");
-      let id = visit.id;
 
-      return <option value={id}>{date}</option>;
+      return (
+        <option key={visit.id} value={visit.id}>
+          {date}
+        </option>
+      );
     });
 
     return (
@@ -237,7 +239,7 @@ class Record extends React.Component {
           : consult.fields.referred_for;
 
       return (
-        <tr>
+        <tr key={consult.id}>
           <td>{type}</td>
           <td>{subType}</td>
           <td>{doctor}</td>
@@ -298,11 +300,11 @@ class Record extends React.Component {
     let { orders } = this.state;
 
     let orderRows = orders.map((order, index) => {
-      let name = order.medicine_name;
+      let name = order.medicine.medicine_name;
       let quantity = order.quantity;
 
       return (
-        <tr>
+        <tr key={order.id}>
           <td>{name}</td>
           <td>{quantity}</td>
           <td>
@@ -345,7 +347,21 @@ class Record extends React.Component {
   }
 
   render() {
-    if (!this.state.mounted) return null;
+    if (!this.state.mounted)
+      return (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <h2 style={{ color: "black", fontSize: "1.5em" }}>
+            This patient has no records currently
+          </h2>
+        </div>
+      );
 
     return (
       <div

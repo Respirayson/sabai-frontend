@@ -1,7 +1,6 @@
 import React from "react";
 import { withAuthSync, logInCheck } from "../utils/auth";
 import axios from "axios";
-import moment from "moment";
 import Router from "next/router";
 import { API_URL } from "../utils/constants";
 
@@ -20,14 +19,9 @@ class Queue extends React.Component {
       visits: [],
       visitsFiltered: [],
       filterString: "",
-      formChoices: {
-        triageChoice: "medicalTriage",
-        consultChoice: "medical",
-      },
     };
 
     this.onFilterChange = this.onFilterChange.bind(this);
-    this.handleFormChoiceChange = this.handleFormChoiceChange.bind(this);
   }
 
   componentDidMount() {
@@ -40,27 +34,37 @@ class Queue extends React.Component {
     this.setState({ visits, visitsFiltered: visits });
   }
 
-  handleFormChoiceChange() {
-    let { formChoices } = this.state;
+  async handleDelete(id) {
+    const { visits, visitsFiltered } = this.state;
 
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this visit?"
+    );
+    if (!confirmed) {
+      return;
+    }
 
-    formChoices[name] = value;
-
-    this.setState({
-      formChoices,
-    });
+    try {
+      await axios.delete(`${API_URL}/visits/${id}`);
+      const updatedVisits = visits.filter((visit) => visit.id !== id);
+      const updatedVisitsFiltered = visitsFiltered.filter(
+        (visit) => visit.id !== id
+      );
+      this.setState({
+        visits: updatedVisits,
+        visitsFiltered: updatedVisitsFiltered,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   renderTableContent() {
-    let { visitsFiltered, formChoices } = this.state;
-    let visitsRows = visitsFiltered.map((visit) => {
+    let { visitsFiltered } = this.state;
+    let visitsRows = visitsFiltered.map((visit, idx) => {
       let Id = `${visit.patient.village_prefix}${visit.patient.id}`;
-      let imageUrl = `${API_URL}/${visit.patient.picture}`;
+      let imageUrl = `${API_URL}${visit.patient.picture}`;
       let fullName = visit.patient.name;
-      console.log(imageUrl);
       let progress = (
         <button
           className="button is-dark level-item"
@@ -70,62 +74,48 @@ class Queue extends React.Component {
         </button>
       );
 
-      let triage = (
+      let vitals = (
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <div className="select is-fullwidth">
-              <select
-                name={"triageChoice"}
-                onChange={this.handleFormChoiceChange}
-              >
-                <option value={"medicalTriage"}>Medical</option>
-                <option value={"dentalTriage"}>Dental</option>
-              </select>
-            </div>
+            {" "}
+            <button
+              className="button is-dark level-item"
+              onClick={() =>
+                Router.push(`/patient?id=${visit.patient.id}&form=vitals`)
+              }
+            >
+              Create
+            </button>
           </div>
-
-          <button
-            className="button is-dark level-item"
-            onClick={() =>
-              Router.push(
-                `/patient?id=${visit.patient.pk}&form=${formChoices.triageChoice}`
-              )
-            }
-          >
-            Create
-          </button>
         </div>
       );
 
       let consultation = (
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <div className="select is-fullwidth">
-              <select
-                name={"consultChoice"}
-                onChange={this.handleFormChoiceChange}
-              >
-                <option value={"medical"}>Medical</option>
-                <option value={"dental"}>Dental</option>
-              </select>
-            </div>
+            {" "}
+            <button
+              className="button is-dark level-item"
+              onClick={() =>
+                Router.push(`/patient?id=${visit.patient.id}&form=medical`)
+              }
+            >
+              Create
+            </button>
           </div>
-
-          <button
-            className="button is-dark level-item"
-            onClick={() =>
-              Router.push(
-                `/patient?id=${visit.patient.pk}&form=${formChoices.consultChoice}`
-              )
-            }
-          >
-            Create
-          </button>
         </div>
       );
 
+      let deleteVisit = (
+        <button
+          className="button is-danger"
+          onClick={() => this.handleDelete(visit.id)}
+        >
+          Delete
+        </button>
+      );
       return (
-        <tr>
+        <tr key={idx}>
           <td>{Id}</td>
           <td>
             <figure className="image is-96x96">
@@ -139,8 +129,9 @@ class Queue extends React.Component {
           <td>{fullName}</td>
 
           <td>{progress}</td>
-          <td>{triage}</td>
+          <td>{vitals}</td>
           <td>{consultation}</td>
+          <td>{deleteVisit}</td>
         </tr>
       );
     });
@@ -167,7 +158,6 @@ class Queue extends React.Component {
           marginTop: 15,
           marginLeft: 25,
           marginRight: 25,
-          // position: "relative"
         }}
       >
         <div className="column is-12">
@@ -189,13 +179,9 @@ class Queue extends React.Component {
                 <th>Photo</th>
                 <th>Full Name</th>
                 <th>Record</th>
-                <th>New Triage</th>
+                <th>New Vitals</th>
                 <th>New Consultation</th>
-                {/* <th>Medical Triage</th>
-              <th>Dental Triage</th>
-              <th>Medical</th>
-              <th>Dental</th> */}
-                {/* <th>ID</th> */}
+                <th>Delete Visit</th>
               </tr>
             </thead>
             <tbody>{this.renderTableContent()}</tbody>

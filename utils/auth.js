@@ -2,16 +2,17 @@ import { Component } from "react";
 import Router from "next/router";
 import nextCookie from "next-cookies";
 import cookie from "js-cookie";
-import getHost from "../utils/get-host";
 import { API_URL } from "../utils/constants";
 
 function setCookie(token) {
-  cookie.set("token", token, { expires: 1 });
+  cookie.set("token", token.access, { expires: 30 });
+  window.localStorage.setItem("userID", token.id);
   Router.push("/patients");
 }
 
 function logout() {
   cookie.remove("token");
+  window.localStorage.removeItem("userID");
   // to support logging out from all windows
   window.localStorage.setItem("logout", Date.now());
   Router.push("/login");
@@ -47,7 +48,7 @@ function withAuthSync(WrappedComponent) {
 
     componentWillUnmount() {
       window.removeEventListener("storage", this.syncLogout);
-      window.localStorage.removeItem("logout");
+      window.window.localStorage.removeItem("logout");
     }
 
     syncLogout(event) {
@@ -66,14 +67,15 @@ async function auth(ctx) {
   const { token } = nextCookie(ctx);
 
   // verify cookie first
-  let isVerified = await verifyCookie(token);
+  // let isVerified = await verifyCookie(token);
 
-  if (!isVerified) {
-    // cookie.remove("token");
-    // ctx.res.writeHead(302, { Location: "/login" });
-    // ctx.res.end();
-    // return undefined
-  }
+  // if (!isVerified) {
+  //   cookie.remove("token");
+  //   window.localStorage.removeItem("userID");
+  //   ctx.res.writeHead(302, { Location: "/login" });
+  //   ctx.res.end();
+  //   return undefined;
+  // }
 
   /*
    * If `ctx.req` is available it means we are on the server.

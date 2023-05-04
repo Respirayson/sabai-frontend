@@ -474,7 +474,6 @@ class Patients extends React.Component {
     return (
       <Modal
         isOpen={this.state.modalIsOpen}
-        // onAfterOpen={this.afterOpenModal}
         onRequestClose={this.closeModal}
         style={customStyles}
         contentLabel="Example Modal"

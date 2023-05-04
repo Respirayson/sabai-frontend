@@ -31,59 +31,16 @@ class Orders extends React.Component {
   }
 
   async onRefresh() {
-    /**
-     * NOTE
-     * this method is very inefficient
-     * next time, let the backend do this
-     */
-
-    let dateToday = moment().format("YYYY-MM-DD");
-
-    let { data: visits } = await axios.get(
-      `${API_URL}/visit/get?status=started&visit_date=${dateToday}`
-    );
-    let activePatients = new Set();
-
-    visits.forEach((visit) => {
-      let patient = visit.fields.patient;
-      activePatients.add(patient);
-    });
-
-    let { data: patients } = await axios.get(`${API_URL}/patients`);
-    let patientsFiltered = patients.filter((patient) => {ì
-      let patientId = patient.pk;
-      return activePatients.has(patientId);
-    });
-
-    let patientsObj = {};
-
-    patientsFiltered.forEach((patient) => {
-      let patientId = patient.pk;
-
-      patientsObj[patientId] = {
-        ...patient,
-      };
-    });
-
-    let visitsEnriched = visits.map((visit) => {
-      let patientId = visit.fields.patient;
-      let patient = patientsObj[patientId];
-
-      return {
-        ...visit,
-        patient,
-      };
-    });
-
-    this.setState({ visits: visitsEnriched, visitsFiltered: visitsEnriched });
+    let { data: visits } = await axios.get(`${API_URL}/visits?status=started`);
+    this.setState({ visits, visitsFiltered: visits });
   }
 
   onFilterChange(event) {
     let { visits } = this.state;
 
     let filteredVisits = visits.filter((visit) => {
-      let patientId =
-        `${visit.patient.fields.village_prefix}${visit.patient.pk}`.toLowerCase();
+      let patientId = "";
+      // `${visit.patient.village_prefix}${visit.patient.id}`.toLowerCase();
 
       return patientId.includes(event.target.value.toLowerCase());
     });
@@ -94,15 +51,16 @@ class Orders extends React.Component {
   renderTableContent() {
     let { visitsFiltered } = this.state;
     let visitsRows = visitsFiltered.map((visit) => {
-      let Id = `${visit.patient.fields.village_prefix}${visit.patient.pk}`;
-      let imageUrl = `${API_URL}/media/${visit.patient.fields.picture}`;
-      let fullName = visit.patient.fields.name;
+      let Id = "";
+      // `${visit.patient.village_prefix}${visit.patient.id}`;
+      let imageUrl = `${API_URL}/${visit.patient.picture}`;
+      let fullName = visit.patient.name;
 
       let action = (
         <button
           className="button is-dark level-item"
           onClick={() => {
-            Router.push(`/pharmacy/prescription?id=${visit.patient.pk}`);
+            Router.push(`/pharmacy/prescription?id=${visit.patient.id}`);
           }}
         >
           View
@@ -110,7 +68,7 @@ class Orders extends React.Component {
       );
 
       return (
-        <tr>
+        <tr key={visit.id}>
           <td>{Id}</td>
           <td>
             <figure className="image is-96x96">

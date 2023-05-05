@@ -111,7 +111,7 @@ class Prescription extends React.Component {
         order_status: flag,
       };
 
-      let medicineId = order.medicine;
+      let medicineId = order.medicine.id;
       let medPayload = {
         quantityChange: order.quantity,
       };
@@ -125,7 +125,7 @@ class Prescription extends React.Component {
     let visitPayload = {
       status: "finished",
     };
-    promises.push(axios.patch(`${API_URL}/visits/${visit.pk}`, visitPayload));
+    promises.push(axios.patch(`${API_URL}/visits/${visit.id}`, visitPayload));
 
     await Promise.all(promises);
     alert("Order Completed!");
@@ -137,7 +137,7 @@ class Prescription extends React.Component {
     let orderId = order.id;
     delete order.id;
 
-    await axios.patch(`${API_URL}/orders${orderId}`, order);
+    await axios.patch(`${API_URL}/orders/${orderId}`, order);
     this.toggleEditModal();
   }
 
@@ -145,6 +145,7 @@ class Prescription extends React.Component {
     let orderId = order.id;
 
     order.order_status = "REJECTED";
+    order.medicine = order.medicine.id;
     delete order.id;
 
     await axios.patch(`${API_URL}/orders/${orderId}`, order);
@@ -189,17 +190,21 @@ class Prescription extends React.Component {
       let name = medication.fields.medicine_name;
       let pKey = medication.pk;
 
-      let chosenMedicineValue = `${order.medicine} ${order.medicine_name}`;
-      if (chosenMedicineValue == `${pKey} ${name}`)
+      if (
+        Object.keys(order).length &&
+        `${order.medicine.id} ${order.medicine.medicine_name}` ==
+          `${pKey} ${name}`
+      ) {
         return (
           <option value={`${pKey} ${name}`} selected>
             {name}
           </option>
         );
+      }
 
       return <option value={`${pKey} ${name}`}>{name}</option>;
     });
-
+    console.log(medications);
     return (
       <Modal
         isOpen={editModalOpen}
@@ -208,7 +213,7 @@ class Prescription extends React.Component {
         contentLabel="Example Modal"
       >
         <PrescriptionForm
-          allergies={patient.drug_allergy}
+          allergies={patient.fields.drug_allergy}
           handleInputChange={this.handleOrderChange}
           formDetails={order}
           medicationOptions={options}
@@ -260,34 +265,29 @@ class Prescription extends React.Component {
     let { orders, medicationsDict } = this.state;
 
     let orderRows = orders.map((order) => {
-      let name = order.medicine_name;
-      let current_stock = medicationsDict[order.medicine];
+      let name = order.medicine.medicine_name;
+      let current_stock = medicationsDict[order.medicine.id];
       let quantity = order.quantity;
-      let doctor = order.doctor;
-
-      let orderEnriched = {
-        ...order,
-        pk: order.id,
-      };
+      // let doctor = order.doctor;
 
       return (
         <tr>
           <td>{name}</td>
           <td>{current_stock}</td>
           <td>{quantity}</td>
-          <td>{doctor}</td>
+          {/* <td>{doctor}</td> */}
           <td>
             <div className="levels">
               <div className="level-left">
                 <button
                   className="button is-dark level-item"
-                  onClick={() => this.toggleEditModal(orderEnriched)}
+                  onClick={() => this.toggleEditModal(order)}
                 >
                   Edit
                 </button>
                 <button
                   className="button is-dark level-item"
-                  onClick={() => this.cancelOrder(orderEnriched)}
+                  onClick={() => this.cancelOrder(order)}
                 >
                   Cancel
                 </button>
@@ -305,7 +305,7 @@ class Prescription extends React.Component {
             <th>Medicine Name</th>
             <th>Current Stock</th>
             <th>Quantity</th>
-            <th>Doctor</th>
+            {/* <th>Doctor</th> */}
             <th>Action</th>
           </tr>
         </thead>
@@ -318,14 +318,11 @@ class Prescription extends React.Component {
     let { consultations } = this.state;
 
     let consultRows = consultations.map((consult) => {
-      let type = consult.fields.type;
-      let subType =
-        consult.fields.sub_type == null ? "General" : consult.fields.sub_type;
-      let doctor = consult.fields.doctor;
+      let type = consult.type;
+      let subType = consult.sub_type == null ? "General" : consult.sub_type;
+      let doctor = consult.doctor.name;
       let referredFor =
-        consult.fields.referred_for == null
-          ? "None"
-          : consult.fields.referred_for;
+        consult.referred_for == null ? "None" : consult.referred_for;
 
       return (
         <tr>

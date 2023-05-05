@@ -112,7 +112,6 @@ class Record extends React.Component {
     let { data: orders } = await axios.get(
       `${API_URL}/orders?order_status=PENDING`
     );
-
     // key -> medicine pk
     // value -> total reserved
     let reservedMedications = {};
@@ -229,17 +228,14 @@ class Record extends React.Component {
     let { vitals, consults, visitPrescriptions } = this.state;
 
     let consultRows = consults.map((consult) => {
-      let type = consult.fields.type;
-      let subType =
-        consult.fields.sub_type == null ? "General" : consult.fields.sub_type;
-      let doctor = consult.fields.doctor;
+      let type = consult.type;
+      let subType = consult.sub_type == null ? "General" : consult.sub_type;
+      let doctor = consult.doctor.name;
       let referredFor =
-        consult.fields.referred_for == null
-          ? "None"
-          : consult.fields.referred_for;
+        consult.referred_for == null ? "None" : consult.referred_for;
 
       return (
-        <tr key={consult.id}>
+        <tr key={consult.pk}>
           <td>{type}</td>
           <td>{subType}</td>
           <td>{doctor}</td>
@@ -331,7 +327,6 @@ class Record extends React.Component {
         </tr>
       );
     });
-
     return (
       <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
         <thead>

@@ -41,9 +41,11 @@ class Patients extends React.Component {
       imageDetails: null,
       formDetails: {
         gender: "Male",
+        village_prefix: "CATT",
       },
       scanOptions: {
         gender: "Male",
+        village_prefix: "CATT",
       },
       possibleOptions: [],
     };
@@ -226,6 +228,7 @@ class Patients extends React.Component {
           patient: response[0],
           formDetails: {
             gender: "Male",
+            village_prefix: "CATT",
           },
           imageDetails: null,
         });
@@ -561,13 +564,25 @@ class Patients extends React.Component {
                 <div className="control is-expanded">
                   <label className="label">Village Prefix</label>
                   <div className="control">
-                    <input
+                    <div className="select">
+                      <select
+                        name="village_prefix"
+                        onChange={this.handleInputChange}
+                        default="CATT"
+                      >
+                        <option value="CATT">CATT</option>
+                        <option value="PC">PC</option>
+                        <option value="PC">TK</option>
+                        <option value="TT">TT</option>
+                      </select>
+                    </div>
+                    {/* <input
                       name="village_prefix"
                       className="input"
                       type="text"
                       onChange={this.handleInputChange}
                       value={formDetails.village_prefix}
-                    />
+                    /> */}
                   </div>
                 </div>
 

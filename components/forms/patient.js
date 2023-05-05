@@ -264,111 +264,6 @@ class MedicalTriageForm extends React.Component {
   }
 }
 
-class DentalForm extends React.Component {
-  constructor() {
-    super();
-  }
-
-  render() {
-    let { handleInputChange, formDetails } = this.props;
-
-    return (
-      <div>
-        <label className="label">Dental Consultation Form</label>
-
-        <div>
-          <label className="label">Treatments Done</label>
-          <label className="label">EXO</label>
-          <div className="control" style={{ marginBottom: 20 }}>
-            <input
-              name="exo"
-              className="input"
-              type="text"
-              onChange={handleInputChange}
-              value={formDetails.exo}
-            />
-          </div>
-
-          <label className="label">CAP</label>
-          <div className="control" style={{ marginBottom: 20 }}>
-            <input
-              name="cap"
-              className="input"
-              type="text"
-              onChange={handleInputChange}
-              value={formDetails.cap}
-            />
-          </div>
-
-          <label className="label">SDF</label>
-          <div className="control" style={{ marginBottom: 20 }}>
-            <input
-              name="sdf"
-              className="input"
-              type="text"
-              onChange={handleInputChange}
-              value={formDetails.sdf}
-            />
-          </div>
-
-          <label className="label">F</label>
-          <div className="control" style={{ marginBottom: 20 }}>
-            <input
-              name="f"
-              className="input"
-              type="text"
-              onChange={handleInputChange}
-              value={formDetails.f}
-            />
-          </div>
-
-          <label className="label">Others</label>
-          <div className="control" style={{ marginBottom: 20 }}>
-            <input
-              name="others"
-              className="input"
-              type="text"
-              onChange={handleInputChange}
-              value={formDetails.others}
-            />
-          </div>
-        </div>
-
-        <hr />
-
-        <div className="field">
-          <label className="label">Notes</label>
-          <div className="control">
-            <textarea
-              name="notes"
-              className="textarea"
-              placeholder="Textarea"
-              onChange={handleInputChange}
-              value={formDetails.notes}
-            />
-          </div>
-        </div>
-
-        <hr />
-
-        <div className="field">
-          <label className="label">Referred for (within clinic)</label>
-          <div className="control" style={{ marginBottom: 20 }}>
-            <input
-              name="referred_for"
-              className="input"
-              type="text"
-              placeholder="Type specialty here..."
-              onChange={handleInputChange}
-              value={formDetails.referred_for}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
 class MedicalForm extends React.Component {
   constructor() {
     super();
@@ -461,6 +356,7 @@ class PrescriptionForm extends React.Component {
     let { medications } = this.props;
 
     let medication = medications.filter((med) => {
+      console.log(med);
       return medicine == med.pk;
     });
 
@@ -470,6 +366,7 @@ class PrescriptionForm extends React.Component {
 
   calculateMedicineReservedStock(medicine) {
     let { reservedMedications } = this.props;
+    console.log(reservedMedications);
 
     if (typeof reservedMedications[medicine] === "undefined") return 0;
     else return reservedMedications[medicine];
@@ -484,7 +381,7 @@ class PrescriptionForm extends React.Component {
       onSubmit,
       isEditing,
     } = this.props;
-
+    console.log(this.props);
     return (
       <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Prescription</h1>
@@ -554,10 +451,4 @@ class PrescriptionForm extends React.Component {
   }
 }
 
-export {
-  DentalTriageForm,
-  MedicalTriageForm,
-  DentalForm,
-  MedicalForm,
-  PrescriptionForm,
-};
+export { DentalTriageForm, MedicalTriageForm, MedicalForm, PrescriptionForm };

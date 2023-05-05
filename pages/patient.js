@@ -5,7 +5,6 @@ import _ from "lodash";
 import Router from "next/router";
 import Modal from "react-modal";
 import moment from "moment";
-import cookie from "js-cookie";
 import {
   MedicalTriageForm,
   MedicalForm,
@@ -159,7 +158,6 @@ class Patient extends React.Component {
       formModalIsOpen,
       reservedMedications,
     } = this.state;
-
     let options = medications.map((medication) => {
       let name = medication.fields.medicine_name;
       let pKey = medication.pk;
@@ -170,11 +168,15 @@ class Patient extends React.Component {
 
       if (value == `${pKey} ${name}`)
         return (
-          <option value={`${pKey} ${name}`} selected>
+          <option key={pKey} value={`${pKey} ${name}`}>
             {name}
           </option>
         );
-      return <option value={`${pKey} ${name}`}>{name}</option>;
+      return (
+        <option key={pKey} value={`${pKey} ${name}`}>
+          {name}
+        </option>
+      );
     });
 
     return (
@@ -249,7 +251,7 @@ class Patient extends React.Component {
     );
 
     let consultsEnriched = consults.map((consult) => {
-      let consultID = consult.pk;
+      let consultID = consult.id;
       let consultPrescriptions = prescriptions.filter((prescription) => {
         return prescription.consult == consultID;
       });
@@ -297,7 +299,7 @@ class Patient extends React.Component {
           type: "medical",
         });
 
-        consultId = medicalConsult[0].pk;
+        consultId = medicalConsult.id;
         orderPromises = [];
 
         orders.forEach((order) => {
@@ -367,9 +369,12 @@ class Patient extends React.Component {
     let { patient, visits } = this.state;
     let visitOptions = visits.map((visit) => {
       let date = moment(visit.visit_date).format("DD MMMM YYYY");
-      let pk = visit.pk;
 
-      return <option value={pk}>{date}</option>;
+      return (
+        <option key={visit.id} value={visit.id}>
+          {date}
+        </option>
+      );
     });
 
     return (
@@ -423,17 +428,13 @@ class Patient extends React.Component {
     let { vitals, consults, visitPrescriptions } = this.state;
 
     let consultRows = consults.map((consult) => {
-      let type = consult.fields.type;
-      let subType =
-        consult.fields.sub_type == null ? "General" : consult.fields.sub_type;
-      let doctor = consult.fields.doctor;
+      let type = consult.type;
+      let subType = consult.sub_type == null ? "General" : consult.sub_type;
+      let doctor = consult.doctor.name;
       let referredFor =
-        consult.fields.referred_for == null
-          ? "None"
-          : consult.fields.referred_for;
-
+        consult.referred_for == null ? "None" : consult.referred_for;
       return (
-        <tr>
+        <tr key={consult.id}>
           <td>{type}</td>
           <td>{subType}</td>
           <td>{doctor}</td>
@@ -551,7 +552,7 @@ class Patient extends React.Component {
       let quantity = order.quantity;
 
       return (
-        <tr>
+        <tr key={order.id}>
           <td>{name}</td>
           <td>{quantity}</td>
           <td>

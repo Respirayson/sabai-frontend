@@ -9,10 +9,10 @@ class PrescriptionForm extends React.Component {
     let { medications } = this.props;
 
     let medication = medications.filter((med) => {
-      return medicine == med.pk;
+      return medicine == med.id;
     });
 
-    if (medication.length > 0) return medication[0].fields.quantity;
+    if (medication.length > 0) return medication[0].quantity;
     return 0;
   }
 
@@ -31,7 +31,6 @@ class PrescriptionForm extends React.Component {
       medicationOptions,
       onSubmit,
     } = this.props;
-
     return (
       <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Prescription</h1>

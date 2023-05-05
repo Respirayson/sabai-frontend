@@ -32,12 +32,12 @@ class ConsultationsView extends React.Component {
 
   renderPrescriptions(prescriptions) {
     let prescriptionRows = prescriptions.map((prescription) => {
-      let name = prescription.medicine_name;
+      let name = prescription.medicine.medicine_name;
       let quantity = prescription.quantity;
       let notes = prescription.notes;
 
       return (
-        <tr>
+        <tr key={prescription.id}>
           <td>{name}</td>
           <td>{quantity}</td>
           <td>{notes}</td>
@@ -59,37 +59,36 @@ class ConsultationsView extends React.Component {
     );
   }
 
-  renderMedicalConsultation(content) {
-    let fields = content.fields;
-    let prescriptions = content.prescriptions;
+  renderMedicalConsultation(consult) {
+    let prescriptions = consult.prescriptions;
 
     return (
       <div>
         <div className="field">
           <label className="label">Sub Type</label>
           <article className="message">
-            <div className="message-body">{fields.sub_type}</div>
+            <div className="message-body">{consult.sub_type}</div>
           </article>
         </div>
 
         <div className="field">
           <label className="label">Problems</label>
           <article className="message">
-            <div className="message-body">{fields.problems}</div>
+            <div className="message-body">{consult.problems}</div>
           </article>
         </div>
 
         <div className="field">
           <label className="label">Diagnosis</label>
           <article className="message">
-            <div className="message-body">{fields.diagnosis}</div>
+            <div className="message-body">{consult.diagnosis}</div>
           </article>
         </div>
 
         <div className="field">
           <label className="label">Notes</label>
           <article className="message">
-            <div className="message-body">{fields.notes}</div>
+            <div className="message-body">{consult.notes}</div>
           </article>
         </div>
       </div>
@@ -100,7 +99,7 @@ class ConsultationsView extends React.Component {
     let { content } = this.props;
     if (Object.keys(content).length == 0) return null;
 
-    let type = content.fields.type;
+    let type = content.type;
     let prescriptions = content.prescriptions;
 
     return (
@@ -109,7 +108,7 @@ class ConsultationsView extends React.Component {
         <div className="field">
           <label className="label">Done by</label>
           <article className="message">
-            <div className="message-body">{content.fields.doctor}</div>
+            <div className="message-body">{content.doctor.name}</div>
           </article>
         </div>
 
@@ -122,7 +121,7 @@ class ConsultationsView extends React.Component {
         <div className="field">
           <label className="label">Referred For</label>
           <article className="message">
-            <div className="message-body">{content.fields.referred_for}</div>
+            <div className="message-body">{content.referred_for}</div>
           </article>
         </div>
 

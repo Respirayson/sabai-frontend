@@ -108,7 +108,7 @@ class ConsultationsView extends React.Component {
         <div className="field">
           <label className="label">Done by</label>
           <article className="message">
-            <div className="message-body">{content.doctor.name}</div>
+            <div className="message-body">{content.doctor.username}</div>
           </article>
         </div>
 

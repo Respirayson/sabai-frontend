@@ -16,7 +16,7 @@ import {
   MedicalTriageView,
   VisitPrescriptionsTable,
 } from "../components/views/patient";
-import { API_URL } from "../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../utils/constants";
 
 Modal.setAppElement("#__next");
 
@@ -382,7 +382,7 @@ class Patient extends React.Component {
         <div className="columns is-12">
           <div className="column is-2">
             <img
-              src={`${API_URL}/${patient.fields.picture}`}
+              src={`${CLOUDINARY_URL}/${patient.fields.picture}`}
               alt="Placeholder image"
               className="has-ratio"
               style={{

@@ -2,7 +2,7 @@ import React from "react";
 import { withAuthSync, logInCheck } from "../utils/auth";
 import axios from "axios";
 import Router from "next/router";
-import { API_URL } from "../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../utils/constants";
 
 class Queue extends React.Component {
   static async getInitialProps(ctx) {
@@ -63,7 +63,7 @@ class Queue extends React.Component {
     let { visitsFiltered } = this.state;
     let visitsRows = visitsFiltered.map((visit, idx) => {
       let Id = `${visit.patient.village_prefix}${visit.patient.id}`;
-      let imageUrl = `${API_URL}/${visit.patient.picture}`;
+      let imageUrl = `${CLOUDINARY_URL}/${visit.patient.picture}`;
       let fullName = visit.patient.name;
       let progress = (
         <button

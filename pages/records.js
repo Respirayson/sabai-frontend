@@ -1,9 +1,8 @@
 import React from "react";
 import { withAuthSync, logInCheck } from "../utils/auth";
 import axios from "axios";
-import moment from "moment";
 import Router from "next/router";
-import { API_URL } from "../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../utils/constants";
 
 class Records extends React.Component {
   static async getInitialProps(ctx) {
@@ -45,7 +44,7 @@ class Records extends React.Component {
     let { patientsFiltered } = this.state;
     let patientsRows = patientsFiltered.map((patient) => {
       let Id = `${patient.fields.village_prefix}${patient.pk}`;
-      let imageUrl = `${API_URL}/${patient.fields.picture}`;
+      let imageUrl = `${CLOUDINARY_URL}/${patient.fields.picture}`;
       let fullName = patient.fields.name;
 
       let progress = (
@@ -55,8 +54,7 @@ class Records extends React.Component {
             onClick={() => {
               Router.push(`/record?id=${patient.pk}`);
             }}
-            style={{display:"inline-block"}}
-
+            style={{ display: "inline-block" }}
           >
             View
           </button>
@@ -72,7 +70,7 @@ class Records extends React.Component {
                 }
               }
             }}
-            style={{display:"inline-block", marginLeft: "10px"}}
+            style={{ display: "inline-block", marginLeft: "10px" }}
           >
             Delete
           </button>

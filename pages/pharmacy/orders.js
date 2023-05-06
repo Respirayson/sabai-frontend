@@ -4,9 +4,8 @@
 import React from "react";
 import { withAuthSync, logInCheck } from "../../utils/auth";
 import axios from "axios";
-import moment from "moment";
 import Router from "next/router";
-import { API_URL } from "../../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../../utils/constants";
 
 class Orders extends React.Component {
   static async getInitialProps(ctx) {
@@ -52,7 +51,7 @@ class Orders extends React.Component {
     let { visitsFiltered } = this.state;
     let visitsRows = visitsFiltered.map((visit) => {
       let Id = `${visit.patient.village_prefix}${visit.patient.id}`;
-      let imageUrl = `${API_URL}/${visit.patient.picture}`;
+      let imageUrl = `${CLOUDINARY_URL}/${visit.patient.picture}`;
       let fullName = visit.patient.name;
 
       let action = (
@@ -62,8 +61,7 @@ class Orders extends React.Component {
             onClick={() => {
               Router.push(`/pharmacy/prescription?id=${visit.patient.id}`);
             }}
-            style={{ display: "inline-block"}}
-
+            style={{ display: "inline-block" }}
           >
             View
           </button>

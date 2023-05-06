@@ -6,7 +6,7 @@ import _ from "lodash";
 import Modal from "react-modal";
 import Webcam from "react-webcam";
 import moment from "moment";
-import { API_URL } from "../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../utils/constants";
 import { urltoFile } from "../utils/helpers";
 
 // put id
@@ -41,11 +41,9 @@ class Patients extends React.Component {
       imageDetails: null,
       formDetails: {
         gender: "Male",
-        village_prefix: "CATT",
       },
       scanOptions: {
         gender: "Male",
-        village_prefix: "CATT",
       },
       possibleOptions: [],
     };
@@ -228,7 +226,6 @@ class Patients extends React.Component {
           patient: response[0],
           formDetails: {
             gender: "Male",
-            village_prefix: "CATT",
           },
           imageDetails: null,
         });
@@ -309,7 +306,7 @@ class Patients extends React.Component {
       let fields = option.fields;
       let name = fields.name;
       let id = `${fields.village_prefix}${option.pk}`;
-      let imageUrl = `${API_URL}/${fields.picture}`;
+      let imageUrl = `${CLOUDINARY_URL}/${fields.picture}`;
       let dateOfBirth = moment(fields.date_of_birth).format("DD MMM YYYY");
 
       let select = (
@@ -564,25 +561,13 @@ class Patients extends React.Component {
                 <div className="control is-expanded">
                   <label className="label">Village Prefix</label>
                   <div className="control">
-                    <div className="select">
-                      <select
-                        name="village_prefix"
-                        onChange={this.handleInputChange}
-                        default="CATT"
-                      >
-                        <option value="CATT">CATT</option>
-                        <option value="PC">PC</option>
-                        <option value="PC">TK</option>
-                        <option value="TT">TT</option>
-                      </select>
-                    </div>
-                    {/* <input
+                    <input
                       name="village_prefix"
                       className="input"
                       type="text"
                       onChange={this.handleInputChange}
                       value={formDetails.village_prefix}
-                    /> */}
+                    />
                   </div>
                 </div>
 
@@ -714,7 +699,7 @@ class Patients extends React.Component {
               <figure className="image is-96x96">
                 <img
                   // src="https://bulma.io/images/placeholders/96x96.png"
-                  src={`${API_URL}/${imageURL}`}
+                  src={`${CLOUDINARY_URL}/${imageURL}`}
                   alt="Placeholder image"
                   style={{ height: 96, width: 96, objectFit: "cover" }}
                 />
@@ -812,7 +797,13 @@ class Patients extends React.Component {
           >
             <div className="levels" style={{ marginBottom: 10 }}>
               <div className="level-left">
-               
+                <button
+                  className="button is-dark is-medium level-item"
+                  style={{ display: "inline-block", verticalAlign: "top" }}
+                  onClick={this.openScanModal}
+                >
+                  Scan Face
+                </button>
                 <button
                   className="button is-dark is-medium level-item"
                   onClick={this.openModal}
@@ -839,7 +830,7 @@ class Patients extends React.Component {
             <div className="column is-2">
               <figure className="image is-1by1">
                 <img
-                  src={`${API_URL}/${patient.fields.picture}`}
+                  src={`${CLOUDINARY_URL}/${patient.fields.picture}`}
                   alt="Placeholder image"
                   className="has-ratio"
                   style={{ height: 200, width: 200, objectFit: "cover" }}

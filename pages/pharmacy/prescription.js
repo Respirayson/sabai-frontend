@@ -1,11 +1,9 @@
 import React from "react";
 import { withAuthSync, logInCheck } from "../../utils/auth";
 import axios from "axios";
-import moment from "moment";
-import Router from "next/router";
 import Modal from "react-modal";
 import { PrescriptionForm } from "../../components/forms/prescription";
-import { API_URL } from "../../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../../utils/constants";
 
 Modal.setAppElement("#__next");
 
@@ -232,7 +230,7 @@ class Prescription extends React.Component {
         <div className="columns is-12">
           <div className="column is-2">
             <img
-              src={`${API_URL}/${patient.fields.picture}`}
+              src={`${CLOUDINARY_URL}/${patient.fields.picture}`}
               alt="Placeholder image"
               className="has-ratio"
               style={{
@@ -319,7 +317,7 @@ class Prescription extends React.Component {
     let consultRows = consultations.map((consult) => {
       let type = consult.type;
       let subType = consult.sub_type == null ? "General" : consult.sub_type;
-      let doctor = consult.doctor.name;
+      let doctor = consult.doctor.username;
       let referredFor =
         consult.referred_for == null ? "None" : consult.referred_for;
 

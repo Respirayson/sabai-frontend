@@ -373,6 +373,7 @@ class PrescriptionForm extends React.Component {
   }
 
   render() {
+    console.log(1);
     let {
       allergies,
       handleInputChange,
@@ -382,6 +383,7 @@ class PrescriptionForm extends React.Component {
       isEditing,
     } = this.props;
     console.log(this.props);
+    console.log("adsfasfasdf");
     return (
       <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Prescription</h1>

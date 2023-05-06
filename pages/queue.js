@@ -63,7 +63,7 @@ class Queue extends React.Component {
     let { visitsFiltered } = this.state;
     let visitsRows = visitsFiltered.map((visit, idx) => {
       let Id = `${visit.patient.village_prefix}${visit.patient.id}`;
-      let imageUrl = `${API_URL}${visit.patient.picture}`;
+      let imageUrl = `${API_URL}/${visit.patient.picture}`;
       let fullName = visit.patient.name;
       let progress = (
         <button

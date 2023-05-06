@@ -204,7 +204,6 @@ class Prescription extends React.Component {
 
       return <option value={`${pKey} ${name}`}>{name}</option>;
     });
-    console.log(medications);
     return (
       <Modal
         isOpen={editModalOpen}

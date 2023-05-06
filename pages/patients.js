@@ -812,13 +812,7 @@ class Patients extends React.Component {
           >
             <div className="levels" style={{ marginBottom: 10 }}>
               <div className="level-left">
-                <button
-                  className="button is-dark is-medium level-item"
-                  style={{ display: "inline-block", verticalAlign: "top" }}
-                  onClick={this.openScanModal}
-                >
-                  Scan Face
-                </button>
+               
                 <button
                   className="button is-dark is-medium level-item"
                   onClick={this.openModal}

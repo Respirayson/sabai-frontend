@@ -452,9 +452,9 @@ class Patient extends React.Component {
     });
 
     return (
-      <div className="column is-7">
+      <div className="column is-5">
         <div className="columns">
-          <div className="column is-6">
+          <div className="column is-4">
             <label className="label">Medical Triage</label>
             {typeof vitals.fields === "undefined" ? (
               <h2>Not Done</h2>
@@ -528,7 +528,7 @@ class Patient extends React.Component {
     };
 
     return (
-      <div className="column is-5">
+      <div className="column is-7">
         {formContent()}
 
         <hr />

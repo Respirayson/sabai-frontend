@@ -120,7 +120,7 @@ class Orders extends React.Component {
       >
         <div className="column is-12">
           <h1 style={{ color: "black", fontSize: "1.5em" }}>
-            Approve/ Reject Orders
+            Approve/Reject Orders
           </h1>
           <div className="field">
             <div className="control">

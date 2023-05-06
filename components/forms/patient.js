@@ -267,10 +267,19 @@ class MedicalTriageForm extends React.Component {
 class MedicalForm extends React.Component {
   constructor() {
     super();
+    this.state = {
+      showWomenClinicDetails: false,
+    };
   }
+
+  handleCheckboxChange = (event) => {
+    const { checked } = event.target;
+    this.setState({ showWomenClinicDetails: checked });
+  };
 
   render() {
     let { handleInputChange, formDetails } = this.props;
+    const { showWomenClinicDetails } = this.state;
 
     return (
       <div>
@@ -330,6 +339,80 @@ class MedicalForm extends React.Component {
         <hr />
 
         <div className="field">
+          <label className="label">
+            <input
+              name="women_clinic_checkbox"
+              type="checkbox"
+              checked={showWomenClinicDetails}
+              onChange={this.handleCheckboxChange}
+              style={{ marginRight: "10px" }}
+            />
+            Women's Clinic Triage
+          </label>
+        </div>
+
+        {showWomenClinicDetails && (
+          <div className="field">
+            <label className="label">Additional Information</label>
+            <div className="control">
+              <div className="columns">
+                <div className="column">
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      name="Breast Problem"
+                      style={{ marginRight: "10px" }}
+                    />
+                    Breast Problem
+                  </label>
+                </div>
+                <div className="column">
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      name="Genital Area Problem"
+                      style={{ marginRight: "10px" }}
+                    />
+                    Genital Area Problem
+                  </label>
+                </div>
+              </div>
+              <div className="columns">
+                <div className="column">
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      name="Menstruation Problem"
+                      style={{ marginRight: "10px" }}
+                    />
+                    Menstruation Problem
+                  </label>
+                </div>
+                <div className="column">
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      name="Others"
+                      style={{ marginRight: "10px" }}
+                    />
+                    Others
+                  </label>
+                  <textarea
+                    name="others_details"
+                    className="textarea"
+                    placeholder="Enter details..."
+                    onChange={handleInputChange}
+                    value={formDetails.others_details}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <hr />
+
+        <div className="field">
           <label className="label">Referred for (within clinic)</label>
           <div className="control" style={{ marginBottom: 20 }}>
             <input
@@ -373,7 +456,6 @@ class PrescriptionForm extends React.Component {
   }
 
   render() {
-    console.log(1);
     let {
       allergies,
       handleInputChange,
@@ -383,7 +465,6 @@ class PrescriptionForm extends React.Component {
       isEditing,
     } = this.props;
     console.log(this.props);
-    console.log("adsfasfasdf");
     return (
       <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Prescription</h1>

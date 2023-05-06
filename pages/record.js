@@ -230,7 +230,7 @@ class Record extends React.Component {
     let consultRows = consults.map((consult) => {
       let type = consult.type;
       let subType = consult.sub_type == null ? "General" : consult.sub_type;
-      let doctor = consult.doctor.name;
+      let doctor = consult.doctor.username;
       let referredFor =
         consult.referred_for == null ? "None" : consult.referred_for;
 

@@ -218,21 +218,20 @@ class MedicalTriageForm extends React.Component {
         </div>
 
         <div className="field is-grouped">
-        <div className="control is-expanded">
-          <label className="label">Left Eye</label>
-          <div className="control">
-            <input
-              name="left_eye_degree"
-              className="input"
-              type="text"
-              onChange={handleInputChange}
-              value={formDetails.left_eye_degree}
-            />
+          <div className="control is-expanded">
+            <label className="label">Left Eye</label>
+            <div className="control">
+              <input
+                name="left_eye_degree"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.left_eye_degree}
+              />
+            </div>
           </div>
-        </div>
 
-
-        <div className="control is-expanded">
+          <div className="control is-expanded">
             <label className="label">Right Eye</label>
             <div className="control">
               <input
@@ -246,22 +245,21 @@ class MedicalTriageForm extends React.Component {
           </div>
         </div>
 
-
         <div className="field is-grouped">
-        <div className="control is-expanded">
-          <label className="label">Cataract</label>
-          <div className="control">
-            <input
-              name="cataracts"
-              className="input"
-              type="text"
-              onChange={handleInputChange}
-              value={formDetails.cataracts}
-            />
+          <div className="control is-expanded">
+            <label className="label">Cataract</label>
+            <div className="control">
+              <input
+                name="cataracts"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.cataracts}
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="control is-expanded">
+          <div className="control is-expanded">
             <label className="label">Eye Pressure</label>
             <div className="control">
               <input
@@ -275,9 +273,6 @@ class MedicalTriageForm extends React.Component {
           </div>
         </div>
 
-
-
-        
         <br></br>
 
         <div className="field">
@@ -477,14 +472,25 @@ class MedicalForm extends React.Component {
         <div className="field">
           <label className="label">Referred for (within clinic)</label>
           <div className="control" style={{ marginBottom: 20 }}>
-            <input
+            <div className="select">
+              <select
+                name="referred_for"
+                onChange={this.handleInputChange}
+                default="Diagnostic"
+              >
+                <option value="Diagnostic">Diagnostic</option>
+                <option value="Acute">Acute</option>
+                <option value="Chronic">Chronic</option>
+              </select>
+            </div>
+            {/* <input
               name="referred_for"
               className="input"
               type="text"
               placeholder="Type specialty here..."
               onChange={handleInputChange}
               value={formDetails.referred_for}
-            />
+            /> */}
           </div>
         </div>
       </div>

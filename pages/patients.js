@@ -838,7 +838,9 @@ class Patients extends React.Component {
             <div className="column is-5">
               <label className="label">ID</label>
               <article className="message">
-                <div className="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
+                <div className="message-body">{`${
+                  patient.fields.village_prefix
+                }${patient.pk.toString().padStart(3, "0")}`}</div>
               </article>
               <label className="label">Name</label>
               <article className="message">

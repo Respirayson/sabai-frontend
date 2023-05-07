@@ -370,7 +370,9 @@ class Patient extends React.Component {
           <div className="column is-3">
             <label className="label">Village ID</label>
             <article className="message">
-              <div className="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
+              <div className="message-body">{`${
+                patient.fields.village_prefix
+              }${patient.pk.toString().padStart(3, "0")}`}</div>
             </article>
             <label className="label">Visit on</label>
             <div className="select is-fullwidth">

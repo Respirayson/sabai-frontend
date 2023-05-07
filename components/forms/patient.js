@@ -368,19 +368,6 @@ class MedicalForm extends React.Component {
         </div>
 
         <div className="field">
-          <label className="label">Diagnosis</label>
-          <div className="control">
-            <textarea
-              name="diagnosis"
-              className="textarea"
-              placeholder="Type your diagnosis here..."
-              onChange={handleInputChange}
-              value={formDetails.diagnosis}
-            />
-          </div>
-        </div>
-
-        <div className="field">
           <label className="label">Notes</label>
           <div className="control">
             <textarea
@@ -393,6 +380,18 @@ class MedicalForm extends React.Component {
           </div>
         </div>
 
+        <div className="field">
+          <label className="label">Diagnosis</label>
+          <div className="control">
+            <textarea
+              name="diagnosis"
+              className="textarea"
+              placeholder="Type your diagnosis here..."
+              onChange={handleInputChange}
+              value={formDetails.diagnosis}
+            />
+          </div>
+        </div>
         <hr />
 
         <div className="field">

@@ -11,7 +11,7 @@ import {
   VisitPrescriptionsTable,
   PatientView,
 } from "../components/views/patient";
-import { API_URL } from "../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../utils/constants";
 
 Modal.setAppElement("#__next");
 

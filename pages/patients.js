@@ -698,7 +698,9 @@ class Patients extends React.Component {
 
   renderSuggestion(suggestion) {
     let name = suggestion.fields.name;
-    let id = `${suggestion.fields.village_prefix} ${suggestion.pk}`;
+    let id = `${suggestion.fields.village_prefix} ${suggestion.pk
+      .toString()
+      .padStart(3, "0")}`;
     let imageURL = suggestion.fields.picture;
 
     return (

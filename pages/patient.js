@@ -250,9 +250,8 @@ class Patient extends React.Component {
     );
 
     let consultsEnriched = consults.map((consult) => {
-      let consultID = consult.id;
       let consultPrescriptions = prescriptions.filter((prescription) => {
-        return prescription.consult == consultID;
+        return prescription.visit == consult.visit;
       });
 
       return {
@@ -277,7 +276,7 @@ class Patient extends React.Component {
   async submitForm() {
     let { form } = this.props.query;
     let { formDetails, visitID, orders } = this.state;
-
+    console.log(visitID);
     var formPayload = {
       visit: visitID,
       ...formDetails,
@@ -305,7 +304,6 @@ class Patient extends React.Component {
           let orderPayload = {
             ...order,
             visit: visitID,
-            consult: consultId,
             doctor: window.localStorage.getItem("userID"),
           };
           orderPromises.push(axios.post(`${API_URL}/orders`, orderPayload));
@@ -313,28 +311,6 @@ class Patient extends React.Component {
 
         await Promise.all(orderPromises);
         alert("Medical Consult Completed!");
-        break;
-      case "dental":
-        let { data: dentalConsult } = await axios.post(`${API_URL}/consults`, {
-          ...formPayload,
-          doctor: window.localStorage.getItem("userID"),
-          type: "dental",
-        });
-        consultId = dentalConsult[0].pk;
-
-        orderPromises = [];
-
-        orders.forEach((order) => {
-          let orderPayload = {
-            ...order,
-            consult: consultId,
-            visit: visitID,
-            doctor: window.localStorage.getItem("userID"),
-          };
-          orderPromises.push(axios.post(`${API_URL}/orders`, orderPayload));
-        });
-
-        alert("Dental Consult Completed!");
         break;
     }
 

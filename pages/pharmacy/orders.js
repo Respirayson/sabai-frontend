@@ -59,7 +59,7 @@ class Orders extends React.Component {
           <button
             className="button is-dark level-item"
             onClick={() => {
-              Router.push(`/pharmacy/prescription?id=${visit.patient.id}`);
+              Router.push(`/pharmacy/prescription?id=${visit.id}`);
             }}
             style={{ display: "inline-block" }}
           >

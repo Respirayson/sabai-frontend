@@ -235,7 +235,7 @@ class VitalsView extends React.Component {
 
   render() {
     let { content } = this.props;
-
+    console.log(content);
     return (
       <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Vital Signs</h1>

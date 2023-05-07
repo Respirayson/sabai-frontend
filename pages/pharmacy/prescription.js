@@ -1,4 +1,5 @@
 import React from "react";
+import Router from "next/router";
 import { withAuthSync, logInCheck } from "../../utils/auth";
 import axios from "axios";
 import Modal from "react-modal";
@@ -36,20 +37,13 @@ class Prescription extends React.Component {
   }
 
   async onRefresh() {
-    let { id: patientId } = this.props.query;
-
-    let { data: patient } = await axios.get(`${API_URL}/patients/${patientId}`);
-
-    let { data: visit } = await axios.get(
-      `${API_URL}/visits?patient=${patientId}`
-    );
-
-    let visitId = visit[visit.length - 1].pk;
+    let { id: visitId } = this.props.query;
+    let { data: visit } = await axios.get(`${API_URL}/visits/${visitId}`);
 
     let { data: consultations } = await axios.get(
       `${API_URL}/consults?visit=${visitId}`
     );
-
+    console.log(consultations);
     let { data: medications } = await axios.get(`${API_URL}/medications`);
 
     let medicationsDict = {};
@@ -59,15 +53,15 @@ class Prescription extends React.Component {
 
       medicationsDict[medicationId] = quantity;
     });
-
-    this.setState({
-      patient: patient[0],
-      visit: visit[visit.length - 1],
-      medicationsDict,
-      consultations,
-    });
-
-    this.loadMedicationStock();
+    this.setState(
+      {
+        visit,
+        patient: visit.patient,
+        medicationsDict,
+        consultations,
+      },
+      () => this.loadMedicationStock()
+    );
   }
 
   async loadMedicationStock() {
@@ -102,6 +96,7 @@ class Prescription extends React.Component {
   async massUpdate(flag) {
     let { orders, visit } = this.state;
     let promises = [];
+    console.log(visit);
 
     orders.forEach((order) => {
       let orderId = order.id;
@@ -125,8 +120,10 @@ class Prescription extends React.Component {
     };
     promises.push(axios.patch(`${API_URL}/visits/${visit.id}`, visitPayload));
 
-    await Promise.all(promises);
-    alert("Order Completed!");
+    await Promise.all(promises).then(() => {
+      alert("Order Completed!");
+      Router.push("/pharmacy/orders");
+    });
   }
 
   async submitOrderEdit() {
@@ -210,7 +207,7 @@ class Prescription extends React.Component {
         contentLabel="Example Modal"
       >
         <PrescriptionForm
-          allergies={patient.fields.drug_allergy}
+          allergies={patient.drug_allergy}
           handleInputChange={this.handleOrderChange}
           formDetails={order}
           medicationOptions={options}
@@ -230,7 +227,7 @@ class Prescription extends React.Component {
         <div className="columns is-12">
           <div className="column is-2">
             <img
-              src={`${CLOUDINARY_URL}/${patient.fields.picture}`}
+              src={`${CLOUDINARY_URL}/${patient.picture}`}
               alt="Placeholder image"
               className="has-ratio"
               style={{
@@ -243,13 +240,13 @@ class Prescription extends React.Component {
           <div className="column is-3">
             <label className="label">Village ID</label>
             <article className="message">
-              <div className="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
+              <div className="message-body">{`${patient.village_prefix}${patient.id}`}</div>
             </article>
           </div>
           <div className="column is-3">
             <label className="label">Name</label>
             <article className="message">
-              <div className="message-body">{patient.fields.name}</div>
+              <div className="message-body">{patient.name}</div>
             </article>
           </div>
           <div className="column is-3"></div>

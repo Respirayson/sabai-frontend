@@ -240,6 +240,8 @@ class VitalsView extends React.Component {
       <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Vital Signs</h1>
 
+        <br></br>
+        
         <div className="field is-grouped">
           <div className="control is-expanded">
             <label className="label">Height</label>
@@ -299,6 +301,47 @@ class VitalsView extends React.Component {
             </div>
           </div>
         </div>
+
+        <div className="field is-grouped">
+          <div className="field is-expanded">
+            <label className="label">Left Eye</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.left_eye_degree}</div>
+              </article>
+            </div>
+          </div>
+
+          <div className="field is-expanded">
+            <label className="label">Right Eye</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.right_eye_degree}</div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div className="field is-grouped">
+          <div className="field is-expanded">
+            <label className="label">Cataract</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.cataracts}</div>
+              </article>
+            </div>
+          </div>
+
+          <div className="field is-expanded">
+            <label className="label">Eye Pressure</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.eye_pressure}</div>
+              </article>
+            </div>
+          </div>
+        </div>
+
 
         <hr />
 

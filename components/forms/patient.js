@@ -132,7 +132,7 @@ class MedicalTriageForm extends React.Component {
 
     return (
       <div>
-        <label className="label">Medical Triage Form</label>
+        <label className="label">Vitals</label>
         <div className="field is-grouped">
           <div className="control is-expanded">
             <label className="label">Height</label>
@@ -217,8 +217,70 @@ class MedicalTriageForm extends React.Component {
           </div>
         </div>
 
+        <div className="field is-grouped">
+        <div className="control is-expanded">
+          <label className="label">Left Eye</label>
+          <div className="control">
+            <input
+              name="left_eye_degree"
+              className="input"
+              type="text"
+              onChange={handleInputChange}
+              value={formDetails.left_eye_degree}
+            />
+          </div>
+        </div>
+
+
+        <div className="control is-expanded">
+            <label className="label">Right Eye</label>
+            <div className="control">
+              <input
+                name="right_eye_degree"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.right_eye_degree}
+              />
+            </div>
+          </div>
+        </div>
+
+
+        <div className="field is-grouped">
+        <div className="control is-expanded">
+          <label className="label">Cataract</label>
+          <div className="control">
+            <input
+              name="cataracts"
+              className="input"
+              type="text"
+              onChange={handleInputChange}
+              value={formDetails.cataracts}
+            />
+          </div>
+        </div>
+
+        <div className="control is-expanded">
+            <label className="label">Eye Pressure</label>
+            <div className="control">
+              <input
+                name="eye_pressure"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.eye_pressure}
+              />
+            </div>
+          </div>
+        </div>
+
+
+
+        
+        <br></br>
+
         <div className="field">
-          {/* <label className="label">HIV Po</label> */}
           <div className="control">
             <label className="checkbox">
               <input
@@ -227,7 +289,7 @@ class MedicalTriageForm extends React.Component {
                 onChange={handleInputChange}
                 value={formDetails.hiv_positive}
               />
-              HIV Positive?
+              &nbsp; HIV Positive?
             </label>
           </div>
         </div>
@@ -241,7 +303,7 @@ class MedicalTriageForm extends React.Component {
                 onChange={handleInputChange}
                 value={formDetails.ptb_positive}
               />
-              PTB Positive?
+              &nbsp; PTB Positive?
             </label>
           </div>
         </div>
@@ -255,7 +317,7 @@ class MedicalTriageForm extends React.Component {
                 onChange={handleInputChange}
                 value={formDetails.hepc_positive}
               />
-              HEPC Positive?
+              &nbsp; HEPC Positive?
             </label>
           </div>
         </div>

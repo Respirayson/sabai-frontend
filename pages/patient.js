@@ -60,7 +60,6 @@ class Patient extends React.Component {
 
   async onRefresh() {
     let { id: patientId } = this.props.query;
-    console.log(patientId);
     // gets patient data
     let { data: patient } = await axios.get(`${API_URL}/patients/${patientId}`);
 

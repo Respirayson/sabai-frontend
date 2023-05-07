@@ -439,7 +439,6 @@ class PrescriptionForm extends React.Component {
     let { medications } = this.props;
 
     let medication = medications.filter((med) => {
-      console.log(med);
       return medicine == med.pk;
     });
 
@@ -449,7 +448,6 @@ class PrescriptionForm extends React.Component {
 
   calculateMedicineReservedStock(medicine) {
     let { reservedMedications } = this.props;
-    console.log(reservedMedications);
 
     if (typeof reservedMedications[medicine] === "undefined") return 0;
     else return reservedMedications[medicine];
@@ -464,7 +462,6 @@ class PrescriptionForm extends React.Component {
       onSubmit,
       isEditing,
     } = this.props;
-    console.log(this.props);
     return (
       <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Prescription</h1>

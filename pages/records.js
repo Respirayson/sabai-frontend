@@ -43,7 +43,9 @@ class Records extends React.Component {
   renderTableContent() {
     let { patientsFiltered } = this.state;
     let patientsRows = patientsFiltered.map((patient) => {
-      let Id = `${patient.fields.village_prefix}${patient.pk}`;
+      let Id = `${patient.fields.village_prefix}${patient.pk
+        .toString()
+        .padStart(3, "0")}`;
       let imageUrl = `${CLOUDINARY_URL}/${patient.fields.picture}`;
       let fullName = patient.fields.name;
 

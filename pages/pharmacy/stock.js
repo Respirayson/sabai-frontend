@@ -165,13 +165,15 @@ class Stock extends React.Component {
                 >
                   Edit
                 </button>
+
+
+
               </div>
             </div>
           </td>
         </tr>
       );
     });
-
     return tableRows;
   }
 

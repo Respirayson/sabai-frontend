@@ -191,7 +191,7 @@ class MedicalTriageForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">Temperature (Decimal eg. 36.5)e</label>
+            <label className="label">Temperature (Decimal eg. 36.5)</label>
             <div className="control">
               <input
                 name="temperature"

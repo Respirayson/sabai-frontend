@@ -219,7 +219,7 @@ class MedicalTriageForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">Left Eye (Number/Number eg. 6/6)</label>
+            <label className="label">Left Eye (Number eg. 20)</label>
             <div className="control">
               <input
                 name="left_eye_degree"
@@ -232,7 +232,7 @@ class MedicalTriageForm extends React.Component {
           </div>
 
           <div className="control is-expanded">
-            <label className="label">Right Eye (Number/Number eg. 6/36)</label>
+            <label className="label">Right Eye (Number eg. 20)</label>
             <div className="control">
               <input
                 name="right_eye_degree"

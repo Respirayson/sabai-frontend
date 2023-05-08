@@ -141,7 +141,7 @@ class Record extends React.Component {
 
     let consultsEnriched = consults.map((consult) => {
       let consultPrescriptions = prescriptions.filter((prescription) => {
-        return prescription.visit == consult.visit;
+        return prescription.visit.id == consult.visit.id;
       });
 
       return {

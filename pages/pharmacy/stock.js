@@ -69,7 +69,7 @@ class Stock extends React.Component {
         await axios.patch(`${API_URL}/medications/${key}`, medicationDetails);
         alert("Medication updated!");
       } else {
-        alert("Not enough medication left!");
+        alert("Insufficient medication!");
       }
     } else {
       medicationDetails.quantity = changeQuantity;
@@ -165,9 +165,6 @@ class Stock extends React.Component {
                 >
                   Edit
                 </button>
-
-
-
               </div>
             </div>
           </td>

@@ -70,7 +70,7 @@ class Patient extends React.Component {
 
     // sorts
     let visitsSorted = visits.sort((a, b) => {
-      return b.pk - a.pk;
+      return b.id - a.id;
     });
 
     this.setState({
@@ -248,10 +248,11 @@ class Patient extends React.Component {
     let { data: prescriptions } = await axios.get(
       `${API_URL}/orders?visit=${visitID}`
     );
+    console.log(prescriptions);
 
     let consultsEnriched = consults.map((consult) => {
       let consultPrescriptions = prescriptions.filter((prescription) => {
-        return prescription.visit == consult.visit;
+        return prescription.visit.id == consult.visit.id;
       });
 
       return {
@@ -259,6 +260,7 @@ class Patient extends React.Component {
         prescriptions: consultPrescriptions,
       };
     });
+    console.log(consultsEnriched);
 
     let { data: vitals } = await axios.get(
       `${API_URL}/vitals?visit=${visitID}`
@@ -610,6 +612,9 @@ const formModalStyles = {
     top: "12.5%",
     bottom: "12.5%",
   },
+  overlay: {
+    zIndex: 4,
+  },
 };
 
 const viewModalStyles = {
@@ -618,6 +623,9 @@ const viewModalStyles = {
     right: "12.5%",
     top: "12.5%",
     bottom: "12.5%",
+  },
+  overlay: {
+    zIndex: 4,
   },
 };
 

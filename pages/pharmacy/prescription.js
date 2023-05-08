@@ -43,7 +43,6 @@ class Prescription extends React.Component {
     let { data: consultations } = await axios.get(
       `${API_URL}/consults?visit=${visitId}`
     );
-    console.log(consultations);
     let { data: medications } = await axios.get(`${API_URL}/medications`);
 
     let medicationsDict = {};
@@ -75,7 +74,6 @@ class Prescription extends React.Component {
     let { data: allOrders } = await axios.get(
       `${API_URL}/orders?order_status=PENDING`
     );
-
     // key -> medicine pk
     // value -> total reserved
     let reservedMedications = {};
@@ -93,37 +91,45 @@ class Prescription extends React.Component {
     this.setState({ orders, medications, reservedMedications, mounted: true });
   }
 
-  async massUpdate(flag) {
+  massUpdate(flag) {
+    console.log("mass update");
     let { orders, visit } = this.state;
-    let promises = [];
-    console.log(visit);
+    let medicationUpdates = [];
+    let orderUpdates = [];
 
     orders.forEach((order) => {
-      let orderId = order.id;
-      let payload = {
-        order_status: flag,
-      };
-
-      let medicineId = order.medicine.id;
       let medPayload = {
         quantityChange: order.quantity,
       };
 
-      promises.push(
-        axios.patch(`${API_URL}/medications/${medicineId}`, medPayload)
+      let orderPayload = {
+        order_status: flag,
+      };
+
+      medicationUpdates.push(() =>
+        axios.patch(`${API_URL}/medications/${order.medicine.id}`, medPayload)
       );
-      promises.push(axios.patch(`${API_URL}/orders/${orderId}`, payload));
+      orderUpdates.push(() =>
+        axios.patch(`${API_URL}/orders/${order.id}`, orderPayload)
+      );
     });
 
     let visitPayload = {
       status: "finished",
     };
-    promises.push(axios.patch(`${API_URL}/visits/${visit.id}`, visitPayload));
+    orderUpdates.push(() =>
+      axios.patch(`${API_URL}/visits/${visit.id}`, visitPayload)
+    );
 
-    await Promise.all(promises).then(() => {
-      alert("Order Completed!");
-      Router.push("/pharmacy/orders");
-    });
+    Promise.all(medicationUpdates.map((x) => x()))
+      .then(() => Promise.all(orderUpdates.map((x) => x())))
+      .then(() => {
+        alert("Order Completed!");
+        Router.push("/pharmacy/orders");
+      })
+      .catch(() => {
+        alert("Insufficient medication!");
+      });
   }
 
   async submitOrderEdit() {

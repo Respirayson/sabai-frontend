@@ -284,7 +284,7 @@ class MedicalTriageForm extends React.Component {
                 onChange={handleInputChange}
                 value={formDetails.phq_9}
               />
-              PHQ-9
+              &nbsp; PHQ-9
             </label>
           </div>
           <div className="control is-expanded">
@@ -292,10 +292,10 @@ class MedicalTriageForm extends React.Component {
               <input
                 type="checkbox"
                 name="gad_7"
-                nChange={handleInputChange}
+                onChange={handleInputChange}
                 value={formDetails.gad_7}
               />
-              GAD-7
+              &nbsp; GAD-7
             </label>
           </div>
         </div>

@@ -135,7 +135,7 @@ class MedicalTriageForm extends React.Component {
         <label className="label">Vitals</label>
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">Height</label>
+            <label className="label">Height (Decimal eg. 160.5)</label>
             <div className="control">
               <input
                 name="height"
@@ -148,7 +148,7 @@ class MedicalTriageForm extends React.Component {
           </div>
 
           <div className="control is-expanded">
-            <label className="label">Weight</label>
+            <label className="label">Weight (Decimal eg. 60.2)</label>
             <div className="control">
               <input
                 name="weight"
@@ -163,7 +163,7 @@ class MedicalTriageForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">Systolic</label>
+            <label className="label">Systolic (Number eg. 10)</label>
             <div className="control">
               <input
                 name="systolic"
@@ -176,7 +176,7 @@ class MedicalTriageForm extends React.Component {
           </div>
 
           <div className="control is-expanded">
-            <label className="label">Diastolic</label>
+            <label className="label">Diastolic (Number eg. 10)</label>
             <div className="control">
               <input
                 name="diastolic"
@@ -191,7 +191,7 @@ class MedicalTriageForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">Temperature</label>
+            <label className="label">Temperature (Decimal eg. 36.5)e</label>
             <div className="control">
               <input
                 name="temperature"
@@ -204,7 +204,7 @@ class MedicalTriageForm extends React.Component {
           </div>
 
           <div className="control is-expanded">
-            <label className="label">Heart Rate</label>
+            <label className="label">Heart Rate (Number eg. 120)</label>
             <div className="control">
               <input
                 name="heart_rate"
@@ -219,7 +219,7 @@ class MedicalTriageForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">Left Eye</label>
+            <label className="label">Left Eye (Number eg. 20)</label>
             <div className="control">
               <input
                 name="left_eye_degree"
@@ -232,7 +232,7 @@ class MedicalTriageForm extends React.Component {
           </div>
 
           <div className="control is-expanded">
-            <label className="label">Right Eye</label>
+            <label className="label">Right Eye (Number eg. 20)</label>
             <div className="control">
               <input
                 name="right_eye_degree"
@@ -247,7 +247,7 @@ class MedicalTriageForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">Cataract</label>
+            <label className="label">Cataract (Text eg. Anyth)</label>
             <div className="control">
               <input
                 name="cataracts"
@@ -260,7 +260,7 @@ class MedicalTriageForm extends React.Component {
           </div>
 
           <div className="control is-expanded">
-            <label className="label">Eye Pressure</label>
+            <label className="label">Eye Pressure (Text eg. anyth)</label>
             <div className="control">
               <input
                 name="eye_pressure"

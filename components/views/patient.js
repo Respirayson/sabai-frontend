@@ -134,92 +134,6 @@ class ConsultationsView extends React.Component {
   }
 }
 
-class DentalTriageView extends React.Component {
-  constructor() {
-    super();
-  }
-
-  render() {
-    let { content } = this.props;
-
-    return (
-      <div className="column is-12">
-        <h1 style={{ color: "black", fontSize: "1.5em" }}>Dental Triage</h1>
-        <div className="field">
-          <label className="label">Complaints</label>
-          <article className="message">
-            <div className="message-body">{content.fields.complaints}</div>
-          </article>
-        </div>
-
-        <div className="field">
-          <label className="label">Intraoral</label>
-          <article className="message">
-            <div className="message-body">{content.fields.intraoral}</div>
-          </article>
-        </div>
-
-        <div className="field">
-          <label className="label">Diagnosis</label>
-          <article className="message">
-            <div className="message-body">{content.fields.diagnosis}</div>
-          </article>
-        </div>
-        <hr />
-
-        <div className="field is-grouped">
-          <div className="control is-expanded">
-            <label className="label">EXO</label>
-            <div className="control">
-              <article className="message">
-                <div className="message-body">{content.fields.exo}</div>
-              </article>
-            </div>
-          </div>
-
-          <div className="control is-expanded">
-            <label className="label">CAP</label>
-            <div className="control">
-              <article className="message">
-                <div className="message-body">{content.fields.cap}</div>
-              </article>
-            </div>
-          </div>
-        </div>
-
-        <div className="field is-grouped">
-          <div className="control is-expanded">
-            <label className="label">SDF</label>
-            <div className="control">
-              <article className="message">
-                <div className="message-body">{content.fields.sdf}</div>
-              </article>
-            </div>
-          </div>
-
-          <div className="control is-expanded">
-            <label className="label">F</label>
-            <div className="control">
-              <article className="message">
-                <div className="message-body">{content.fields.f}</div>
-              </article>
-            </div>
-          </div>
-        </div>
-
-        <div className="field">
-          <label className="label">Others</label>
-          <article className="message">
-            <div className="message-body">{content.fields.others}</div>
-          </article>
-        </div>
-
-        <hr />
-      </div>
-    );
-  }
-}
-
 class VitalsView extends React.Component {
   constructor() {
     super();
@@ -227,14 +141,12 @@ class VitalsView extends React.Component {
 
   render() {
     let { content } = this.props;
-    console.log(content);
     return (
       <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Vital Signs</h1>
 
         <br></br>
 
-        
         <div className="field is-grouped">
           <div className="control is-expanded">
             <label className="label">Height</label>
@@ -459,7 +371,6 @@ class PatientView extends React.Component {
 export {
   ConsultationsTable,
   ConsultationsView,
-  DentalTriageView,
   VitalsView,
   VisitPrescriptionsTable,
   PatientView,

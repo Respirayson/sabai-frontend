@@ -6,14 +6,14 @@ import Router from "next/router";
 import Modal from "react-modal";
 import moment from "moment";
 import {
-  MedicalTriageForm,
+  VitalsForm,
   MedicalForm,
   PrescriptionForm,
 } from "../components/forms/patient";
 import {
   ConsultationsTable,
   ConsultationsView,
-  MedicalTriageView,
+  VitalsView,
   VisitPrescriptionsTable,
 } from "../components/views/patient";
 import { API_URL, CLOUDINARY_URL } from "../utils/constants";
@@ -96,7 +96,7 @@ class Patient extends React.Component {
 
     let modalContent =
       viewType == "vitals" ? (
-        <MedicalTriageView content={vitals} />
+        <VitalsView content={vitals} />
       ) : (
         <ConsultationsView content={consult} />
       );
@@ -248,7 +248,6 @@ class Patient extends React.Component {
     let { data: prescriptions } = await axios.get(
       `${API_URL}/orders?visit=${visitID}`
     );
-    console.log(prescriptions);
 
     let consultsEnriched = consults.map((consult) => {
       let consultPrescriptions = prescriptions.filter((prescription) => {
@@ -260,7 +259,6 @@ class Patient extends React.Component {
         prescriptions: consultPrescriptions,
       };
     });
-    console.log(consultsEnriched);
 
     let { data: vitals } = await axios.get(
       `${API_URL}/vitals?visit=${visitID}`
@@ -278,7 +276,6 @@ class Patient extends React.Component {
   async submitForm() {
     let { form } = this.props.query;
     let { formDetails, visitID, orders } = this.state;
-    console.log(visitID);
     var formPayload = {
       visit: visitID,
       ...formDetails,
@@ -478,7 +475,7 @@ class Patient extends React.Component {
       switch (form) {
         case "vitals":
           return (
-            <MedicalTriageForm
+            <VitalsForm
               formDetails={formDetails}
               handleInputChange={this.handleInputChange}
             />

@@ -92,7 +92,6 @@ class Prescription extends React.Component {
   }
 
   massUpdate(flag) {
-    console.log("mass update");
     let { orders, visit } = this.state;
     let medicationUpdates = [];
     let orderUpdates = [];

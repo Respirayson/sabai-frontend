@@ -87,9 +87,9 @@ async function auth(ctx) {
   }
 
   // We already checked for server. This should only happen on client.
-  if (!token) {
-    Router.push("/login");
-  }
+  // if (!token) {
+  //   Router.push("/login");
+  // }
 
   return token;
 }

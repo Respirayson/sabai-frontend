@@ -245,7 +245,7 @@ class VitalsView extends React.Component {
         
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">Height &#40Decimal&#41</label>
+            <label className="label">Height</label>
             <div className="control">
               <article className="message">
                 <div className="message-body">{content.height}</div>

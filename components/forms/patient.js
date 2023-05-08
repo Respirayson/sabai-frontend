@@ -275,31 +275,6 @@ class MedicalTriageForm extends React.Component {
 
         <br></br>
 
-        <div className="field is-grouped">
-          <div className="control is-expanded">
-            <label className="checkbox">
-              <input
-                type="checkbox"
-                name="phq_9"
-                onChange={handleInputChange}
-                value={formDetails.phq_9}
-              />
-              PHQ-9
-            </label>
-          </div>
-          <div className="control is-expanded">
-            <label className="checkbox">
-              <input
-                type="checkbox"
-                name="gad_7"
-                nChange={handleInputChange}
-                value={formDetails.gad_7}
-              />
-              GAD-7
-            </label>
-          </div>
-        </div>
-
         <div className="field">
           <div className="control">
             <label className="checkbox">

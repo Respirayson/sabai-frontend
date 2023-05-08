@@ -81,6 +81,31 @@ class Stock extends React.Component {
     this.onRefresh();
   }
 
+    async handleDelete(pk) {
+      const { medications, medicationsFiltered } = this.state;
+  
+      const confirmed = window.confirm(
+        "Are you sure you want to delete this medication?"
+      );
+      if (!confirmed) {
+        return;
+      }
+  
+      try {
+        await axios.delete(`${API_URL}/medications/${pk}`);
+        const updatedMedications = medications.filter((medication) => medication.pk !== pk);
+        const updatedMedicationsFiltered = medicationsFiltered.filter(
+          (medication) => medication.pk !== pk
+        );
+        this.setState({
+          medications: updatedMedications,
+          medicationsFiltered: updatedMedicationsFiltered,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
   onFilterChange(event) {
     let { medications } = this.state;
 
@@ -165,9 +190,12 @@ class Stock extends React.Component {
                 >
                   Edit
                 </button>
-
-
-
+                <button
+                  className="button is-danger"
+                  onClick={() => this.handleDelete(medication.pk)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </td>

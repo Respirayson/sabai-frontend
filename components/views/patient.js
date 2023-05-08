@@ -13,7 +13,6 @@ class ConsultationsTable extends React.Component {
         <thead>
           <tr>
             <th>Type</th>
-            <th>Sub Type</th>
             <th>Doctor</th>
             <th>Referred For</th>
             <th>Action</th>
@@ -64,13 +63,6 @@ class ConsultationsView extends React.Component {
 
     return (
       <div>
-        <div className="field">
-          <label className="label">Sub Type</label>
-          <article className="message">
-            <div className="message-body">{consult.sub_type}</div>
-          </article>
-        </div>
-
         <div className="field">
           <label className="label">Problems</label>
           <article className="message">

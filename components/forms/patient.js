@@ -245,18 +245,6 @@ class MedicalForm extends React.Component {
       <div>
         <label className="label">Medical Consultation Form</label>
 
-        <label className="label">Sub-type</label>
-        <div className="control" style={{ marginBottom: 20 }}>
-          <input
-            name="sub_type"
-            className="input"
-            type="text"
-            placeholder="General"
-            onChange={handleInputChange}
-            value={formDetails.sub_type}
-          />
-        </div>
-
         <div className="field">
           <label className="label">Problems</label>
           <div className="control">

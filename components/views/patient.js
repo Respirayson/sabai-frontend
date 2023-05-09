@@ -250,6 +250,25 @@ class VitalsView extends React.Component {
         <hr />
 
         <div className="field">
+          <label className="label">PHQ-9</label>
+          <article className="message">
+            <div className="message-body">
+              {content.phq_9 ? "Completed" : "Nil"}
+            </div>
+          </article>
+        </div>
+        <div className="field">
+          <label className="label">GAD-7</label>
+          <article className="message">
+            <div className="message-body">
+              {content.gad_7 ? "Completed" : "Nil"}
+            </div>
+          </article>
+        </div>
+
+        <hr />
+
+        <div className="field">
           <label className="label">HIV Positive</label>
           <article className="message">
             <div className="message-body">

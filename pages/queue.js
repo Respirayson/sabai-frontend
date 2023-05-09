@@ -38,18 +38,14 @@ class Queue extends React.Component {
     const { visits, visitsFiltered } = this.state;
 
     const confirmed = window.confirm(
-      "Are you sure you want to delete this visit from the queue?"
+      "Are you sure you want to delete this visit?"
     );
     if (!confirmed) {
       return;
     }
 
     try {
-      let payload = {
-        patient: id,
-        status: "ended",
-      };
-      await axios.post(`${API_URL}/visits`, payload);
+      await axios.end(`${API_URL}/visits/${id}`);
       const updatedVisits = visits.filter((visit) => visit.id !== id);
       const updatedVisitsFiltered = visitsFiltered.filter(
         (visit) => visit.id !== id

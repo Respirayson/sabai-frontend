@@ -48,8 +48,9 @@ class Queue extends React.Component {
       let payload = {
         patient: id,
         status: "ended",
+        visit_date: moment().format("YYYY-MM-DD"),
       };
-      // await axios.post(`${API_URL}/visits`, payload);
+      await axios.post(`${API_URL}/visits`, payload);
       const updatedVisits = visits.filter((visit) => visit.id !== id);
       const updatedVisitsFiltered = visitsFiltered.filter(
         (visit) => visit.id !== id

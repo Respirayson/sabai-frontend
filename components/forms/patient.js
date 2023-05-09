@@ -152,7 +152,7 @@ class VitalsForm extends React.Component {
         </div>
 
         <br></br>
-        {/* 
+
         <div className="field is-grouped">
           <div className="control is-expanded">
             <label className="checkbox">
@@ -176,7 +176,7 @@ class VitalsForm extends React.Component {
               &nbsp; GAD-7
             </label>
           </div>
-        </div> */}
+        </div>
 
         <div className="field">
           <div className="control">

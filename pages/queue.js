@@ -45,7 +45,7 @@ class Queue extends React.Component {
     }
 
     try {
-      await axios.end(`${API_URL}/visits/${id}`);
+      await axios.delete(`${API_URL}/visits/${id}`);
       const updatedVisits = visits.filter((visit) => visit.id !== id);
       const updatedVisitsFiltered = visitsFiltered.filter(
         (visit) => visit.id !== id

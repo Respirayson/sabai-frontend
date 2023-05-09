@@ -50,14 +50,14 @@ class Queue extends React.Component {
         status: "ended",
       };
       await axios.post(`${API_URL}/visits`, payload);
-      const updatedVisits = visits.filter((visit) => visit.id !== id);
-      const updatedVisitsFiltered = visitsFiltered.filter(
-        (visit) => visit.id !== id
-      );
-      this.setState({
-        visits: updatedVisits,
-        visitsFiltered: updatedVisitsFiltered,
-      });
+      // const updatedVisits = visits.filter((visit) => visit.id !== id);
+      // const updatedVisitsFiltered = visitsFiltered.filter(
+      //   (visit) => visit.id !== id
+      // );
+      // this.setState({
+      //   visits: updatedVisits,
+      //   visitsFiltered: updatedVisitsFiltered,
+      // });
     } catch (error) {
       console.error(error);
     }

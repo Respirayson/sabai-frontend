@@ -35,7 +35,7 @@ class Queue extends React.Component {
     this.setState({ visits, visitsFiltered: visits });
   }
 
-  async handleDelete(id) {
+  async handleDelete(visit_id, patient_id) {
     const { visits, visitsFiltered } = this.state;
 
     const confirmed = window.confirm(
@@ -48,15 +48,15 @@ class Queue extends React.Component {
     try {
       // await axios.delete(`${API_URL}/visits/${id}`);
       let payload = {
-        patient: id,
+        patient: patient_id,
         status: "ended",
         visit_date: moment().format("YYYY-MM-DD"),
       };
   
       await axios.post(`${API_URL}/visits`, payload);
-      const updatedVisits = visits.filter((visit) => visit.id !== id);
+      const updatedVisits = visits.filter((visit) => visit.id !== visit_id);
       const updatedVisitsFiltered = visitsFiltered.filter(
-        (visit) => visit.id !== id
+        (visit) => visit.id !== visit_id
       );
       this.setState({
         visits: updatedVisits,
@@ -119,7 +119,7 @@ class Queue extends React.Component {
       let deleteVisit = (
         <button
           className="button is-danger"
-          onClick={() => this.handleDelete(visit.patient.id)}
+          onClick={() => this.handleDelete(visit.id, visit.patient.id)}
         >
           Delete
         </button>

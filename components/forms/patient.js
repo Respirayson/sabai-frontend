@@ -245,6 +245,21 @@ class MedicalForm extends React.Component {
 
     return (
       <div>
+        <label className="label">Patient Photo Details</label>
+
+        <div className="field">
+          <label className="label">Photo URL</label>
+          <div className="control">
+            <textarea
+              name="photo_url"
+              className="textarea"
+              placeholder="Insert Photo URL here..."
+              onChange={handleInputChange}
+              value={formDetails.photo_url}
+            />
+          </div>
+        </div>
+
         <label className="label">Medical Consultation Form</label>
 
         <div className="field">
@@ -253,7 +268,7 @@ class MedicalForm extends React.Component {
             <textarea
               name="problems"
               className="textarea"
-              placeholder="Type your problems here..."
+              placeholder="Type problems here..."
               onChange={handleInputChange}
               value={formDetails.problems}
             />
@@ -266,7 +281,7 @@ class MedicalForm extends React.Component {
             <textarea
               name="diagnosis"
               className="textarea"
-              placeholder="Type your diagnosis here..."
+              placeholder="Type diagnosis here..."
               onChange={handleInputChange}
               value={formDetails.diagnosis}
             />
@@ -278,7 +293,7 @@ class MedicalForm extends React.Component {
             <textarea
               name="notes"
               className="textarea"
-              placeholder="Type your notes here..."
+              placeholder="Type notes here..."
               onChange={handleInputChange}
               value={formDetails.notes}
             />
@@ -365,10 +380,7 @@ class MedicalForm extends React.Component {
           <label className="label">* Referred for (within clinic)</label>
           <div className="control" style={{ marginBottom: 20 }}>
             <div className="select">
-              <select
-                name="referred_for"
-                onChange={handleInputChange}
-              >
+              <select name="referred_for" onChange={handleInputChange}>
                 <option>Please Select...</option>
                 <option value="Diagnostic">Diagnostic</option>
                 <option value="Acute">Acute</option>

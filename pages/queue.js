@@ -46,14 +46,14 @@ class Queue extends React.Component {
     }
 
     try {
-      // await axios.delete(`${API_URL}/visits/${id}`);
-      let payload = {
-        patient: patient_id,
-        status: "ended",
-        visit_date: moment().format("YYYY-MM-DD"),
-      };
+      await axios.delete(`${API_URL}/visits/${id}`);
+      // let payload = {
+      //   patient: patient_id,
+      //   status: "ended",
+      //   visit_date: moment().format("YYYY-MM-DD"),
+      // };
   
-      await axios.post(`${API_URL}/visits`, payload);
+      // await axios.post(`${API_URL}/visits`, payload);
       const updatedVisits = visits.filter((visit) => visit.id !== visit_id);
       const updatedVisitsFiltered = visitsFiltered.filter(
         (visit) => visit.id !== visit_id

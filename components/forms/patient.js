@@ -138,7 +138,7 @@ class VitalsForm extends React.Component {
           </div>
 
           <div className="control is-expanded">
-            <label className="label">Eye Pressure (Text eg. anyth)</label>
+            <label className="label">Eye Pressure (Text eg. Anyth)</label>
             <div className="control">
               <input
                 name="eye_pressure"
@@ -155,7 +155,7 @@ class VitalsForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">PHQ-9 (Text eg. completed)</label>
+            <label className="label">PHQ-9 (Text eg. Completed)</label>
             <div className="control">
               <input
                 name="phq_9"
@@ -168,7 +168,7 @@ class VitalsForm extends React.Component {
           </div>
 
           <div className="control is-expanded">
-            <label className="label">GAD-7 (Text eg. completed)</label>
+            <label className="label">GAD-7 (Text eg. Completed)</label>
             <div className="control">
               <input
                 name="gad_7"

@@ -7,6 +7,7 @@ class ConsultationsTable extends React.Component {
 
   render() {
     let { consultRows } = this.props;
+    console.log(consultRows);
 
     return (
       <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">

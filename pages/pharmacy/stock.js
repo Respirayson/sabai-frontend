@@ -80,7 +80,7 @@ class Stock extends React.Component {
     this.toggleModal();
     this.onRefresh();
   }
-  
+
   async handleDelete(pk) {
     const { medications, medicationsFiltered } = this.state;
 
@@ -93,7 +93,9 @@ class Stock extends React.Component {
 
     try {
       await axios.delete(`${API_URL}/medications/${pk}`);
-      const updatedMedications = medications.filter((medication) => medication.pk !== pk);
+      const updatedMedications = medications.filter(
+        (medication) => medication.pk !== pk
+      );
       const updatedMedicationsFiltered = medicationsFiltered.filter(
         (medication) => medication.pk !== pk
       );
@@ -189,6 +191,13 @@ class Stock extends React.Component {
                   onClick={() => this.toggleModal(true, medicationDetails)}
                 >
                   Edit
+                </button>
+
+                <button
+                  className="button is-danger level-item"
+                  onClick={() => this.handleDelete(medicationDetails)}
+                >
+                  Delete
                 </button>
               </div>
             </div>

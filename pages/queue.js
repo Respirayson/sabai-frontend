@@ -120,7 +120,7 @@ class Queue extends React.Component {
       let deleteVisit = (
         <button
           className="button is-danger"
-          onClick={() => this.handleDelete(visit.id)}
+          onClick={() => this.handleDelete(visit.patient.id)}
         >
           Delete
         </button>

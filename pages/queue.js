@@ -3,6 +3,7 @@ import { withAuthSync, logInCheck } from "../utils/auth";
 import axios from "axios";
 import Router from "next/router";
 import { API_URL, CLOUDINARY_URL } from "../utils/constants";
+import moment from "moment";
 
 class Queue extends React.Component {
   static async getInitialProps(ctx) {
@@ -49,6 +50,7 @@ class Queue extends React.Component {
       let payload = {
         patient: id,
         status: "ended",
+        visit_date: moment().format("YYYY-MM-DD"),
       };
   
       await axios.post(`${API_URL}/visits`, payload);

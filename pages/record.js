@@ -34,7 +34,7 @@ class Record extends React.Component {
       visitID: null,
       consults: [],
       orders: [],
-      referrals: [],
+      referredFor: [],
       vitals: {},
       formDetails: {},
       medicationDetails: {},

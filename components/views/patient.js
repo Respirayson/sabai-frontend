@@ -251,50 +251,55 @@ class VitalsView extends React.Component {
 
         <hr />
 
-        <div className="field">
-          <label className="label">PHQ-9</label>
-          <article className="message">
-            <div className="message-body">
-              {content.phq_9 ? "Completed" : "Nil"}
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">phq-9</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.phq_9}</div>
+              </article>
             </div>
-          </article>
-        </div>
-        <div className="field">
-          <label className="label">GAD-7</label>
-          <article className="message">
-            <div className="message-body">
-              {content.gad_7 ? "Completed" : "Nil"}
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">GAD-7</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.gad_7}</div>
+              </article>
             </div>
-          </article>
+          </div>
         </div>
 
         <hr />
 
-        <div className="field">
-          <label className="label">HIV Positive</label>
-          <article className="message">
-            <div className="message-body">
-              {content.hiv_positive ? "Positive" : "Negative"}
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">HIV Positive</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.hiv_positive}</div>
+              </article>
             </div>
-          </article>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">PTB Positive</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.ptb_positive}</div>
+              </article>
+            </div>
+          </div>
         </div>
 
-        <div className="field">
-          <label className="label">PTB Positive</label>
-          <article className="message">
-            <div className="message-body">
-              {content.ptb_positive ? "Positive" : "Negative"}
-            </div>
-          </article>
-        </div>
-
-        <div className="field">
+        <div className="control is-expanded">
           <label className="label">HEPC Positive</label>
-          <article className="message">
-            <div className="message-body">
-              {content.hepc_positive ? "Positive" : "Negative"}
-            </div>
-          </article>
+          <div className="control">
+            <article className="message">
+              <div className="message-body">{content.hepc_positive}</div>
+            </article>
+          </div>
         </div>
       </div>
     );

@@ -155,70 +155,72 @@ class VitalsForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="checkbox">
+            <label className="label">PHQ-9 (Text eg. completed)</label>
+            <div className="control">
               <input
-                type="checkbox"
                 name="phq_9"
+                className="input"
+                type="text"
                 onChange={handleInputChange}
                 value={formDetails.phq_9}
               />
-              &nbsp; PHQ-9
-            </label>
+            </div>
           </div>
+
           <div className="control is-expanded">
-            <label className="checkbox">
+            <label className="label">GAD-7 (Text eg. completed)</label>
+            <div className="control">
               <input
-                type="checkbox"
                 name="gad_7"
+                className="input"
+                type="text"
                 onChange={handleInputChange}
                 value={formDetails.gad_7}
               />
-              &nbsp; GAD-7
-            </label>
+            </div>
           </div>
         </div>
 
-        <div className="field">
-          <div className="control">
-            <label className="checkbox">
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">HIV Positive (Text eg. Positive)</label>
+            <div className="control">
               <input
-                type="checkbox"
                 name="hiv_positive"
+                className="input"
+                type="text"
                 onChange={handleInputChange}
                 value={formDetails.hiv_positive}
               />
-              &nbsp; HIV Positive?
-            </label>
+            </div>
           </div>
-        </div>
 
-        <div className="field">
-          <div className="control">
-            <label className="checkbox">
+          <div className="control is-expanded">
+            <label className="label">PTB Positive (Text eg. Positive)</label>
+            <div className="control">
               <input
-                type="checkbox"
                 name="ptb_positive"
+                className="input"
+                type="text"
                 onChange={handleInputChange}
                 value={formDetails.ptb_positive}
               />
-              &nbsp; PTB Positive?
-            </label>
+            </div>
           </div>
         </div>
 
-        <div className="field">
-          <div className="control">
-            <label className="checkbox">
+        <div className="control is-expanded">
+            <label className="label">HEPC Positive (Text eg. Positive)</label>
+            <div className="control">
               <input
-                type="checkbox"
                 name="hepc_positive"
+                className="input"
+                type="text"
                 onChange={handleInputChange}
                 value={formDetails.hepc_positive}
               />
-              &nbsp; HEPC Positive?
-            </label>
+            </div>
           </div>
-        </div>
       </div>
     );
   }

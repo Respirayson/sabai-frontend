@@ -39,7 +39,7 @@ class Patient extends React.Component {
       visitID: null,
       consults: [],
       orders: [],
-      referrals: [],
+      referredFor: [],
       vitals: {},
       formDetails: {},
       medicationDetails: {},
@@ -408,7 +408,7 @@ class Patient extends React.Component {
       // let subType = consult.sub_type == null ? "General" : consult.sub_type;
       let doctor = consult.doctor.username;
       let referredFor =
-        consult.referred_for == null ? "None" : consult.referred_for;
+        consult.referredFor == null ? "None" : consult.referredFor;
       return (
         <tr key={consult.id}>
           {/* <td>{type}</td>

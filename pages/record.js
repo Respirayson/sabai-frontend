@@ -238,9 +238,6 @@ class Record extends React.Component {
 
       return (
         <tr key={consult.pk}>
-          <td>{type}</td>
-          <td>{referredFor}</td>
-          {/* <td>{subType}</td> */}
           <td>{doctor}</td>
           <td>{referredFor}</td>
           <td>

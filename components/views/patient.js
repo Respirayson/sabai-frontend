@@ -93,6 +93,7 @@ class ConsultationsView extends React.Component {
 
     let type = content.type;
     let prescriptions = content.prescriptions;
+    console.log(content);
 
     return (
       <div className="column is-12">

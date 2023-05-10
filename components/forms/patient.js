@@ -366,7 +366,6 @@ class MedicalForm extends React.Component {
               <select
                 name="referred_for"
                 onChange={handleInputChange}
-                selected="Diagnostic"
               >
                 <option value="Diagnostic" selected>Diagnostic</option>
                 <option value="Acute">Acute</option>

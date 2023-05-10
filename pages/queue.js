@@ -47,7 +47,6 @@ class Queue extends React.Component {
 
     try {
       // await axios.delete(`${API_URL}/visits/${id}`);
-      console.log(id);
       let payload = {
         patient: id,
         status: "ended",

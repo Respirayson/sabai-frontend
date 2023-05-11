@@ -287,6 +287,7 @@ class Patient extends React.Component {
     switch (form) {
       case "vitals":
         await axios.post(`${API_URL}/vitals`, formPayload);
+        console.log(formPayload);
         alert("Vitals completed!");
         break;
       case "medical":

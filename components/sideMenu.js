@@ -47,11 +47,12 @@ const SideMenu = (props) => (
     </ul>
     <p className="menu-label sideMenuItem">Others</p>
     <ul className="menu-list">
-      <li>
+      {/* uncomment to show users tab */}
+      {/* <li>
         <Link href="/users" replace>
           Users
         </Link>
-      </li>
+      </li> */}
       <li onClick={logout}>
         <a>Logout</a>
       </li>

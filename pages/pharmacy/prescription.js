@@ -325,8 +325,6 @@ class Prescription extends React.Component {
 
       return (
         <tr>
-          <td>{type}</td>
-          <td>{subType}</td>
           <td>{doctor}</td>
           <td>{referredFor}</td>
         </tr>
@@ -337,8 +335,6 @@ class Prescription extends React.Component {
       <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
           <tr>
-            <th>Type</th>
-            <th>Sub Type</th>
             <th>Doctor</th>
             <th>Referred For</th>
           </tr>

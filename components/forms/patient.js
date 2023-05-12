@@ -466,6 +466,18 @@ class MedicalForm extends React.Component {
             /> */}
           </div>
         </div>
+        <div className="field">
+          <label className="label">Referral Notes</label>
+          <div className="control">
+            <textarea
+              name="notes"
+              className="textarea"
+              placeholder="Type your referral notes here..."
+              onChange={handleInputChange}
+              value={formDetails.referred_notes}
+            />
+          </div>
+        </div>
       </div>
     );
   }

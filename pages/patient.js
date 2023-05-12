@@ -266,7 +266,7 @@ class Patient extends React.Component {
 
     this.setState({
       consults: consultsEnriched,
-      vitals: vitals,
+      vitals: vitals[0] || {},
       visitPrescriptions: prescriptions,
       mounted: true,
       visitID,

@@ -299,8 +299,8 @@ class MedicalForm extends React.Component {
   };
 
   handleCheckboxAndInputChange = (event) => {
-    this.handleCheckboxChange();
-    handleInputChange();
+    this.handleCheckboxChange(event);
+    handleInputChange(event);
   };
 
   render() {

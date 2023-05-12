@@ -122,6 +122,33 @@ class ConsultationsView extends React.Component {
         <hr />
 
         <div className="field">
+          <label className="label">Problems</label>
+          <article className="message">
+            <div className="message-body">{content.problems}</div>
+          </article>
+        </div>
+
+        <hr />
+
+        <div className="field">
+          <label className="label">Diagnosis</label>
+          <article className="message">
+            <div className="message-body">{content.diagnosis}</div>
+          </article>
+        </div>
+
+        <hr />
+
+        <div className="field">
+          <label className="label">Notes</label>
+          <article className="message">
+            <div className="message-body">{content.notes}</div>
+          </article>
+        </div>
+
+        <hr />
+
+        <div className="field">
           <label className="label">Prescriptions</label>
           {prescriptions.length > 0 ? (
             this.renderPrescriptions(prescriptions)

@@ -138,7 +138,7 @@ class VitalsForm extends React.Component {
           </div>
 
           <div className="control is-expanded">
-            <label className="label">Eye Pressure (Text eg. Anyth)</label>
+            <label className="label">Eye Pressure (Text eg. anyth)</label>
             <div className="control">
               <input
                 name="eye_pressure"
@@ -155,72 +155,70 @@ class VitalsForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">PHQ-9 (Number(0-27) eg. 7)</label>
-            <div className="control">
+            <label className="checkbox">
               <input
+                type="checkbox"
                 name="phq_9"
-                className="input"
-                type="text"
                 onChange={handleInputChange}
                 value={formDetails.phq_9}
               />
-            </div>
+              &nbsp; PHQ-9
+            </label>
           </div>
-
           <div className="control is-expanded">
-            <label className="label">GAD-7 (Number(0-21) eg. 4)</label>
-            <div className="control">
+            <label className="checkbox">
               <input
+                type="checkbox"
                 name="gad_7"
-                className="input"
-                type="text"
                 onChange={handleInputChange}
                 value={formDetails.gad_7}
               />
-            </div>
+              &nbsp; GAD-7
+            </label>
           </div>
         </div>
 
-        <div className="field is-grouped">
-          <div className="control is-expanded">
-            <label className="label">HIV Positive (Text eg. Positive)</label>
-            <div className="control">
+        <div className="field">
+          <div className="control">
+            <label className="checkbox">
               <input
+                type="checkbox"
                 name="hiv_positive"
-                className="input"
-                type="text"
                 onChange={handleInputChange}
                 value={formDetails.hiv_positive}
               />
-            </div>
-          </div>
-
-          <div className="control is-expanded">
-            <label className="label">PTB Positive (Text eg. Positive)</label>
-            <div className="control">
-              <input
-                name="ptb_positive"
-                className="input"
-                type="text"
-                onChange={handleInputChange}
-                value={formDetails.ptb_positive}
-              />
-            </div>
+              &nbsp; HIV Positive?
+            </label>
           </div>
         </div>
 
-        <div className="control is-expanded">
-            <label className="label">HEPC Positive (Text eg. Positive)</label>
-            <div className="control">
+        <div className="field">
+          <div className="control">
+            <label className="checkbox">
               <input
+                type="checkbox"
+                name="ptb_positive"
+                onChange={handleInputChange}
+                value={formDetails.ptb_positive}
+              />
+              &nbsp; PTB Positive?
+            </label>
+          </div>
+        </div>
+
+        <div className="field">
+          <div className="control">
+            <label className="checkbox">
+              <input
+                type="checkbox"
                 name="hepc_positive"
-                className="input"
-                type="text"
                 onChange={handleInputChange}
                 value={formDetails.hepc_positive}
               />
-            </div>
+              &nbsp; HEPC Positive?
+            </label>
           </div>
+        </div>
       </div>
     );
   }
@@ -245,21 +243,6 @@ class MedicalForm extends React.Component {
 
     return (
       <div>
-        <label className="label">Patient Photo Details</label>
-
-        <div className="field">
-          <label className="label">Photo URL</label>
-          <div className="control">
-            <textarea
-              name="photo_url"
-              className="textarea"
-              placeholder="Insert Photo URL here..."
-              onChange={handleInputChange}
-              value={formDetails.photo_url}
-            />
-          </div>
-        </div>
-
         <label className="label">Medical Consultation Form</label>
 
         <div className="field">
@@ -268,7 +251,7 @@ class MedicalForm extends React.Component {
             <textarea
               name="problems"
               className="textarea"
-              placeholder="Type problems here..."
+              placeholder="Type your problems here..."
               onChange={handleInputChange}
               value={formDetails.problems}
             />
@@ -281,7 +264,7 @@ class MedicalForm extends React.Component {
             <textarea
               name="diagnosis"
               className="textarea"
-              placeholder="Type diagnosis here..."
+              placeholder="Type your diagnosis here..."
               onChange={handleInputChange}
               value={formDetails.diagnosis}
             />
@@ -293,7 +276,7 @@ class MedicalForm extends React.Component {
             <textarea
               name="notes"
               className="textarea"
-              placeholder="Type notes here..."
+              placeholder="Type your notes here..."
               onChange={handleInputChange}
               value={formDetails.notes}
             />
@@ -308,7 +291,7 @@ class MedicalForm extends React.Component {
               name="women_clinic_checkbox"
               type="checkbox"
               checked={showWomenClinicDetails}
-              onChange={this.handleCheckboxChange}
+              onChange="this.handleCheckboxChange(); handleInputChnange();"
               style={{ marginRight: "10px" }}
             />
             Women's Clinic Triage
@@ -324,8 +307,9 @@ class MedicalForm extends React.Component {
                   <label className="checkbox">
                     <input
                       type="checkbox"
-                      name="Breast Problem"
+                      name="breast_problem"
                       style={{ marginRight: "10px" }}
+                      onChange={handleInputChange}
                     />
                     Breast Problem
                   </label>
@@ -334,8 +318,9 @@ class MedicalForm extends React.Component {
                   <label className="checkbox">
                     <input
                       type="checkbox"
-                      name="Genital Area Problem"
+                      name="genital_area_problem"
                       style={{ marginRight: "10px" }}
+                      onChange={handleInputChange}
                     />
                     Genital Area Problem
                   </label>
@@ -346,27 +331,27 @@ class MedicalForm extends React.Component {
                   <label className="checkbox">
                     <input
                       type="checkbox"
-                      name="Menstruation Problem"
+                      name="menstruation_problem"
                       style={{ marginRight: "10px" }}
+                      onChange={handleInputChange}
                     />
                     Menstruation Problem
                   </label>
                 </div>
                 <div className="column">
-                  <label className="checkbox">
+                  {/* <label className="checkbox">
                     <input
                       type="checkbox"
                       name="Others"
                       style={{ marginRight: "10px" }}
                     />
                     Others
-                  </label>
+                  </label> */}
                   <textarea
                     name="others_details"
                     className="textarea"
-                    placeholder="Enter details..."
+                    placeholder="Others..."
                     onChange={handleInputChange}
-                    value={formDetails.others_details}
                   />
                 </div>
               </div>
@@ -377,11 +362,14 @@ class MedicalForm extends React.Component {
         <hr />
 
         <div className="field">
-          <label className="label">* Referred for (within clinic)</label>
+          <label className="label">Referred for (within clinic)</label>
           <div className="control" style={{ marginBottom: 20 }}>
             <div className="select">
-              <select name="referred_for" onChange={handleInputChange}>
-                <option>Please Select...</option>
+              <select
+                name="referred_for"
+                onChange={handleInputChange}
+                default="Diagnostic"
+              >
                 <option value="Diagnostic">Diagnostic</option>
                 <option value="Acute">Acute</option>
                 <option value="Chronic">Chronic</option>

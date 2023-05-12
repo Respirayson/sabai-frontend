@@ -148,6 +148,29 @@ class ConsultationsView extends React.Component {
 
         <hr />
 
+        {content.women_clinic_checkbox && (
+          <div className="field">
+            <label className="label">Breast Problem</label>
+            <article className="message">
+              <div className="message_body">
+                {content.breast_problem ? "Yes" : "No"}
+              </div>
+            </article>
+            <label className="label">Genital Area Problem</label>
+            <article className="message">
+              <div className="message_body">
+                {content.genital_area_problem ? "Yes" : "No"}
+              </div>
+            </article>
+            <label className="label">Menstruation Problem</label>
+            <article className="message">
+              <div className="message_body">
+                {content.menstruation_problem ? "Yes" : "No"}
+              </div>
+            </article>
+          </div>
+        )}
+
         <div className="field">
           <label className="label">Prescriptions</label>
           {prescriptions.length > 0 ? (

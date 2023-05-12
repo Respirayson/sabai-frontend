@@ -274,6 +274,7 @@ class Patient extends React.Component {
   }
 
   async submitForm() {
+    console.log(window.localStorage);
     let { form } = this.props.query;
     let { formDetails, visitID, orders } = this.state;
     var formPayload = {

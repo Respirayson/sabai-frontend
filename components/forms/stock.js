@@ -38,11 +38,11 @@ class MedicationForm extends React.Component {
             <label className="label">Add/ Subtract</label>
             <div className="control">
               <input
-                name="changeQuantity"
+                name="quantityChange"
                 className="input"
                 type="number"
                 onChange={handleInputChange}
-                value={formDetails.changeQuantity}
+                value={formDetails.quantityChange}
               />
             </div>
           </div>

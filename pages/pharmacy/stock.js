@@ -25,7 +25,7 @@ class Stock extends React.Component {
         medicine_name: "",
         reserve_quantity: 0,
         quantity: 0,
-        changeQuantity: 0,
+        quantityChange: 0,
         notes: "",
         remarks: "",
       },
@@ -49,32 +49,38 @@ class Stock extends React.Component {
   async onSubmitForm() {
     let { medicationDetails } = this.state;
 
-    let changeQuantity = medicationDetails.changeQuantity;
+    let quantityChange = medicationDetails.quantityChange;
     let nameEnriched =
       medicationDetails.medicine_name.charAt(0).toUpperCase() +
       medicationDetails.medicine_name.slice(1);
     medicationDetails.medicine_name = nameEnriched;
-
-    if (typeof medicationDetails.pk != "undefined") {
+    if (medicationDetails.pk) {
       let key = medicationDetails.pk;
       let quantity =
-        parseInt(medicationDetails.quantity) + parseInt(changeQuantity);
-
+        parseInt(medicationDetails.quantity) + parseInt(quantityChange);
       if (quantity >= 0) {
-        medicationDetails.quantity = quantity;
+        // medicationDetails.quantity = quantity;
 
-        medicationDetails.changeQuantity = 0;
-        delete medicationDetails["pk"];
+        // medicationDetails.changeQuantity = 0;
+        // delete medicationDetails["pk"];
 
-        await axios.patch(`${API_URL}/medications/${key}`, medicationDetails);
-        alert("Medication updated!");
+        await axios
+          .patch(`${API_URL}/medications/${key}`, { quantityChange })
+          .then(() => alert("Medication updated!"))
+          .catch(() => {
+            alert("Encountered an error!");
+            this.toggleModal();
+            this.onRefresh();
+          });
       } else {
         alert("Insufficient medication!");
       }
-    } else {
-      medicationDetails.quantity = changeQuantity;
+    } else if (quantityChange >= 0) {
+      medicationDetails.quantity = quantityChange;
       await axios.post(`${API_URL}/medications`, medicationDetails);
       alert("New Medication created!");
+    } else {
+      alert("Invalid number!");
     }
 
     this.toggleModal();
@@ -92,7 +98,6 @@ class Stock extends React.Component {
     }
 
     try {
-      console.log(pk);
       await axios.delete(`${API_URL}/medications/${pk}`);
       const updatedMedications = medications.filter(
         (medication) => medication.pk !== pk
@@ -133,7 +138,6 @@ class Stock extends React.Component {
       // load up what we have chosen
       changes.medicationDetails = medication;
     }
-
     this.setState(changes);
   }
 
@@ -170,12 +174,11 @@ class Stock extends React.Component {
 
   renderRows() {
     let { medicationsFiltered: medications } = this.state;
-
     let tableRows = medications.map((medication) => {
       let medicationDetails = {
         ...medication.fields,
         pk: medication.pk,
-        changeQuantity: 0,
+        quantityChange: 0,
       };
       let name = medicationDetails.medicine_name;
       let quantity = medicationDetails.quantity;

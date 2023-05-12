@@ -98,7 +98,7 @@ class Prescription extends React.Component {
 
     orders.forEach((order) => {
       let medPayload = {
-        quantityChange: order.quantity,
+        quantityChange: -order.quantity,
       };
 
       let orderPayload = {

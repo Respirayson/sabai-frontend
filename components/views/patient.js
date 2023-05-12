@@ -118,6 +118,12 @@ class ConsultationsView extends React.Component {
             <div className="message-body">{content.referred_for}</div>
           </article>
         </div>
+        <div className="field">
+          <label className="label">Referral Notes</label>
+          <article className="message">
+            <div className="message-body">{content.referred_notes}</div>
+          </article>
+        </div>
 
         <hr />
 

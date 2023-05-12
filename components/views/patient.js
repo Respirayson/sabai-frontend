@@ -196,6 +196,13 @@ class ConsultationsView extends React.Component {
               {content.menstruation_problem ? "Yes" : "No"}
             </div>
           </article>
+          <label className="label">Others</label>
+          <article className="message">
+            <div className="message_body">
+              {content.others_details ? content.others_details : "N/A"}
+            </div>
+          </article>
+          <hr />
         </div>
 
         <div className="field">

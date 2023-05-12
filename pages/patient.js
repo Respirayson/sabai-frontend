@@ -280,7 +280,7 @@ class Patient extends React.Component {
       visit: visitID,
       ...formDetails,
     };
-    console.log(this.state);
+    // console.log(this.state);
     var consultId;
     var orderPromises;
 

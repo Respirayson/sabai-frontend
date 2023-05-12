@@ -138,7 +138,7 @@ class VitalsForm extends React.Component {
           </div>
 
           <div className="control is-expanded">
-            <label className="label">Eye Pressure (Text eg. anyth)</label>
+            <label className="label">Eye Pressure (Text eg. Anyth)</label>
             <div className="control">
               <input
                 name="eye_pressure"
@@ -155,68 +155,70 @@ class VitalsForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="checkbox">
+            <label className="label">PHQ-9 (Number(0-27) eg. 7)</label>
+            <div className="control">
               <input
-                type="checkbox"
                 name="phq_9"
+                className="input"
+                type="text"
                 onChange={handleInputChange}
                 value={formDetails.phq_9}
               />
-              &nbsp; PHQ-9
-            </label>
+            </div>
           </div>
+
           <div className="control is-expanded">
-            <label className="checkbox">
+            <label className="label">GAD-7 (Number(0-21) eg. 4)</label>
+            <div className="control">
               <input
-                type="checkbox"
                 name="gad_7"
+                className="input"
+                type="text"
                 onChange={handleInputChange}
                 value={formDetails.gad_7}
               />
-              &nbsp; GAD-7
-            </label>
+            </div>
           </div>
         </div>
 
-        <div className="field">
-          <div className="control">
-            <label className="checkbox">
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">HIV Positive (Text eg. Positive)</label>
+            <div className="control">
               <input
-                type="checkbox"
                 name="hiv_positive"
+                className="input"
+                type="text"
                 onChange={handleInputChange}
                 value={formDetails.hiv_positive}
               />
-              &nbsp; HIV Positive?
-            </label>
+            </div>
           </div>
-        </div>
 
-        <div className="field">
-          <div className="control">
-            <label className="checkbox">
+          <div className="control is-expanded">
+            <label className="label">PTB Positive (Text eg. Positive)</label>
+            <div className="control">
               <input
-                type="checkbox"
                 name="ptb_positive"
+                className="input"
+                type="text"
                 onChange={handleInputChange}
                 value={formDetails.ptb_positive}
               />
-              &nbsp; PTB Positive?
-            </label>
+            </div>
           </div>
         </div>
 
-        <div className="field">
+        <div className="control is-expanded">
+          <label className="label">HEPC Positive (Text eg. Positive)</label>
           <div className="control">
-            <label className="checkbox">
-              <input
-                type="checkbox"
-                name="hepc_positive"
-                onChange={handleInputChange}
-                value={formDetails.hepc_positive}
-              />
-              &nbsp; HEPC Positive?
-            </label>
+            <input
+              name="hepc_positive"
+              className="input"
+              type="text"
+              onChange={handleInputChange}
+              value={formDetails.hepc_positive}
+            />
           </div>
         </div>
       </div>
@@ -243,6 +245,21 @@ class MedicalForm extends React.Component {
 
     return (
       <div>
+        <label className="label">Patient Photo Details</label>
+
+        <div className="field">
+          <label className="label">Photo URL</label>
+          <div className="control">
+            <textarea
+              name="photo_url"
+              className="textarea"
+              placeholder="Insert Photo URL here..."
+              onChange={handleInputChange}
+              value={formDetails.photo_url}
+            />
+          </div>
+        </div>
+
         <label className="label">Medical Consultation Form</label>
 
         <div className="field">

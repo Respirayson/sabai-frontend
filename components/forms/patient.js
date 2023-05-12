@@ -470,7 +470,7 @@ class MedicalForm extends React.Component {
           <label className="label">Referral Notes</label>
           <div className="control">
             <textarea
-              name="notes"
+              name="referred_notes"
               className="textarea"
               placeholder="Type your referral notes here..."
               onChange={handleInputChange}

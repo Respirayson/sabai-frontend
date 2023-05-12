@@ -328,6 +328,48 @@ class VitalsView extends React.Component {
             </article>
           </div>
         </div>
+
+        <hr />
+
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Urine Dip Test</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.urine_test}</div>
+              </article>
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">Hemocue Hb Count</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.hemocue_count}</div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Blood Glucose</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.blood_glucose}</div>
+              </article>
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">Others</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.others}</div>
+              </article>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

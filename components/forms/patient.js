@@ -221,6 +221,65 @@ class VitalsForm extends React.Component {
             />
           </div>
         </div>
+
+        <br></br>
+
+        <label className="label">STAT Investigations</label>
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Urine Dip Test (Text eg. Anyth)</label>
+            <div className="control">
+              <input
+                name="urine_test"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.urine_test}
+              />
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">Hemocue Hb Count (Decimal eg. 13.2)</label>
+            <div className="control">
+              <input
+                name="hemocue_count"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.hemocue_count}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Blood Glucose (Text eg. Anyth)</label>
+            <div className="control">
+              <input
+                name="blood_glucose"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.blood_glucose}
+              />
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">Others (Text eg. Anyth)</label>
+            <div className="control">
+              <input
+                name="others"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.others}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

@@ -196,7 +196,7 @@ class Stock extends React.Component {
 
                 <button
                   className="button is-danger level-item"
-                  onClick={() => this.handleDelete(medicationDetails)}
+                  onClick={() => this.handleDelete(medicationDetails.pk)}
                 >
                   Delete
                 </button>

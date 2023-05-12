@@ -197,7 +197,7 @@ class ConsultationsView extends React.Component {
           <label className="label">Others</label>
           <article className="message">
             <div className="message_body">
-              {content.others_details ? content.others_details : "N/A"}
+              {content.others_details}
             </div>
           </article>
           <hr />

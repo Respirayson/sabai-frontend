@@ -443,14 +443,14 @@ class MedicalForm extends React.Component {
         <hr />
 
         <div className="field">
-          <label className="label">Referred for (within clinic)</label>
+          <label className="label">* Referred for (within clinic)</label>
           <div className="control" style={{ marginBottom: 20 }}>
             <div className="select">
               <select
                 name="referred_for"
                 onChange={handleInputChange}
-                default="Diagnostic"
               >
+                <option>Please select....</option>
                 <option value="Diagnostic">Diagnostic</option>
                 <option value="Acute">Acute</option>
                 <option value="Chronic">Chronic</option>

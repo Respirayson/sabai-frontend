@@ -431,8 +431,8 @@ class Patient extends React.Component {
       <div className="column is-5">
         <div className="columns">
           <div className="column is-4">
-            <label className="label">Medical Triage</label>
-            {typeof vitals.fields === "undefined" ? (
+            <label className="label">Vital Signs</label>
+            {typeof vitals === "undefined" ? (
               <h2>Not Done</h2>
             ) : (
               <button

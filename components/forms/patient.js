@@ -387,6 +387,7 @@ class MedicalForm extends React.Component {
               checked={showWomenClinicDetails}
               onChange={this.handleCheckboxAndInputChange}
               style={{ marginRight: "10px" }}
+              value={formDetails.women_clinic_checkbox}
             />
             Women's Clinic Triage
           </label>
@@ -404,6 +405,7 @@ class MedicalForm extends React.Component {
                       name="breast_problem"
                       style={{ marginRight: "10px" }}
                       onChange={handleInputChange}
+                      value={formDetails.breast_problem}
                     />
                     Breast Problem
                   </label>
@@ -415,6 +417,7 @@ class MedicalForm extends React.Component {
                       name="genital_area_problem"
                       style={{ marginRight: "10px" }}
                       onChange={handleInputChange}
+                      value={formDetails.genital_area_problem}
                     />
                     Genital Area Problem
                   </label>
@@ -428,6 +431,7 @@ class MedicalForm extends React.Component {
                       name="menstruation_problem"
                       style={{ marginRight: "10px" }}
                       onChange={handleInputChange}
+                      value={formDetails.menstruation_problem}
                     />
                     Menstruation Problem
                   </label>
@@ -446,6 +450,7 @@ class MedicalForm extends React.Component {
                     className="textarea"
                     placeholder="Others..."
                     onChange={handleInputChange}
+                    value={formDetails.others_details}
                   />
                 </div>
               </div>

@@ -92,6 +92,7 @@ class Stock extends React.Component {
     }
 
     try {
+      console.log(pk);
       await axios.delete(`${API_URL}/medications/${pk}`);
       const updatedMedications = medications.filter(
         (medication) => medication.pk !== pk
@@ -195,7 +196,7 @@ class Stock extends React.Component {
 
                 <button
                   className="button is-danger level-item"
-                  onClick={() => this.handleDelete(medicationDetails)}
+                  onClick={() => this.handleDelete(medicationDetails.pk)}
                 >
                   Delete
                 </button>

@@ -7,7 +7,6 @@ class ConsultationsTable extends React.Component {
 
   render() {
     let { consultRows } = this.props;
-    console.log(consultRows);
 
     return (
       <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -94,7 +93,6 @@ class ConsultationsView extends React.Component {
 
     let type = content.type;
     let prescriptions = content.prescriptions;
-    console.log(content);
 
     return (
       <div className="column is-12">

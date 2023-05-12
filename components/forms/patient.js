@@ -272,7 +272,7 @@ class VitalsForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">Blood Glucose (Text eg. Anyth)</label>
+            <label className="label">Blood Glucose (Decimal eg. 13.2)</label>
             <div className="control">
               <input
                 name="blood_glucose"

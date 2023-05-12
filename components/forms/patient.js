@@ -155,47 +155,6 @@ class VitalsForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">PHQ-9 (Number(0-27) eg. 7)</label>
-            <div className="control">
-              <input
-                name="phq_9"
-                className="input"
-                type="text"
-                onChange={handleInputChange}
-                value={formDetails.phq_9}
-              />
-            </div>
-          </div>
-
-          <div className="control is-expanded">
-            <label className="label">GAD-7 (Number(0-21) eg. 4)</label>
-            <div className="control">
-              <input
-                name="gad_7"
-                className="input"
-                type="text"
-                onChange={handleInputChange}
-                value={formDetails.gad_7}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="control is-expanded">
-          <label className="label">SDQ (Number eg. 34)</label>
-          <div className="control">
-            <input
-              name="sdq"
-              className="input"
-              type="text"
-              onChange={handleInputChange}
-              value={formDetails.sdq}
-            />
-          </div>
-        </div>
-
-        <div className="field is-grouped">
-          <div className="control is-expanded">
             <label className="label">HIV Positive (Text eg. Positive)</label>
             <div className="control">
               <input
@@ -231,6 +190,51 @@ class VitalsForm extends React.Component {
               type="text"
               onChange={handleInputChange}
               value={formDetails.hepc_positive}
+            />
+          </div>
+        </div>
+
+        <br></br>
+
+        <label className="label">Psychology Tests</label>
+
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">PHQ-9 (Number(0-27) eg. 7)</label>
+            <div className="control">
+              <input
+                name="phq_9"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.phq_9}
+              />
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">GAD-7 (Number(0-21) eg. 4)</label>
+            <div className="control">
+              <input
+                name="gad_7"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.gad_7}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="control is-expanded">
+          <label className="label">SDQ (Number eg. 34)</label>
+          <div className="control">
+            <input
+              name="sdq"
+              className="input"
+              type="text"
+              onChange={handleInputChange}
+              value={formDetails.sdq}
             />
           </div>
         </div>

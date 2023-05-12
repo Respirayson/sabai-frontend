@@ -92,6 +92,7 @@ class Stock extends React.Component {
     }
 
     try {
+      console.log(pk);
       await axios.delete(`${API_URL}/medications/${pk}`);
       const updatedMedications = medications.filter(
         (medication) => medication.pk !== pk

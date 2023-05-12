@@ -367,7 +367,7 @@ class MedicalForm extends React.Component {
               name="women_clinic_checkbox"
               type="checkbox"
               checked={showWomenClinicDetails}
-              onChange="this.handleCheckboxChange(); handleInputChnange();"
+              onChange={this.handleCheckboxChange}
               style={{ marginRight: "10px" }}
             />
             Women's Clinic Triage

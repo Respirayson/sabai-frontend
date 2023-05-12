@@ -280,7 +280,7 @@ class VitalsView extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">phq-9</label>
+            <label className="label">PHQ-9</label>
             <div className="control">
               <article className="message">
                 <div className="message-body">{content.phq_9}</div>
@@ -295,6 +295,15 @@ class VitalsView extends React.Component {
                 <div className="message-body">{content.gad_7}</div>
               </article>
             </div>
+          </div>
+        </div>
+
+        <div className="control is-expanded">
+          <label className="label">SDQ</label>
+          <div className="control">
+            <article className="message">
+              <div className="message-body">{content.sdq}</div>
+            </article>
           </div>
         </div>
 

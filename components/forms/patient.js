@@ -181,6 +181,19 @@ class VitalsForm extends React.Component {
           </div>
         </div>
 
+        <div className="control is-expanded">
+          <label className="label">SDQ (Number eg. 34)</label>
+          <div className="control">
+            <input
+              name="sdq"
+              className="input"
+              type="text"
+              onChange={handleInputChange}
+              value={formDetails.sdq}
+            />
+          </div>
+        </div>
+
         <div className="field is-grouped">
           <div className="control is-expanded">
             <label className="label">HIV Positive (Text eg. Positive)</label>

@@ -291,6 +291,7 @@ class Patient extends React.Component {
         alert("Vitals completed!");
         break;
       case "medical":
+        console.log(formDetails);
         let { data: medicalConsult } = await axios.post(`${API_URL}/consults`, {
           ...formPayload,
           doctor: window.localStorage.getItem("userID"),

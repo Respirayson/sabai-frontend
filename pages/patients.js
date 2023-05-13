@@ -496,7 +496,7 @@ class Patients extends React.Component {
               </div>
 
               <div className="field">
-                <label className="label">Local Name</label>
+                <label className="label">IC Number</label>
                 <div className="control">
                   <input
                     name="local_name"
@@ -849,7 +849,7 @@ class Patients extends React.Component {
               <article className="message">
                 <div className="message-body">{patient.fields.name}</div>
               </article>
-              <label className="label">Local Name</label>
+              <label className="label">IC Number</label>
               <article className="message">
                 <div className="message-body">{patient.fields.local_name}</div>
               </article>

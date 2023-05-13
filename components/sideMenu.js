@@ -10,7 +10,7 @@ const SideMenu = (props) => (
           <img src="/sabaiLogo.png" />
         </figure>
 
-        <h1 className="level-item sideMenuTitle">Biometrics</h1>
+        <h1 className="level-item sideMenuTitle">Sa'Bai '23</h1>
       </div>
     </div>
     <p className="menu-label sideMenuItem">{cookie.get("name")}</p>

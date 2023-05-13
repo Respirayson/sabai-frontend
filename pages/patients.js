@@ -683,6 +683,7 @@ class Patients extends React.Component {
 
   getSuggestions(filter) {
     let { patients } = this.state;
+    console.log(patients);
     let inputValue = filter.trim().toLowerCase();
     let inputLength = inputValue.length;
     let query =

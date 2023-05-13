@@ -691,7 +691,7 @@ class Patients extends React.Component {
         ? []
         : patients.filter((patient) =>
             patient.filterString.toLowerCase().includes(inputValue) ||
-            patient.pk.toString().concat(patient.village_prefix).includes(inputValue)
+            patient.village_prefix.concat(patient.pk.toString()).includes(inputValue)
           );
 
     return query;

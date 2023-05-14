@@ -233,7 +233,8 @@ class Patients extends React.Component {
           },
           imageDetails: null,
         });
-        alert("New patient registered!");
+        // alert("New patient registered!");
+        this.submitNewVisit();
         this.closeModal();
       } else {
         alert("Please retake photo!");

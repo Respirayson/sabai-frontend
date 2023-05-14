@@ -535,6 +535,7 @@ class PrescriptionForm extends React.Component {
       isEditing,
     } = this.props;
     console.log(medicationOptions);
+    console.log(medicationOptions[0].props.children);
     return (
       <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Prescription</h1>

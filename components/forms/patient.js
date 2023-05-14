@@ -468,10 +468,7 @@ class MedicalForm extends React.Component {
           <label className="label">* Referred for (within clinic)</label>
           <div className="control" style={{ marginBottom: 20 }}>
             <div className="select">
-              <select
-                name="referred_for"
-                onChange={handleInputChange}
-              >
+              <select name="referred_for" onChange={handleInputChange}>
                 <option>Please select....</option>
                 <option value="Diagnostic">Diagnostic</option>
                 <option value="Acute">Acute</option>

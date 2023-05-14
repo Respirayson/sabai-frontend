@@ -487,7 +487,7 @@ class PatientView extends React.Component {
     return (
       <div className="column is-3">
         <div className="field">
-          <label className="label">Local Name</label>
+          <label className="label">IC Number</label>
           <article className="message">
             <div className="message-body">{content.fields.local_name}</div>
           </article>

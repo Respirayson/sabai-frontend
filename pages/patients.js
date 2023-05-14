@@ -483,7 +483,7 @@ class Patients extends React.Component {
           <div className="column is-8">
             <form>
               <div className="field">
-                <label className="label">Name</label>
+                <label className="label">Name (english + local if possible)</label>
                 <div className="control">
                   <input
                     name="name"

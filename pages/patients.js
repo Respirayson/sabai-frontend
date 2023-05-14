@@ -175,8 +175,6 @@ class Patients extends React.Component {
   }
 
   async submitNewPatient() {
-    this.submitNewVisit();
-
     let { formDetails, imageDetails } = this.state;
 
     let checklist = [
@@ -508,15 +506,6 @@ class Patients extends React.Component {
                     value={formDetails.local_name}
                   />
                 </div>
-              </div>
-
-              <div className="field">
-                <label className="label">Age</label>
-                <article className="message">
-                <div className="message-body">{content.fields.date_of_birth ? 
-                  Math.abs(new Date(Date.now() - new Date(content.fields.date_of_birth)).getUTCFullYear() - 1970) : "No DOB" }
-                </div>
-                </article>
               </div>
 
               <div className="field">

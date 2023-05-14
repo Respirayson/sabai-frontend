@@ -536,7 +536,9 @@ class PrescriptionForm extends React.Component {
     } = this.props;
     console.log(medicationOptions);
     console.log(medicationOptions[0].props.children);
-    medicationOptions.sort((a, b) => a.props.children - b.props.children);
+    medicationOptions.sort(
+      (a, b) => (a, b) => a.props.children.localeCompare(b.props.children)
+    );
     console.log(medicationOptions);
     return (
       <div className="column is-12">

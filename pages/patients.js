@@ -270,6 +270,7 @@ class Patients extends React.Component {
     // get all active visits
     // sort them by their statuses
     // from there, determine where to put this guy
+    console.log(patient);
     let payload = {
       patient: patient.pk,
       status: "started",

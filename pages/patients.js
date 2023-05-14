@@ -175,7 +175,7 @@ class Patients extends React.Component {
   }
 
   async submitNewPatient() {
-    console.log("In submite new patient");
+    // console.log("In submit new patient");
     let { formDetails, imageDetails } = this.state;
 
     let checklist = [
@@ -262,7 +262,6 @@ class Patients extends React.Component {
   }
 
   async submitNewVisit() {
-    console.log("In submit new visit");
     let { patient } = this.state;
 
     // future helper function
@@ -471,11 +470,11 @@ class Patients extends React.Component {
     );
   }
 
-  submitNewPatientAndStartVisit = (event) => {
-    this.submitNewPatient();
-    this.submitNewVisit();
-    console.log("Submit both");
-  };
+  // submitNewPatientAndStartVisit = (event) => {
+  //   this.submitNewPatient();
+  //   this.submitNewVisit();
+  //   console.log("Submit both");
+  // };
 
   renderModal() {
     const { formDetails } = this.state;
@@ -626,8 +625,8 @@ class Patients extends React.Component {
                 <div className="level-item">
                   <button
                     className="button is-dark is-medium"
-                    // onClick={this.submitNewPatient}
-                    onClick={this.submitNewPatientAndStartVisit}
+                    onClick={this.submitNewPatient}
+                    // onClick={this.submitNewPatientAndStartVisit}
                   >
                     Submit
                   </button>

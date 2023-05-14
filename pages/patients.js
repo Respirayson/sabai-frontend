@@ -469,6 +469,11 @@ class Patients extends React.Component {
     );
   }
 
+  submitNewPatientAndStartVisit = (event) => {
+    this.submitNewPatient(event);
+    this.submitNewVisit(event);
+  };
+
   renderModal() {
     const { formDetails } = this.state;
 
@@ -619,7 +624,7 @@ class Patients extends React.Component {
                   <button
                     className="button is-dark is-medium"
                     // onClick={this.submitNewPatient}
-                    onClick="this.submitNewPatient(); this.submitNewVisit();"
+                    onClick={this.submitNewPatientAndStartVisit}
                   >
                     Submit
                   </button>

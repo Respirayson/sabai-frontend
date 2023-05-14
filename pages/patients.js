@@ -226,6 +226,7 @@ class Patients extends React.Component {
 
       if (typeof response.error == "undefined") {
         this.submitNewVisit();
+        console.log(this.state);
         this.setState({
           patient: response[0],
           formDetails: {
@@ -234,6 +235,7 @@ class Patients extends React.Component {
           },
           imageDetails: null,
         });
+        console.log(this.state);
         console.log("testing!!!!!!!!");
         alert("New patient registered!");
         this.closeModal();

@@ -483,7 +483,9 @@ class Patients extends React.Component {
           <div className="column is-8">
             <form>
               <div className="field">
-                <label className="label">Name (english + local if possible)</label>
+                <label className="label">
+                  Name (english + local if possible)
+                </label>
                 <div className="control">
                   <input
                     name="name"
@@ -616,7 +618,8 @@ class Patients extends React.Component {
                 <div className="level-item">
                   <button
                     className="button is-dark is-medium"
-                    onClick={this.submitNewPatient}
+                    // onClick={this.submitNewPatient}
+                    onClick="this.submitNewPatient(); this.submitNewVisit();"
                   >
                     Submit
                   </button>
@@ -689,9 +692,10 @@ class Patients extends React.Component {
     let query =
       inputLength === 0
         ? []
-        : patients.filter((patient) =>
-            patient.filterString.toLowerCase().includes(inputValue) ||
-            patient.pk.toString().includes(inputValue)
+        : patients.filter(
+            (patient) =>
+              patient.filterString.toLowerCase().includes(inputValue) ||
+              patient.pk.toString().includes(inputValue)
           );
 
     return query;

@@ -224,9 +224,8 @@ class Patients extends React.Component {
         }
       );
 
-      this.submitNewVisit();
-
       if (typeof response.error == "undefined") {
+        this.submitNewVisit();
         this.setState({
           patient: response[0],
           formDetails: {
@@ -276,7 +275,7 @@ class Patients extends React.Component {
       status: "started",
       visit_date: moment().format("YYYY-MM-DD"),
     };
-
+    console.log(payload);
     await axios.post(`${API_URL}/visits`, payload);
 
     this.setState({

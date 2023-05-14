@@ -468,10 +468,7 @@ class MedicalForm extends React.Component {
           <label className="label">* Referred for (within clinic)</label>
           <div className="control" style={{ marginBottom: 20 }}>
             <div className="select">
-              <select
-                name="referred_for"
-                onChange={handleInputChange}
-              >
+              <select name="referred_for" onChange={handleInputChange}>
                 <option>Please select....</option>
                 <option value="Diagnostic">Diagnostic</option>
                 <option value="Acute">Acute</option>
@@ -537,6 +534,7 @@ class PrescriptionForm extends React.Component {
       onSubmit,
       isEditing,
     } = this.props;
+    console.log(medicationOptions);
     return (
       <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Prescription</h1>

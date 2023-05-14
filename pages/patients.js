@@ -175,6 +175,7 @@ class Patients extends React.Component {
   }
 
   async submitNewPatient() {
+    console.log("In submite new patient");
     let { formDetails, imageDetails } = this.state;
 
     let checklist = [
@@ -261,6 +262,7 @@ class Patients extends React.Component {
   }
 
   async submitNewVisit() {
+    console.log("In submit new visit");
     let { patient } = this.state;
 
     // future helper function
@@ -470,8 +472,9 @@ class Patients extends React.Component {
   }
 
   submitNewPatientAndStartVisit = (event) => {
-    this.submitNewPatient(event);
-    this.submitNewVisit(event);
+    this.submitNewPatient();
+    this.submitNewVisit();
+    console.log("Submit both");
   };
 
   renderModal() {

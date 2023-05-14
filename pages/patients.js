@@ -233,8 +233,9 @@ class Patients extends React.Component {
           },
           imageDetails: null,
         });
+        console.log("testing!!!!!!!!");
         alert("New patient registered!");
-        // this.submitNewVisit();
+        this.submitNewVisit();
         this.closeModal();
       } else {
         alert("Please retake photo!");
@@ -264,7 +265,7 @@ class Patients extends React.Component {
 
   async submitNewVisit() {
     let { patient } = this.state;
-
+    console.log("In submit new visit");
     // future helper function
     // get all active visits
     // sort them by their statuses

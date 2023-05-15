@@ -240,14 +240,14 @@ class Patients extends React.Component {
         console.log("testing!!!!!!!!");
         alert("New patient registered!");
         this.closeModal();
+        this.setState({ patient: "test" });
+        console.log(this.state);
+        console.log(response[0]);
+        this.setState({patient: response[0]});
+        this.submitNewVisit();
       } else {
         alert("Please retake photo!");
       }
-      this.setState({ patient: "test" });
-      console.log(this.state);
-      console.log(response[0]);
-      this.setState({patient: response[0]});
-      this.autoSubmitNewVisit(response[0]);
     }
   }
 
@@ -290,23 +290,6 @@ class Patients extends React.Component {
     this.setState({
       patient: {},
     });
-    alert("Patient successfully registered!");
-  }
-
-  async autoSubmitNewVisit(patient) {
-    console.log("Auto submit new visit");
-    // future helper function
-    // get all active visits
-    // sort them by their statuses
-    // from there, determine where to put this guy
-    console.log(patient);
-    let payload = {
-      patient: patient.pk,
-      status: "started",
-      visit_date: moment().format("YYYY-MM-DD"),
-    };
-    console.log(payload);
-    await axios.post(`${API_URL}/visits`, payload);
     alert("Patient successfully registered!");
   }
 

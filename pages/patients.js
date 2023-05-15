@@ -590,7 +590,7 @@ class Patients extends React.Component {
                       >
                         <option value="CATT">CATT</option>
                         <option value="PC">PC</option>
-                        <option value="PC">TK</option>
+                        <option value="TK">TK</option>
                         <option value="TT">TT</option>
                       </select>
                     </div>

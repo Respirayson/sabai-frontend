@@ -69,7 +69,8 @@ class Queue extends React.Component {
 
   renderTableContent() {
     let { visitsFiltered } = this.state;
-    let visitsRows = visitsFiltered.map((visit, idx) => {
+    let reversedVisitsFiltered = visitsFiltered.reverse();
+    let visitsRows = reversedVisitsFiltered.map((visit, idx) => {
       let Id = `${visit.patient.village_prefix}${visit.patient.id
         .toString()
         .padStart(3, "0")}`;

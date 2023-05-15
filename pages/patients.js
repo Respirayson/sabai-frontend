@@ -242,9 +242,11 @@ class Patients extends React.Component {
       } else {
         alert("Please retake photo!");
       }
+      this.setState({ patient: "test" });
       console.log(this.state);
       console.log(response[0]);
-      this.submitNewVisit();
+      this.setState({patient: response[0]});
+      this.submitNewVisit;
     }
   }
 

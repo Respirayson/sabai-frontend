@@ -153,10 +153,14 @@ class Queue extends React.Component {
   onFilterChange(event) {
     let { visits } = this.state;
     let filteredVisits = visits.filter((visit) => {
-      let patientId =
+      let patientId1 =
         `${visit.patient.village_prefix}${visit.patient.id}`.toLowerCase();
-
-      return patientId.includes(event.target.value.toLowerCase());
+      let patientId2 = 
+        `${visit.patient.village_prefix}`.toLowerCase()
+        + `${visit.patient.id}`.padStart(3, `0`);
+      console.log(patientId1, patientId2);
+      let searchValue = event.target.value.toLowerCase();
+      return patientId1.includes(searchValue) || patientId2.includes(searchValue);
     });
 
     this.setState({ visitsFiltered: filteredVisits });

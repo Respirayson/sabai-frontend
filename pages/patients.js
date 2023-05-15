@@ -227,11 +227,11 @@ class Patients extends React.Component {
       if (typeof response.error == "undefined") {
         // await this.submitNewVisit();
         this.setState({patient: response[0].pk});
+        console.log(this.state);
         this.submitNewVisit();
         console.log(response[0].pk);
         console.log("this is the patient id");
         console.log(this.state.patient);
-        console.log(this.state);
         this.setState({
           patient: response[0],
           formDetails: {

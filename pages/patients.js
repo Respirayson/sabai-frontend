@@ -8,6 +8,7 @@ import Webcam from "react-webcam";
 import moment from "moment";
 import { API_URL, CLOUDINARY_URL } from "../utils/constants";
 import { urltoFile } from "../utils/helpers";
+import record from "./record";
 
 // put id
 
@@ -246,7 +247,7 @@ class Patients extends React.Component {
       console.log(this.state);
       console.log(response[0]);
       this.setState({patient: response[0]});
-      this.submitNewVisit;
+      this.autoSubmitNewVisit(response[0]);
     }
   }
 
@@ -289,6 +290,23 @@ class Patients extends React.Component {
     this.setState({
       patient: {},
     });
+    alert("Patient successfully registered!");
+  }
+
+  async autoSubmitNewVisit(patient) {
+    console.log("Auto submit new visit");
+    // future helper function
+    // get all active visits
+    // sort them by their statuses
+    // from there, determine where to put this guy
+    console.log(patient);
+    let payload = {
+      patient: patient.pk,
+      status: "started",
+      visit_date: moment().format("YYYY-MM-DD"),
+    };
+    console.log(payload);
+    await axios.post(`${API_URL}/visits`, payload);
     alert("Patient successfully registered!");
   }
 

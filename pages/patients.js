@@ -226,7 +226,7 @@ class Patients extends React.Component {
 
       if (typeof response.error == "undefined") {
         // await this.submitNewVisit();
-        this.setState({patient: response[0].pk});
+        this.setState({patient: response[0].pk,});
         console.log(this.state);
         console.log(this.state.patient);
         this.submitNewVisit();
@@ -249,6 +249,7 @@ class Patients extends React.Component {
       } else {
         alert("Please retake photo!");
       }
+      console.log(this.state);
     }
   }
 
@@ -726,6 +727,7 @@ class Patients extends React.Component {
       .toString()
       .padStart(3, "0")}`;
     let imageURL = suggestion.fields.picture;
+    console.log(suggestion);
 
     return (
       <div

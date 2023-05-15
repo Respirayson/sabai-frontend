@@ -330,7 +330,7 @@ class Patients extends React.Component {
           <td>
             <figure className="image is-96x96">
               <img
-                // src="https://bulma.io/images/placeholders/96x96.png"
+                //src="https://bulma.io/images/placeholders/96x96.png"
                 src={imageUrl}
                 alt="Placeholder image"
                 style={{ height: 96, width: 96, objectFit: "cover" }}

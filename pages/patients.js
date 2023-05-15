@@ -226,7 +226,8 @@ class Patients extends React.Component {
 
       if (typeof response.error == "undefined") {
         // await this.submitNewVisit();
-        this.setState({patient: response[0].pk,});
+        this.setState({patient: response,});
+        console.log(response);
         console.log(this.state);
         console.log(this.state.patient);
         this.submitNewVisit();

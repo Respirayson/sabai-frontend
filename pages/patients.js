@@ -240,14 +240,14 @@ class Patients extends React.Component {
         console.log("testing!!!!!!!!");
         alert("New patient registered!");
         this.closeModal();
+        this.setState({ patient: "test" });
+        console.log(this.state);
+        console.log(response[0]);
+        this.setState({patient: response[0]});
+        this.autoSubmitNewVisit(response[0]);
       } else {
         alert("Please retake photo!");
       }
-      this.setState({ patient: "test" });
-      console.log(this.state);
-      console.log(response[0]);
-      this.setState({patient: response[0]});
-      this.autoSubmitNewVisit(response[0]);
     }
   }
 

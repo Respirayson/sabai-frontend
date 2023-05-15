@@ -226,7 +226,7 @@ class Patients extends React.Component {
 
       if (typeof response.error == "undefined") {
         // await this.submitNewVisit();
-        console.log(this.state.patient);
+        console.log(response[0]);
         this.setState({
           patient: response[0],
           formDetails: {
@@ -243,6 +243,7 @@ class Patients extends React.Component {
         alert("Please retake photo!");
       }
       console.log(this.state);
+      console.log(response[0]);
       this.submitNewVisit();
     }
   }

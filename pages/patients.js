@@ -290,7 +290,7 @@ class Patients extends React.Component {
     this.setState({
       patient: {},
     });
-    alert("Patient successfully registered!");
+    alert("Visit started!");
   }
 
   async autoSubmitNewVisit(patient) {
@@ -307,7 +307,7 @@ class Patients extends React.Component {
     };
     console.log(payload);
     await axios.post(`${API_URL}/visits`, payload);
-    alert("Patient successfully registered!");
+    console.log("Visit has started automatically!");
   }
 
   /**

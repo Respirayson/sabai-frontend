@@ -307,7 +307,7 @@ class Patients extends React.Component {
     };
     console.log(payload);
     await axios.post(`${API_URL}/visits`, payload);
-    console.log("Visit has started automatically!");
+    alert("Visit has started automatically!");
   }
 
   /**

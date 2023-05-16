@@ -140,7 +140,8 @@ class Patients extends React.Component {
 
       return {
         ...patient,
-        filterString: `${village}${id} ${name} ${contact_no} ${localName}`,
+        filterString: `${village}` + `${id}`.padStart(3,'0') 
+                      + ` ${village}${id} ${name} ${contact_no} ${localName}`,
       };
     });
 
@@ -227,7 +228,7 @@ class Patients extends React.Component {
 
       if (typeof response.error == "undefined") {
         // await this.submitNewVisit();
-        console.log(response[0]);
+        //console.log(response[0]);
         this.setState({
           patient: response[0],
           formDetails: {
@@ -236,13 +237,13 @@ class Patients extends React.Component {
           },
           imageDetails: null,
         });
-        console.log(this.state);
-        console.log("testing!!!!!!!!");
+        //console.log(this.state);
+        //console.log("testing!!!!!!!!");
         alert("New patient registered!");
         this.closeModal();
         this.setState({ patient: "test" });
-        console.log(this.state);
-        console.log(response[0]);
+        //console.log(this.state);
+        //console.log(response[0]);
         this.setState({patient: response[0]});
         this.autoSubmitNewVisit(response[0]);
       } else {
@@ -273,18 +274,18 @@ class Patients extends React.Component {
 
   async submitNewVisit() {
     let { patient } = this.state;
-    console.log("In submit new visit");
+    //console.log("In submit new visit");
     // future helper function
     // get all active visits
     // sort them by their statuses
     // from there, determine where to put this guy
-    console.log(patient);
+    //console.log(patient);
     let payload = {
       patient: patient.pk,
       status: "started",
       visit_date: moment().format("YYYY-MM-DD"),
     };
-    console.log(payload);
+    //console.log(payload);
     await axios.post(`${API_URL}/visits`, payload);
 
     this.setState({
@@ -294,20 +295,20 @@ class Patients extends React.Component {
   }
 
   async autoSubmitNewVisit(patient) {
-    console.log("Auto submit new visit");
+    //console.log("Auto submit new visit");
     // future helper function
     // get all active visits
     // sort them by their statuses
     // from there, determine where to put this guy
-    console.log(patient);
+    //console.log(patient);
     let payload = {
       patient: patient.pk,
       status: "started",
       visit_date: moment().format("YYYY-MM-DD"),
     };
-    console.log(payload);
+    //console.log(payload);
     await axios.post(`${API_URL}/visits`, payload);
-    alert("Visit has started automatically!");
+    alert("Patient successfully registered!");
   }
 
   /**
@@ -721,7 +722,7 @@ class Patients extends React.Component {
 
   getSuggestions(filter) {
     let { patients } = this.state;
-    console.log(patients);
+    //console.log(patients);
     let inputValue = filter.trim().toLowerCase();
     let inputLength = inputValue.length;
     let query =
@@ -729,10 +730,8 @@ class Patients extends React.Component {
         ? []
         : patients.filter(
             (patient) =>
-              patient.filterString.toLowerCase().includes(inputValue) ||
-              patient.pk.toString().includes(inputValue)
+              patient.filterString.toLowerCase().includes(inputValue)
           );
-
     return query;
   }
 
@@ -742,7 +741,7 @@ class Patients extends React.Component {
       .toString()
       .padStart(3, "0")}`;
     let imageURL = suggestion.fields.picture;
-    console.log(suggestion);
+    //console.log(suggestion);
 
     return (
       <div

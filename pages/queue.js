@@ -158,9 +158,10 @@ class Queue extends React.Component {
       let patientId2 = 
         `${visit.patient.village_prefix}`.toLowerCase()
         + `${visit.patient.id}`.padStart(3, `0`);
-      console.log(patientId1, patientId2);
+      let name = `${visit.patient.name}`.toLowerCase();
       let searchValue = event.target.value.toLowerCase();
-      return patientId1.includes(searchValue) || patientId2.includes(searchValue);
+      return patientId1.includes(searchValue) || patientId2.includes(searchValue)
+            || name.includes(searchValue);
     });
 
     this.setState({ visitsFiltered: filteredVisits });

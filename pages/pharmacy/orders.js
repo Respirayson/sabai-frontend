@@ -50,7 +50,8 @@ class Orders extends React.Component {
   renderTableContent() {
     let { visitsFiltered } = this.state;
     let visitsRows = visitsFiltered.map((visit) => {
-      let Id = `${visit.patient.village_prefix}${visit.patient.id}`;
+      let Id = `${visit.patient.village_prefix}`
+               + `${visit.patient.id}`.padStart(3, `0`);
       let imageUrl = `${CLOUDINARY_URL}/${visit.patient.picture}`;
       let fullName = visit.patient.name;
 

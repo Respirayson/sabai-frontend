@@ -6,8 +6,9 @@ import _ from "lodash";
 import Modal from "react-modal";
 import Webcam from "react-webcam";
 import moment from "moment";
-import { API_URL } from "../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../utils/constants";
 import { urltoFile } from "../utils/helpers";
+import record from "./record";
 
 // put id
 
@@ -139,7 +140,8 @@ class Patients extends React.Component {
 
       return {
         ...patient,
-        filterString: `${village}${id} ${name} ${contact_no} ${localName}`,
+        filterString: `${village}` + `${id}`.padStart(3,'0') 
+                      + ` ${village}${id} ${name} ${contact_no} ${localName}`,
       };
     });
 
@@ -175,6 +177,7 @@ class Patients extends React.Component {
   }
 
   async submitNewPatient() {
+    // console.log("In submit new patient");
     let { formDetails, imageDetails } = this.state;
 
     let checklist = [
@@ -224,6 +227,8 @@ class Patients extends React.Component {
       );
 
       if (typeof response.error == "undefined") {
+        // await this.submitNewVisit();
+        //console.log(response[0]);
         this.setState({
           patient: response[0],
           formDetails: {
@@ -232,8 +237,15 @@ class Patients extends React.Component {
           },
           imageDetails: null,
         });
+        //console.log(this.state);
+        //console.log("testing!!!!!!!!");
         alert("New patient registered!");
         this.closeModal();
+        this.setState({ patient: "test" });
+        //console.log(this.state);
+        //console.log(response[0]);
+        this.setState({patient: response[0]});
+        this.autoSubmitNewVisit(response[0]);
       } else {
         alert("Please retake photo!");
       }
@@ -262,23 +274,40 @@ class Patients extends React.Component {
 
   async submitNewVisit() {
     let { patient } = this.state;
-
+    //console.log("In submit new visit");
     // future helper function
     // get all active visits
     // sort them by their statuses
     // from there, determine where to put this guy
-
+    //console.log(patient);
     let payload = {
       patient: patient.pk,
       status: "started",
       visit_date: moment().format("YYYY-MM-DD"),
     };
-
+    //console.log(payload);
     await axios.post(`${API_URL}/visits`, payload);
 
     this.setState({
       patient: {},
     });
+    alert("Visit started!");
+  }
+
+  async autoSubmitNewVisit(patient) {
+    //console.log("Auto submit new visit");
+    // future helper function
+    // get all active visits
+    // sort them by their statuses
+    // from there, determine where to put this guy
+    //console.log(patient);
+    let payload = {
+      patient: patient.pk,
+      status: "started",
+      visit_date: moment().format("YYYY-MM-DD"),
+    };
+    //console.log(payload);
+    await axios.post(`${API_URL}/visits`, payload);
     alert("Patient successfully registered!");
   }
 
@@ -330,7 +359,6 @@ class Patients extends React.Component {
           <td>
             <figure className="image is-96x96">
               <img
-                //src="https://bulma.io/images/placeholders/96x96.png"
                 src={imageUrl}
                 alt="Placeholder image"
                 style={{ height: 96, width: 96, objectFit: "cover" }}
@@ -471,6 +499,12 @@ class Patients extends React.Component {
     );
   }
 
+  // submitNewPatientAndStartVisit = (event) => {
+  //   this.submitNewPatient();
+  //   this.submitNewVisit();
+  //   console.log("Submit both");
+  // };
+
   renderModal() {
     const { formDetails } = this.state;
 
@@ -485,7 +519,9 @@ class Patients extends React.Component {
           <div className="column is-8">
             <form>
               <div className="field">
-                <label className="label">Name</label>
+                <label className="label">
+                  Name (english + local if possible)
+                </label>
                 <div className="control">
                   <input
                     name="name"
@@ -498,7 +534,7 @@ class Patients extends React.Component {
               </div>
 
               <div className="field">
-                <label className="label">Local Name</label>
+                <label className="label">IC Number</label>
                 <div className="control">
                   <input
                     name="local_name"
@@ -572,7 +608,7 @@ class Patients extends React.Component {
                       >
                         <option value="CATT">CATT</option>
                         <option value="PC">PC</option>
-                        <option value="PC">TK</option>
+                        <option value="TK">TK</option>
                         <option value="TT">TT</option>
                       </select>
                     </div>
@@ -619,6 +655,7 @@ class Patients extends React.Component {
                   <button
                     className="button is-dark is-medium"
                     onClick={this.submitNewPatient}
+                    // onClick={this.submitNewPatientAndStartVisit}
                   >
                     Submit
                   </button>
@@ -685,22 +722,26 @@ class Patients extends React.Component {
 
   getSuggestions(filter) {
     let { patients } = this.state;
+    //console.log(patients);
     let inputValue = filter.trim().toLowerCase();
     let inputLength = inputValue.length;
     let query =
       inputLength === 0
         ? []
-        : patients.filter((patient) =>
-            patient.filterString.toLowerCase().includes(inputValue)
+        : patients.filter(
+            (patient) =>
+              patient.filterString.toLowerCase().includes(inputValue)
           );
-
     return query;
   }
 
   renderSuggestion(suggestion) {
     let name = suggestion.fields.name;
-    let id = `${suggestion.fields.village_prefix} ${suggestion.pk}`;
+    let id = `${suggestion.fields.village_prefix} ${suggestion.pk
+      .toString()
+      .padStart(3, "0")}`;
     let imageURL = suggestion.fields.picture;
+    //console.log(suggestion);
 
     return (
       <div
@@ -714,7 +755,7 @@ class Patients extends React.Component {
               <figure className="image is-96x96">
                 <img
                   // src="https://bulma.io/images/placeholders/96x96.png"
-                  src={`${API_URL}/${imageURL}`}
+                  src={`${CLOUDINARY_URL}/${imageURL}`}
                   alt="Placeholder image"
                   style={{ height: 96, width: 96, objectFit: "cover" }}
                 />
@@ -798,45 +839,29 @@ class Patients extends React.Component {
         {this.renderScanModal()}
         <div className="column is-12">
           <h1 style={{ color: "black", fontSize: "1.5em" }}>Registration</h1>
-        </div>
-        <div className="columns is-vcentered">
-          <div
-            className="column is-12"
-            style={
-              {
-                // position: "absolute",
-                // top: 25,
-                // backgroundColor: "brown"
-              }
-            }
-          >
-            <div className="levels" style={{ marginBottom: 10 }}>
-              <div className="level-left">
-                <button
-                  className="button is-dark is-medium level-item"
-                  style={{ display: "inline-block", verticalAlign: "top" }}
-                  onClick={this.openScanModal}
-                >
-                  Scan Face
-                </button>
-                <button
-                  className="button is-dark is-medium level-item"
-                  onClick={this.openModal}
-                >
-                  New Patient
-                </button>
+          <div className="columns is-vcentered">
+            <div className="column is-12">
+              <div className="levels" style={{ marginBottom: 10 }}>
+                <div className="level-left">
+                  <button
+                    className="button is-dark is-medium level-item"
+                    onClick={this.openModal}
+                  >
+                    New Patient
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <div>
-              <Autosuggest
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                getSuggestionValue={this.getSuggestionValue}
-                renderSuggestion={this.renderSuggestion}
-                inputProps={inputProps}
-              />
+              <div>
+                <Autosuggest
+                  suggestions={suggestions}
+                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                  getSuggestionValue={this.getSuggestionValue}
+                  renderSuggestion={this.renderSuggestion}
+                  inputProps={inputProps}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -845,7 +870,7 @@ class Patients extends React.Component {
             <div className="column is-2">
               <figure className="image is-1by1">
                 <img
-                  src={`${API_URL}/${patient.fields.picture}`}
+                  src={`${CLOUDINARY_URL}/${patient.fields.picture}`}
                   alt="Placeholder image"
                   className="has-ratio"
                   style={{ height: 200, width: 200, objectFit: "cover" }}
@@ -855,13 +880,15 @@ class Patients extends React.Component {
             <div className="column is-5">
               <label className="label">ID</label>
               <article className="message">
-                <div className="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
+                <div className="message-body">{`${
+                  patient.fields.village_prefix
+                }${patient.pk.toString().padStart(3, "0")}`}</div>
               </article>
               <label className="label">Name</label>
               <article className="message">
                 <div className="message-body">{patient.fields.name}</div>
               </article>
-              <label className="label">Local Name</label>
+              <label className="label">IC Number</label>
               <article className="message">
                 <div className="message-body">{patient.fields.local_name}</div>
               </article>

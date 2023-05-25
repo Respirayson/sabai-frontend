@@ -2,7 +2,8 @@ import React from "react";
 import { withAuthSync, logInCheck } from "../utils/auth";
 import axios from "axios";
 import Router from "next/router";
-import { API_URL } from "../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../utils/constants";
+import moment from "moment";
 
 class Queue extends React.Component {
   static async getInitialProps(ctx) {
@@ -34,7 +35,7 @@ class Queue extends React.Component {
     this.setState({ visits, visitsFiltered: visits });
   }
 
-  async handleDelete(id) {
+  async handleDelete(visit_id, patient_id) {
     const { visits, visitsFiltered } = this.state;
 
     const confirmed = window.confirm(
@@ -45,10 +46,17 @@ class Queue extends React.Component {
     }
 
     try {
-      await axios.delete(`${API_URL}/visits/${id}`);
-      const updatedVisits = visits.filter((visit) => visit.id !== id);
+      await axios.delete(`${API_URL}/visits/${visit_id}`);
+      // let payload = {
+      //   patient: patient_id,
+      //   status: "ended",
+      //   visit_date: moment().format("YYYY-MM-DD"),
+      // };
+  
+      // await axios.post(`${API_URL}/visits`, payload);
+      const updatedVisits = visits.filter((visit) => visit.id !== visit_id);
       const updatedVisitsFiltered = visitsFiltered.filter(
-        (visit) => visit.id !== id
+        (visit) => visit.id !== visit_id
       );
       this.setState({
         visits: updatedVisits,
@@ -61,9 +69,12 @@ class Queue extends React.Component {
 
   renderTableContent() {
     let { visitsFiltered } = this.state;
-    let visitsRows = visitsFiltered.map((visit, idx) => {
-      let Id = `${visit.patient.village_prefix}${visit.patient.id}`;
-      let imageUrl = `${API_URL}/${visit.patient.picture}`;
+    let reversedVisitsFiltered = visitsFiltered.reverse();
+    let visitsRows = reversedVisitsFiltered.map((visit, idx) => {
+      let Id = `${visit.patient.village_prefix}${visit.patient.id
+        .toString()
+        .padStart(3, "0")}`;
+      let imageUrl = `${CLOUDINARY_URL}/${visit.patient.picture}`;
       let fullName = visit.patient.name;
       let progress = (
         <button
@@ -109,7 +120,7 @@ class Queue extends React.Component {
       let deleteVisit = (
         <button
           className="button is-danger"
-          onClick={() => this.handleDelete(visit.id)}
+          onClick={() => this.handleDelete(visit.id, visit.patient.id)}
         >
           Delete
         </button>
@@ -142,10 +153,15 @@ class Queue extends React.Component {
   onFilterChange(event) {
     let { visits } = this.state;
     let filteredVisits = visits.filter((visit) => {
-      let patientId =
+      let patientId1 =
         `${visit.patient.village_prefix}${visit.patient.id}`.toLowerCase();
-
-      return patientId.includes(event.target.value.toLowerCase());
+      let patientId2 = 
+        `${visit.patient.village_prefix}`.toLowerCase()
+        + `${visit.patient.id}`.padStart(3, `0`);
+      let name = `${visit.patient.name}`.toLowerCase();
+      let searchValue = event.target.value.toLowerCase();
+      return patientId1.includes(searchValue) || patientId2.includes(searchValue)
+            || name.includes(searchValue);
     });
 
     this.setState({ visitsFiltered: filteredVisits });

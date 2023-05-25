@@ -1,6 +1,6 @@
 import React from "react";
 
-class DentalTriageForm extends React.Component {
+class VitalsForm extends React.Component {
   constructor() {
     super();
   }
@@ -10,132 +10,10 @@ class DentalTriageForm extends React.Component {
 
     return (
       <div>
-        <label className="label">Dental Triage Form</label>
-        <div className="field">
-          <label className="label">Complaints</label>
-          <div className="control">
-            <textarea
-              name="complaints"
-              className="textarea"
-              placeholder="Textarea"
-              onChange={handleInputChange}
-              value={formDetails.complaints}
-            />
-          </div>
-        </div>
-
-        <div className="field">
-          <label className="label">Intraoral</label>
-          <div className="control">
-            <textarea
-              name="intraoral"
-              className="textarea"
-              placeholder="Textarea"
-              onChange={handleInputChange}
-              value={formDetails.intraoral}
-            />
-          </div>
-        </div>
-
-        <div className="field">
-          <label className="label">Diagnosis</label>
-          <div className="control">
-            <textarea
-              name="diagnosis"
-              className="textarea"
-              placeholder="Textarea"
-              onChange={handleInputChange}
-              value={formDetails.diagnosis}
-            />
-          </div>
-        </div>
-
-        <hr />
-        <label className="label">Treatments Needed</label>
-
-        <div className="field">
-          <label className="label">EXO</label>
-          <div className="control">
-            <input
-              name="exo"
-              className="input"
-              type="text"
-              onChange={handleInputChange}
-              value={formDetails.exo}
-            />
-          </div>
-        </div>
-
-        <div className="field">
-          <label className="label">CAP</label>
-          <div className="control">
-            <input
-              name="cap"
-              className="input"
-              type="text"
-              onChange={handleInputChange}
-              value={formDetails.cap}
-            />
-          </div>
-        </div>
-
-        <div className="field">
-          <label className="label">SDF</label>
-          <div className="control">
-            <input
-              name="sdf"
-              className="input"
-              type="text"
-              onChange={handleInputChange}
-              value={formDetails.sdf}
-            />
-          </div>
-        </div>
-
-        <div className="field">
-          <label className="label">F</label>
-          <div className="control">
-            <input
-              name="f"
-              className="input"
-              type="text"
-              onChange={handleInputChange}
-              value={formDetails.f}
-            />
-          </div>
-        </div>
-
-        <div className="field">
-          <label className="label">Others</label>
-          <div className="control">
-            <input
-              name="others"
-              className="input"
-              type="text"
-              onChange={handleInputChange}
-              value={formDetails.others}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-class MedicalTriageForm extends React.Component {
-  constructor() {
-    super();
-  }
-
-  render() {
-    let { handleInputChange, formDetails } = this.props;
-
-    return (
-      <div>
-        <label className="label">Medical Triage Form</label>
+        <label className="label">Vitals</label>
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">Height</label>
+            <label className="label">Height (Decimal eg. 160.5)</label>
             <div className="control">
               <input
                 name="height"
@@ -148,7 +26,7 @@ class MedicalTriageForm extends React.Component {
           </div>
 
           <div className="control is-expanded">
-            <label className="label">Weight</label>
+            <label className="label">Weight (Decimal eg. 60.2)</label>
             <div className="control">
               <input
                 name="weight"
@@ -163,7 +41,7 @@ class MedicalTriageForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">Systolic</label>
+            <label className="label">Systolic (Number eg. 10)</label>
             <div className="control">
               <input
                 name="systolic"
@@ -176,7 +54,7 @@ class MedicalTriageForm extends React.Component {
           </div>
 
           <div className="control is-expanded">
-            <label className="label">Diastolic</label>
+            <label className="label">Diastolic (Number eg. 10)</label>
             <div className="control">
               <input
                 name="diastolic"
@@ -191,7 +69,7 @@ class MedicalTriageForm extends React.Component {
 
         <div className="field is-grouped">
           <div className="control is-expanded">
-            <label className="label">Temperature</label>
+            <label className="label">Temperature (Decimal eg. 36.5)</label>
             <div className="control">
               <input
                 name="temperature"
@@ -204,7 +82,7 @@ class MedicalTriageForm extends React.Component {
           </div>
 
           <div className="control is-expanded">
-            <label className="label">Heart Rate</label>
+            <label className="label">Heart Rate (Number eg. 120)</label>
             <div className="control">
               <input
                 name="heart_rate"
@@ -217,46 +95,206 @@ class MedicalTriageForm extends React.Component {
           </div>
         </div>
 
-        <div className="field">
-          {/* <label className="label">HIV Po</label> */}
-          <div className="control">
-            <label className="checkbox">
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Left Eye (Fraction eg. 6/6)</label>
+            <div className="control">
               <input
-                type="checkbox"
+                name="left_eye_degree"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.left_eye_degree}
+              />
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">Right Eye (Fraction eg. 6/12)</label>
+            <div className="control">
+              <input
+                name="right_eye_degree"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.right_eye_degree}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Cataract (Text eg. Anyth)</label>
+            <div className="control">
+              <input
+                name="cataracts"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.cataracts}
+              />
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">Eye Pressure (Text eg. Anyth)</label>
+            <div className="control">
+              <input
+                name="eye_pressure"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.eye_pressure}
+              />
+            </div>
+          </div>
+        </div>
+
+        <br></br>
+
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">HIV Positive (Text eg. Positive)</label>
+            <div className="control">
+              <input
                 name="hiv_positive"
+                className="input"
+                type="text"
                 onChange={handleInputChange}
                 value={formDetails.hiv_positive}
               />
-              HIV Positive?
-            </label>
+            </div>
           </div>
-        </div>
 
-        <div className="field">
-          <div className="control">
-            <label className="checkbox">
+          <div className="control is-expanded">
+            <label className="label">PTB Positive (Text eg. Positive)</label>
+            <div className="control">
               <input
-                type="checkbox"
                 name="ptb_positive"
+                className="input"
+                type="text"
                 onChange={handleInputChange}
                 value={formDetails.ptb_positive}
               />
-              PTB Positive?
-            </label>
+            </div>
           </div>
         </div>
 
-        <div className="field">
+        <div className="control is-expanded">
+          <label className="label">HEPC Positive (Text eg. Positive)</label>
           <div className="control">
-            <label className="checkbox">
+            <input
+              name="hepc_positive"
+              className="input"
+              type="text"
+              onChange={handleInputChange}
+              value={formDetails.hepc_positive}
+            />
+          </div>
+        </div>
+
+        <br></br>
+
+        <label className="label">Psychology Tests</label>
+
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">PHQ-9 (Number(0-27) eg. 7)</label>
+            <div className="control">
               <input
-                type="checkbox"
-                name="hepc_positive"
+                name="phq_9"
+                className="input"
+                type="text"
                 onChange={handleInputChange}
-                value={formDetails.hepc_positive}
+                value={formDetails.phq_9}
               />
-              HEPC Positive?
-            </label>
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">GAD-7 (Number(0-21) eg. 4)</label>
+            <div className="control">
+              <input
+                name="gad_7"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.gad_7}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="control is-expanded">
+          <label className="label">SDQ (Number eg. 34)</label>
+          <div className="control">
+            <input
+              name="sdq"
+              className="input"
+              type="text"
+              onChange={handleInputChange}
+              value={formDetails.sdq}
+            />
+          </div>
+        </div>
+
+        <br></br>
+
+        <label className="label">STAT Investigations</label>
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Urine Dip Test (Text eg. Anyth)</label>
+            <div className="control">
+              <input
+                name="urine_test"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.urine_test}
+              />
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">Hemocue Hb Count (Decimal eg. 13.2)</label>
+            <div className="control">
+              <input
+                name="hemocue_count"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.hemocue_count}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Blood Glucose (Decimal eg. 13.2)</label>
+            <div className="control">
+              <input
+                name="blood_glucose"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.blood_glucose}
+              />
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">Others (Text eg. Anyth)</label>
+            <div className="control">
+              <input
+                name="others"
+                className="input"
+                type="text"
+                onChange={handleInputChange}
+                value={formDetails.others}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -267,26 +305,43 @@ class MedicalTriageForm extends React.Component {
 class MedicalForm extends React.Component {
   constructor() {
     super();
+    this.state = {
+      showWomenClinicDetails: false,
+    };
   }
+
+  handleCheckboxChange = (event) => {
+    const { checked } = event.target;
+    this.setState({ showWomenClinicDetails: checked });
+  };
+
+  handleCheckboxAndInputChange = (event) => {
+    this.handleCheckboxChange(event);
+    handleInputChange(event);
+  };
 
   render() {
     let { handleInputChange, formDetails } = this.props;
+    const { showWomenClinicDetails } = this.state;
 
     return (
       <div>
-        <label className="label">Medical Consultation Form</label>
+        <label className="label">Patient Photo Details</label>
 
-        <label className="label">Sub-type</label>
-        <div className="control" style={{ marginBottom: 20 }}>
-          <input
-            name="sub_type"
-            className="input"
-            type="text"
-            placeholder="General"
-            onChange={handleInputChange}
-            value={formDetails.sub_type}
-          />
+        <div className="field">
+          <label className="label">Photo URL</label>
+          <div className="control">
+            <textarea
+              name="photo_url"
+              className="textarea"
+              placeholder="Insert Photo URL here..."
+              onChange={handleInputChange}
+              value={formDetails.photo_url}
+            />
+          </div>
         </div>
+
+        <label className="label">Medical Consultation Form</label>
 
         <div className="field">
           <label className="label">Problems</label>
@@ -313,7 +368,6 @@ class MedicalForm extends React.Component {
             />
           </div>
         </div>
-
         <div className="field">
           <label className="label">Notes</label>
           <div className="control">
@@ -330,15 +384,116 @@ class MedicalForm extends React.Component {
         <hr />
 
         <div className="field">
-          <label className="label">Referred for (within clinic)</label>
-          <div className="control" style={{ marginBottom: 20 }}>
+          <label className="label">
             <input
+              name="women_clinic_checkbox"
+              type="checkbox"
+              checked={showWomenClinicDetails}
+              onChange={this.handleCheckboxAndInputChange}
+              style={{ marginRight: "10px" }}
+              value={formDetails.women_clinic_checkbox}
+            />
+            Women's Clinic Triage
+          </label>
+        </div>
+
+        {showWomenClinicDetails && (
+          <div className="field">
+            <label className="label">Additional Information</label>
+            <div className="control">
+              <div className="columns">
+                <div className="column">
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      name="breast_problem"
+                      style={{ marginRight: "10px" }}
+                      onChange={handleInputChange}
+                      value={formDetails.breast_problem}
+                    />
+                    Breast Problem
+                  </label>
+                </div>
+                <div className="column">
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      name="genital_area_problem"
+                      style={{ marginRight: "10px" }}
+                      onChange={handleInputChange}
+                      value={formDetails.genital_area_problem}
+                    />
+                    Genital Area Problem
+                  </label>
+                </div>
+              </div>
+              <div className="columns">
+                <div className="column">
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      name="menstruation_problem"
+                      style={{ marginRight: "10px" }}
+                      onChange={handleInputChange}
+                      value={formDetails.menstruation_problem}
+                    />
+                    Menstruation Problem
+                  </label>
+                </div>
+                <div className="column">
+                  {/* <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      name="Others"
+                      style={{ marginRight: "10px" }}
+                    />
+                    Others
+                  </label> */}
+                  <textarea
+                    name="others_details"
+                    className="textarea"
+                    placeholder="Others..."
+                    onChange={handleInputChange}
+                    value={formDetails.others_details}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <hr />
+
+        <div className="field">
+          <label className="label">* Referred for (within clinic)</label>
+          <div className="control" style={{ marginBottom: 20 }}>
+            <div className="select">
+              <select name="referred_for" onChange={handleInputChange}>
+                <option>Please select....</option>
+                <option value="Diagnostic">Diagnostic</option>
+                <option value="Acute">Acute</option>
+                <option value="Chronic">Chronic</option>
+              </select>
+            </div>
+            {/* <input
               name="referred_for"
               className="input"
               type="text"
               placeholder="Type specialty here..."
               onChange={handleInputChange}
               value={formDetails.referred_for}
+            /> */}
+          </div>
+        </div>
+        <div className="field">
+          <label className="label">Referral Notes</label>
+          <div className="control">
+            <textarea
+              name="referred_notes"
+              className="textarea"
+              placeholder="Type your referral notes here..."
+              onChange={handleInputChange}
+              value={formDetails.referred_notes}
             />
           </div>
         </div>
@@ -356,7 +511,6 @@ class PrescriptionForm extends React.Component {
     let { medications } = this.props;
 
     let medication = medications.filter((med) => {
-      console.log(med);
       return medicine == med.pk;
     });
 
@@ -366,14 +520,12 @@ class PrescriptionForm extends React.Component {
 
   calculateMedicineReservedStock(medicine) {
     let { reservedMedications } = this.props;
-    console.log(reservedMedications);
 
     if (typeof reservedMedications[medicine] === "undefined") return 0;
     else return reservedMedications[medicine];
   }
 
   render() {
-    console.log(1);
     let {
       allergies,
       handleInputChange,
@@ -382,8 +534,6 @@ class PrescriptionForm extends React.Component {
       onSubmit,
       isEditing,
     } = this.props;
-    console.log(this.props);
-    console.log("adsfasfasdf");
     return (
       <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Prescription</h1>
@@ -453,4 +603,4 @@ class PrescriptionForm extends React.Component {
   }
 }
 
-export { DentalTriageForm, MedicalTriageForm, MedicalForm, PrescriptionForm };
+export { VitalsForm, MedicalForm, PrescriptionForm };

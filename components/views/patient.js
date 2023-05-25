@@ -12,8 +12,7 @@ class ConsultationsTable extends React.Component {
       <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
           <tr>
-            <th>Type</th>
-            <th>Sub Type</th>
+            {/* <th>Type</th> */}
             <th>Doctor</th>
             <th>Referred For</th>
             <th>Action</th>
@@ -64,13 +63,6 @@ class ConsultationsView extends React.Component {
 
     return (
       <div>
-        <div className="field">
-          <label className="label">Sub Type</label>
-          <article className="message">
-            <div className="message-body">{consult.sub_type}</div>
-          </article>
-        </div>
-
         <div className="field">
           <label className="label">Problems</label>
           <article className="message">
@@ -124,8 +116,92 @@ class ConsultationsView extends React.Component {
             <div className="message-body">{content.referred_for}</div>
           </article>
         </div>
+        <div className="field">
+          <label className="label">Referral Notes</label>
+          <article className="message">
+            <div className="message-body">{content.referred_notes}</div>
+          </article>
+        </div>
 
         <hr />
+
+        <div className="field">
+          <label className="label">Problems</label>
+          <article className="message">
+            <div className="message-body">{content.problems}</div>
+          </article>
+        </div>
+
+        <hr />
+
+        <div className="field">
+          <label className="label">Diagnosis</label>
+          <article className="message">
+            <div className="message-body">{content.diagnosis}</div>
+          </article>
+        </div>
+
+        <hr />
+
+        <div className="field">
+          <label className="label">Notes</label>
+          <article className="message">
+            <div className="message-body">{content.notes}</div>
+          </article>
+        </div>
+
+        <hr />
+
+{/*         {content.women_clinic_checkbox && (
+          <div className="field">
+            <label className="label">Breast Problem</label>
+            <article className="message">
+              <div className="message_body">
+                {content.breast_problem ? "Yes" : "No"}
+              </div>
+            </article>
+            <label className="label">Genital Area Problem</label>
+            <article className="message">
+              <div className="message_body">
+                {content.genital_area_problem ? "Yes" : "No"}
+              </div>
+            </article>
+            <label className="label">Menstruation Problem</label>
+            <article className="message">
+              <div className="message_body">
+                {content.menstruation_problem ? "Yes" : "No"}
+              </div>
+            </article>
+          </div>
+        )} */}
+
+        <div className="field">
+          <label className="label">Breast Problem</label>
+          <article className="message">
+            <div className="message_body">
+              {content.breast_problem ? "Yes" : "No"}
+            </div>
+          </article>
+          <label className="label">Genital Area Problem</label>
+          <article className="message">
+            <div className="message_body">
+              {content.genital_area_problem ? "Yes" : "No"}
+            </div>
+          </article>
+          <label className="label">Menstruation Problem</label>
+          <article className="message">
+            <div className="message_body">
+              {content.menstruation_problem ? "Yes" : "No"}
+            </div>
+          </article>
+          <label className="label">Others</label>
+          <article className="message">
+            <div className="message_body">
+              {content.others_details}
+            </div>
+          </article>
+          <hr />
+        </div>
 
         <div className="field">
           <label className="label">Prescriptions</label>
@@ -142,92 +218,6 @@ class ConsultationsView extends React.Component {
   }
 }
 
-class DentalTriageView extends React.Component {
-  constructor() {
-    super();
-  }
-
-  render() {
-    let { content } = this.props;
-
-    return (
-      <div className="column is-12">
-        <h1 style={{ color: "black", fontSize: "1.5em" }}>Dental Triage</h1>
-        <div className="field">
-          <label className="label">Complaints</label>
-          <article className="message">
-            <div className="message-body">{content.fields.complaints}</div>
-          </article>
-        </div>
-
-        <div className="field">
-          <label className="label">Intraoral</label>
-          <article className="message">
-            <div className="message-body">{content.fields.intraoral}</div>
-          </article>
-        </div>
-
-        <div className="field">
-          <label className="label">Diagnosis</label>
-          <article className="message">
-            <div className="message-body">{content.fields.diagnosis}</div>
-          </article>
-        </div>
-        <hr />
-
-        <div className="field is-grouped">
-          <div className="control is-expanded">
-            <label className="label">EXO</label>
-            <div className="control">
-              <article className="message">
-                <div className="message-body">{content.fields.exo}</div>
-              </article>
-            </div>
-          </div>
-
-          <div className="control is-expanded">
-            <label className="label">CAP</label>
-            <div className="control">
-              <article className="message">
-                <div className="message-body">{content.fields.cap}</div>
-              </article>
-            </div>
-          </div>
-        </div>
-
-        <div className="field is-grouped">
-          <div className="control is-expanded">
-            <label className="label">SDF</label>
-            <div className="control">
-              <article className="message">
-                <div className="message-body">{content.fields.sdf}</div>
-              </article>
-            </div>
-          </div>
-
-          <div className="control is-expanded">
-            <label className="label">F</label>
-            <div className="control">
-              <article className="message">
-                <div className="message-body">{content.fields.f}</div>
-              </article>
-            </div>
-          </div>
-        </div>
-
-        <div className="field">
-          <label className="label">Others</label>
-          <article className="message">
-            <div className="message-body">{content.fields.others}</div>
-          </article>
-        </div>
-
-        <hr />
-      </div>
-    );
-  }
-}
-
 class VitalsView extends React.Component {
   constructor() {
     super();
@@ -235,10 +225,11 @@ class VitalsView extends React.Component {
 
   render() {
     let { content } = this.props;
-
     return (
       <div className="column is-12">
         <h1 style={{ color: "black", fontSize: "1.5em" }}>Vital Signs</h1>
+
+        <br></br>
 
         <div className="field is-grouped">
           <div className="control is-expanded">
@@ -300,33 +291,148 @@ class VitalsView extends React.Component {
           </div>
         </div>
 
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Left Eye</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.left_eye_degree}</div>
+              </article>
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">Right Eye</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.right_eye_degree}</div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Cataract</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.cataracts}</div>
+              </article>
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">Eye Pressure</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.eye_pressure}</div>
+              </article>
+            </div>
+          </div>
+        </div>
+
         <hr />
 
-        <div className="field">
-          <label className="label">HIV Positive</label>
-          <article className="message">
-            <div className="message-body">
-              {content.hiv_positive ? "Positive" : "Negative"}
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">PHQ-9</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.phq_9}</div>
+              </article>
             </div>
-          </article>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">GAD-7</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.gad_7}</div>
+              </article>
+            </div>
+          </div>
         </div>
 
-        <div className="field">
-          <label className="label">PTB Positive</label>
-          <article className="message">
-            <div className="message-body">
-              {content.ptb_positive ? "Positive" : "Negative"}
-            </div>
-          </article>
+        <div className="control is-expanded">
+          <label className="label">SDQ</label>
+          <div className="control">
+            <article className="message">
+              <div className="message-body">{content.sdq}</div>
+            </article>
+          </div>
         </div>
 
-        <div className="field">
+        <hr />
+
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">HIV Positive</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.hiv_positive}</div>
+              </article>
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">PTB Positive</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.ptb_positive}</div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div className="control is-expanded">
           <label className="label">HEPC Positive</label>
-          <article className="message">
-            <div className="message-body">
-              {content.hepc_positive ? "Positive" : "Negative"}
+          <div className="control">
+            <article className="message">
+              <div className="message-body">{content.hepc_positive}</div>
+            </article>
+          </div>
+        </div>
+
+        <hr />
+
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Urine Dip Test</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.urine_test}</div>
+              </article>
             </div>
-          </article>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">Hemocue Hb Count</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.hemocue_count}</div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <label className="label">Blood Glucose</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.blood_glucose}</div>
+              </article>
+            </div>
+          </div>
+
+          <div className="control is-expanded">
+            <label className="label">Others</label>
+            <div className="control">
+              <article className="message">
+                <div className="message-body">{content.others}</div>
+              </article>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -381,7 +487,7 @@ class PatientView extends React.Component {
     return (
       <div className="column is-3">
         <div className="field">
-          <label className="label">Local Name</label>
+          <label className="label">IC Number</label>
           <article className="message">
             <div className="message-body">{content.fields.local_name}</div>
           </article>
@@ -391,6 +497,15 @@ class PatientView extends React.Component {
           <label className="label">Gender</label>
           <article className="message">
             <div className="message-body">{content.fields.gender}</div>
+          </article>
+        </div>
+
+        <div className="field">
+          <label className="label">Age</label>
+          <article className="message">
+            <div className="message-body">{content.fields.date_of_birth ? 
+              Math.abs(new Date(Date.now() - new Date(content.fields.date_of_birth)).getUTCFullYear() - 1970) : "No DOB" }
+            </div>
           </article>
         </div>
 
@@ -424,7 +539,6 @@ class PatientView extends React.Component {
 export {
   ConsultationsTable,
   ConsultationsView,
-  DentalTriageView,
   VitalsView,
   VisitPrescriptionsTable,
   PatientView,

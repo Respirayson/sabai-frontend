@@ -1,9 +1,8 @@
 import React from "react";
 import { withAuthSync, logInCheck } from "../utils/auth";
 import axios from "axios";
-import moment from "moment";
 import Router from "next/router";
-import { API_URL } from "../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../utils/constants";
 
 class Records extends React.Component {
   static async getInitialProps(ctx) {
@@ -44,19 +43,40 @@ class Records extends React.Component {
   renderTableContent() {
     let { patientsFiltered } = this.state;
     let patientsRows = patientsFiltered.map((patient) => {
-      let Id = `${patient.fields.village_prefix}${patient.pk}`;
-      let imageUrl = `${API_URL}/${patient.fields.picture}`;
+      let Id = `${patient.fields.village_prefix}${patient.pk
+        .toString()
+        .padStart(3, "0")}`;
+      let imageUrl = `${CLOUDINARY_URL}/${patient.fields.picture}`;
       let fullName = patient.fields.name;
 
       let progress = (
-        <button
-          className="button is-dark level-item"
-          onClick={() => {
-            Router.push(`/record?id=${patient.pk}`);
-          }}
-        >
-          View
-        </button>
+        <div>
+          <button
+            className="button is-dark level-item"
+            onClick={() => {
+              Router.push(`/record?id=${patient.pk}`);
+            }}
+            style={{ display: "inline-block" }}
+          >
+            View
+          </button>
+          <button
+            className="button is-danger level-item"
+            onClick={async () => {
+              if (confirm("Are you sure you want to delete this patient?")) {
+                try {
+                  await axios.delete(`${API_URL}/patients/${patient.pk}`);
+                  await this.onRefresh();
+                } catch (error) {
+                  console.error(error);
+                }
+              }
+            }}
+            style={{ display: "inline-block", marginLeft: "10px" }}
+          >
+            Delete
+          </button>
+        </div>
       );
 
       return (

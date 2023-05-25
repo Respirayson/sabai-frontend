@@ -4,9 +4,8 @@
 import React from "react";
 import { withAuthSync, logInCheck } from "../../utils/auth";
 import axios from "axios";
-import moment from "moment";
 import Router from "next/router";
-import { API_URL } from "../../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../../utils/constants";
 
 class Orders extends React.Component {
   static async getInitialProps(ctx) {
@@ -51,20 +50,40 @@ class Orders extends React.Component {
   renderTableContent() {
     let { visitsFiltered } = this.state;
     let visitsRows = visitsFiltered.map((visit) => {
-      let Id = "";
-      // `${visit.patient.village_prefix}${visit.patient.id}`;
-      let imageUrl = `${API_URL}/${visit.patient.picture}`;
+      let Id = `${visit.patient.village_prefix}`
+               + `${visit.patient.id}`.padStart(3, `0`);
+      let imageUrl = `${CLOUDINARY_URL}/${visit.patient.picture}`;
       let fullName = visit.patient.name;
 
       let action = (
-        <button
-          className="button is-dark level-item"
-          onClick={() => {
-            Router.push(`/pharmacy/prescription?id=${visit.patient.id}`);
-          }}
-        >
-          View
-        </button>
+        <div>
+          <button
+            className="button is-dark level-item"
+            onClick={() => {
+              Router.push(`/pharmacy/prescription?id=${visit.id}`);
+            }}
+            style={{ display: "inline-block" }}
+          >
+            View
+          </button>
+
+          <button
+            className="button is-danger level-item"
+            onClick={async () => {
+              if (confirm("Are you sure you want to delete this order?")) {
+                try {
+                  await axios.delete(`${API_URL}/visits/${visit.id}`);
+                  await this.onRefresh();
+                } catch (error) {
+                  console.error(error);
+                }
+              }
+            }}
+            style={{ display: "inline-block", marginLeft: "10px" }}
+          >
+            Delete
+          </button>
+        </div>
       );
 
       return (
@@ -100,7 +119,7 @@ class Orders extends React.Component {
       >
         <div className="column is-12">
           <h1 style={{ color: "black", fontSize: "1.5em" }}>
-            Approve/ Reject Orders
+            Approve/Reject Orders
           </h1>
           <div className="field">
             <div className="control">

@@ -6,17 +6,17 @@ import Router from "next/router";
 import Modal from "react-modal";
 import moment from "moment";
 import {
-  MedicalTriageForm,
+  VitalsForm,
   MedicalForm,
   PrescriptionForm,
 } from "../components/forms/patient";
 import {
   ConsultationsTable,
   ConsultationsView,
-  MedicalTriageView,
+  VitalsView,
   VisitPrescriptionsTable,
 } from "../components/views/patient";
-import { API_URL } from "../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../utils/constants";
 
 Modal.setAppElement("#__next");
 
@@ -39,7 +39,7 @@ class Patient extends React.Component {
       visitID: null,
       consults: [],
       orders: [],
-      referrals: [],
+      referredFor: [],
       vitals: {},
       formDetails: {},
       medicationDetails: {},
@@ -60,7 +60,6 @@ class Patient extends React.Component {
 
   async onRefresh() {
     let { id: patientId } = this.props.query;
-    console.log(patientId);
     // gets patient data
     let { data: patient } = await axios.get(`${API_URL}/patients/${patientId}`);
 
@@ -71,7 +70,7 @@ class Patient extends React.Component {
 
     // sorts
     let visitsSorted = visits.sort((a, b) => {
-      return b.pk - a.pk;
+      return b.id - a.id;
     });
 
     this.setState({
@@ -97,7 +96,7 @@ class Patient extends React.Component {
 
     let modalContent =
       viewType == "vitals" ? (
-        <MedicalTriageView content={vitals} />
+        <VitalsView content={vitals} />
       ) : (
         <ConsultationsView content={consult} />
       );
@@ -251,9 +250,8 @@ class Patient extends React.Component {
     );
 
     let consultsEnriched = consults.map((consult) => {
-      let consultID = consult.id;
       let consultPrescriptions = prescriptions.filter((prescription) => {
-        return prescription.consult == consultID;
+        return prescription.visit.id == consult.visit.id;
       });
 
       return {
@@ -268,7 +266,7 @@ class Patient extends React.Component {
 
     this.setState({
       consults: consultsEnriched,
-      vitals: vitals,
+      vitals: vitals[0] || {},
       visitPrescriptions: prescriptions,
       mounted: true,
       visitID,
@@ -278,12 +276,10 @@ class Patient extends React.Component {
   async submitForm() {
     let { form } = this.props.query;
     let { formDetails, visitID, orders } = this.state;
-
     var formPayload = {
       visit: visitID,
       ...formDetails,
     };
-
     var consultId;
     var orderPromises;
 
@@ -306,7 +302,6 @@ class Patient extends React.Component {
           let orderPayload = {
             ...order,
             visit: visitID,
-            consult: consultId,
             doctor: window.localStorage.getItem("userID"),
           };
           orderPromises.push(axios.post(`${API_URL}/orders`, orderPayload));
@@ -314,28 +309,6 @@ class Patient extends React.Component {
 
         await Promise.all(orderPromises);
         alert("Medical Consult Completed!");
-        break;
-      case "dental":
-        let { data: dentalConsult } = await axios.post(`${API_URL}/consults`, {
-          ...formPayload,
-          doctor: window.localStorage.getItem("userID"),
-          type: "dental",
-        });
-        consultId = dentalConsult[0].pk;
-
-        orderPromises = [];
-
-        orders.forEach((order) => {
-          let orderPayload = {
-            ...order,
-            consult: consultId,
-            visit: visitID,
-            doctor: window.localStorage.getItem("userID"),
-          };
-          orderPromises.push(axios.post(`${API_URL}/orders`, orderPayload));
-        });
-
-        alert("Dental Consult Completed!");
         break;
     }
 
@@ -382,7 +355,7 @@ class Patient extends React.Component {
         <div className="columns is-12">
           <div className="column is-2">
             <img
-              src={`${API_URL}/${patient.fields.picture}`}
+              src={`${CLOUDINARY_URL}/${patient.fields.picture}`}
               alt="Placeholder image"
               className="has-ratio"
               style={{
@@ -395,7 +368,9 @@ class Patient extends React.Component {
           <div className="column is-3">
             <label className="label">Village ID</label>
             <article className="message">
-              <div className="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
+              <div className="message-body">{`${
+                patient.fields.village_prefix
+              }${patient.pk.toString().padStart(3, "0")}`}</div>
             </article>
             <label className="label">Visit on</label>
             <div className="select is-fullwidth">
@@ -428,15 +403,15 @@ class Patient extends React.Component {
     let { vitals, consults, visitPrescriptions } = this.state;
 
     let consultRows = consults.map((consult) => {
-      let type = consult.type;
-      let subType = consult.sub_type == null ? "General" : consult.sub_type;
+      // let type = consult.type;
+      // let subType = consult.sub_type == null ? "General" : consult.sub_type;
       let doctor = consult.doctor.username;
       let referredFor =
-        consult.referred_for == null ? "None" : consult.referred_for;
+        consult.referredFor == null ? "None" : consult.referredFor;
       return (
         <tr key={consult.id}>
-          <td>{type}</td>
-          <td>{subType}</td>
+          {/* <td>{type}</td>
+          <td>{subType}</td> */}
           <td>{doctor}</td>
           <td>{referredFor}</td>
           <td>
@@ -452,11 +427,11 @@ class Patient extends React.Component {
     });
 
     return (
-      <div className="column is-7">
+      <div className="column is-5">
         <div className="columns">
-          <div className="column is-6">
-            <label className="label">Medical Triage</label>
-            {typeof vitals.fields === "undefined" ? (
+          <div className="column is-4">
+            <label className="label">Vital Signs</label>
+            {typeof vitals === "undefined" ? (
               <h2>Not Done</h2>
             ) : (
               <button
@@ -499,7 +474,7 @@ class Patient extends React.Component {
       switch (form) {
         case "vitals":
           return (
-            <MedicalTriageForm
+            <VitalsForm
               formDetails={formDetails}
               handleInputChange={this.handleInputChange}
             />
@@ -528,7 +503,7 @@ class Patient extends React.Component {
     };
 
     return (
-      <div className="column is-5">
+      <div className="column is-7">
         {formContent()}
 
         <hr />
@@ -633,6 +608,9 @@ const formModalStyles = {
     top: "12.5%",
     bottom: "12.5%",
   },
+  overlay: {
+    zIndex: 4,
+  },
 };
 
 const viewModalStyles = {
@@ -641,6 +619,9 @@ const viewModalStyles = {
     right: "12.5%",
     top: "12.5%",
     bottom: "12.5%",
+  },
+  overlay: {
+    zIndex: 4,
   },
 };
 

@@ -11,7 +11,7 @@ import {
   VisitPrescriptionsTable,
   PatientView,
 } from "../components/views/patient";
-import { API_URL } from "../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../utils/constants";
 
 Modal.setAppElement("#__next");
 
@@ -34,7 +34,7 @@ class Record extends React.Component {
       visitID: null,
       consults: [],
       orders: [],
-      referrals: [],
+      referredFor: [],
       vitals: {},
       formDetails: {},
       medicationDetails: {},
@@ -141,7 +141,7 @@ class Record extends React.Component {
 
     let consultsEnriched = consults.map((consult) => {
       let consultPrescriptions = prescriptions.filter((prescription) => {
-        return prescription.consult == consult.id;
+        return prescription.visit.id == consult.visit.id;
       });
 
       return {
@@ -185,7 +185,7 @@ class Record extends React.Component {
         <div className="columns is-12">
           <div className="column is-2">
             <img
-              src={`${API_URL}/${patient.fields.picture}`}
+              src={`${CLOUDINARY_URL}/${patient.fields.picture}`}
               alt="Placeholder image"
               className="has-ratio"
               style={{
@@ -198,7 +198,9 @@ class Record extends React.Component {
           <div className="column is-3">
             <label className="label">Village ID</label>
             <article className="message">
-              <div className="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
+              <div className="message-body">{`${
+                patient.fields.village_prefix
+              }${patient.pk.toString().padStart(3, "0")}`}</div>
             </article>
             <label className="label">Visit on</label>
             <div className="select is-fullwidth">
@@ -236,8 +238,6 @@ class Record extends React.Component {
 
       return (
         <tr key={consult.pk}>
-          <td>{type}</td>
-          <td>{subType}</td>
           <td>{doctor}</td>
           <td>{referredFor}</td>
           <td>

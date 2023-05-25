@@ -10,7 +10,7 @@ const SideMenu = (props) => (
           <img src="/sabaiLogo.png" />
         </figure>
 
-        <h1 className="level-item sideMenuTitle">Biometrics</h1>
+        <h1 className="level-item sideMenuTitle">Sa'Bai '23</h1>
       </div>
     </div>
     <p className="menu-label sideMenuItem">{cookie.get("name")}</p>
@@ -47,11 +47,12 @@ const SideMenu = (props) => (
     </ul>
     <p className="menu-label sideMenuItem">Others</p>
     <ul className="menu-list">
-      <li>
+      {/* uncomment to show users tab */}
+      {/* <li>
         <Link href="/users" replace>
           Users
         </Link>
-      </li>
+      </li> */}
       <li onClick={logout}>
         <a>Logout</a>
       </li>

@@ -1,11 +1,10 @@
 import React from "react";
+import Router from "next/router";
 import { withAuthSync, logInCheck } from "../../utils/auth";
 import axios from "axios";
-import moment from "moment";
-import Router from "next/router";
 import Modal from "react-modal";
 import { PrescriptionForm } from "../../components/forms/prescription";
-import { API_URL } from "../../utils/constants";
+import { API_URL, CLOUDINARY_URL } from "../../utils/constants";
 
 Modal.setAppElement("#__next");
 
@@ -38,20 +37,12 @@ class Prescription extends React.Component {
   }
 
   async onRefresh() {
-    let { id: patientId } = this.props.query;
-
-    let { data: patient } = await axios.get(`${API_URL}/patients/${patientId}`);
-
-    let { data: visit } = await axios.get(
-      `${API_URL}/visits?patient=${patientId}`
-    );
-
-    let visitId = visit[visit.length - 1].pk;
+    let { id: visitId } = this.props.query;
+    let { data: visit } = await axios.get(`${API_URL}/visits/${visitId}`);
 
     let { data: consultations } = await axios.get(
       `${API_URL}/consults?visit=${visitId}`
     );
-
     let { data: medications } = await axios.get(`${API_URL}/medications`);
 
     let medicationsDict = {};
@@ -61,15 +52,15 @@ class Prescription extends React.Component {
 
       medicationsDict[medicationId] = quantity;
     });
-
-    this.setState({
-      patient: patient[0],
-      visit: visit[visit.length - 1],
-      medicationsDict,
-      consultations,
-    });
-
-    this.loadMedicationStock();
+    this.setState(
+      {
+        visit,
+        patient: visit.patient,
+        medicationsDict,
+        consultations,
+      },
+      () => this.loadMedicationStock()
+    );
   }
 
   async loadMedicationStock() {
@@ -83,7 +74,6 @@ class Prescription extends React.Component {
     let { data: allOrders } = await axios.get(
       `${API_URL}/orders?order_status=PENDING`
     );
-
     // key -> medicine pk
     // value -> total reserved
     let reservedMedications = {};
@@ -101,34 +91,44 @@ class Prescription extends React.Component {
     this.setState({ orders, medications, reservedMedications, mounted: true });
   }
 
-  async massUpdate(flag) {
+  massUpdate(flag) {
     let { orders, visit } = this.state;
-    let promises = [];
+    let medicationUpdates = [];
+    let orderUpdates = [];
 
     orders.forEach((order) => {
-      let orderId = order.id;
-      let payload = {
+      let medPayload = {
+        quantityChange: -order.quantity,
+      };
+
+      let orderPayload = {
         order_status: flag,
       };
 
-      let medicineId = order.medicine.id;
-      let medPayload = {
-        quantityChange: order.quantity,
-      };
-
-      promises.push(
-        axios.patch(`${API_URL}/medications/${medicineId}`, medPayload)
+      medicationUpdates.push(() =>
+        axios.patch(`${API_URL}/medications/${order.medicine.id}`, medPayload)
       );
-      promises.push(axios.patch(`${API_URL}/orders/${orderId}`, payload));
+      orderUpdates.push(() =>
+        axios.patch(`${API_URL}/orders/${order.id}`, orderPayload)
+      );
     });
 
     let visitPayload = {
       status: "finished",
     };
-    promises.push(axios.patch(`${API_URL}/visits/${visit.id}`, visitPayload));
+    orderUpdates.push(() =>
+      axios.patch(`${API_URL}/visits/${visit.id}`, visitPayload)
+    );
 
-    await Promise.all(promises);
-    alert("Order Completed!");
+    Promise.all(medicationUpdates.map((x) => x()))
+      .then(() => Promise.all(orderUpdates.map((x) => x())))
+      .then(() => {
+        alert("Order Completed!");
+        Router.push("/pharmacy/orders");
+      })
+      .catch(() => {
+        alert("Insufficient medication!");
+      });
   }
 
   async submitOrderEdit() {
@@ -212,7 +212,7 @@ class Prescription extends React.Component {
         contentLabel="Example Modal"
       >
         <PrescriptionForm
-          allergies={patient.fields.drug_allergy}
+          allergies={patient.drug_allergy}
           handleInputChange={this.handleOrderChange}
           formDetails={order}
           medicationOptions={options}
@@ -232,7 +232,7 @@ class Prescription extends React.Component {
         <div className="columns is-12">
           <div className="column is-2">
             <img
-              src={`${API_URL}/${patient.fields.picture}`}
+              src={`${CLOUDINARY_URL}/${patient.picture}`}
               alt="Placeholder image"
               className="has-ratio"
               style={{
@@ -245,13 +245,13 @@ class Prescription extends React.Component {
           <div className="column is-3">
             <label className="label">Village ID</label>
             <article className="message">
-              <div className="message-body">{`${patient.fields.village_prefix}${patient.pk}`}</div>
+              <div className="message-body">{`${patient.village_prefix}${patient.id}`}</div>
             </article>
           </div>
           <div className="column is-3">
             <label className="label">Name</label>
             <article className="message">
-              <div className="message-body">{patient.fields.name}</div>
+              <div className="message-body">{patient.name}</div>
             </article>
           </div>
           <div className="column is-3"></div>
@@ -319,14 +319,12 @@ class Prescription extends React.Component {
     let consultRows = consultations.map((consult) => {
       let type = consult.type;
       let subType = consult.sub_type == null ? "General" : consult.sub_type;
-      let doctor = consult.doctor.name;
+      let doctor = consult.doctor.username;
       let referredFor =
         consult.referred_for == null ? "None" : consult.referred_for;
 
       return (
         <tr>
-          <td>{type}</td>
-          <td>{subType}</td>
           <td>{doctor}</td>
           <td>{referredFor}</td>
         </tr>
@@ -337,8 +335,6 @@ class Prescription extends React.Component {
       <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
           <tr>
-            <th>Type</th>
-            <th>Sub Type</th>
             <th>Doctor</th>
             <th>Referred For</th>
           </tr>

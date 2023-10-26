@@ -5,6 +5,7 @@ import cookie from "js-cookie";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import "../styles/styles.scss";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 /**
  * Future implementation
@@ -35,8 +36,6 @@ class MyApp extends App {
 
   render() {
     const { Component, pageProps } = this.props;
-    let isLoggedIn = typeof cookie.get("token") !== "undefined";
-    if (!isLoggedIn) return <Component {...pageProps} />;
 
     return (
       // <AlertProvider template={AlertTemplate} {...options}>
@@ -45,9 +44,11 @@ class MyApp extends App {
       // </Layout>
       // </AlertProvider>
 
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <UserProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </UserProvider>
     );
   }
 }

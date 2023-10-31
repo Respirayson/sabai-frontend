@@ -1,5 +1,5 @@
 import React from "react";
-import { withAuthSync, logInCheck } from "../../utils/auth";
+import withAuth from "../../utils/auth"
 
 class Daily extends React.Component {
   static async getInitialProps(ctx) {
@@ -14,4 +14,4 @@ class Daily extends React.Component {
   }
 }
 
-export default withAuthSync(Daily);
+export default withAuth(Daily);

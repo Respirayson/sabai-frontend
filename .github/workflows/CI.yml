@@ -8,19 +8,8 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Main Branch
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          ref: main
-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18.x"
-
-      - name: Install Dependencies
-        run: npm install
-
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: yarn
       - name: Build Website
-        run: npm run build
+        run: yarn build

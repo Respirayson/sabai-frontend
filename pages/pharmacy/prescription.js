@@ -1,20 +1,14 @@
 import React from "react";
 import Router from "next/router";
-import { withAuthSync, logInCheck } from "../../utils/auth";
 import axios from "axios";
 import Modal from "react-modal";
 import { PrescriptionForm } from "../../components/forms/prescription";
 import { API_URL, CLOUDINARY_URL } from "../../utils/constants";
+import withAuth from "../../utils/auth";
 
 Modal.setAppElement("#__next");
 
 class Prescription extends React.Component {
-  static async getInitialProps(ctx) {
-    let authentication = await logInCheck(ctx);
-    let { query } = ctx;
-
-    return { query };
-  }
 
   constructor() {
     super();
@@ -416,4 +410,4 @@ const editModalStyles = {
   },
 };
 
-export default withAuthSync(Prescription);
+export default withAuth(Prescription);

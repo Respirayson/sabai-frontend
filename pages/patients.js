@@ -1,5 +1,4 @@
 import React from "react";
-import { withAuthSync, logInCheck } from "../utils/auth";
 import Autosuggest from "react-autosuggest";
 import axios from "axios";
 import _ from "lodash";
@@ -9,6 +8,7 @@ import moment from "moment";
 import { API_URL, CLOUDINARY_URL } from "../utils/constants";
 import { urltoFile } from "../utils/helpers";
 import record from "./record";
+import withAuth from "../utils/auth";
 
 // put id
 
@@ -947,4 +947,4 @@ const videoConstraints = {
   facingMode: "user",
 };
 
-export default withAuthSync(Patients);
+export default withAuth(Patients);

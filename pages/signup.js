@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import fetch from "isomorphic-unfetch";
-import { setCookie } from "../utils/auth";
 import { API_URL } from "../utils/constants";
 
 function SignUp() {
@@ -13,29 +12,7 @@ function SignUp() {
     const password = userData.password;
     const url = `${API_URL}/signup`;
 
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (200 <= response.status && response.status <= 299) {
-        setCookie(await response.json());
-      } else {
-        let error = new Error(response.statusText);
-        error.response = response;
-        throw error;
-      }
-    } catch (error) {
-      const { response } = error;
-      setUserData(
-        Object.assign({}, userData, {
-          error: response ? response.statusText : error.message,
-        })
-      );
-    }
+    
   }
 
   return (

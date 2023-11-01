@@ -25,6 +25,7 @@
     "react-router-dom": "^5.0.1",
     "react-sidebar": "^3.0.2",
     "react-webcam": "^3.1.1",
-    "sass": "^1.58.0"
+    "sass": "^1.58.0",
+    "yarn": "^1.22.19"
   }
 }

@@ -1,19 +1,15 @@
 import React from "react";
-import { withAuthSync, logInCheck } from "../../utils/auth";
 import Modal from "react-modal";
 import moment from "moment";
 import axios from "axios";
 import _ from "lodash";
 import { MedicationForm } from "../../components/forms/stock";
 import { API_URL } from "../../utils/constants";
+import withAuth from "../../utils/auth";
 
 Modal.setAppElement("#__next");
 
 class Stock extends React.Component {
-  static async getInitialProps(ctx) {
-    let authentication = await logInCheck(ctx);
-    return authentication;
-  }
 
   constructor() {
     super();
@@ -270,4 +266,4 @@ const prescriptionModalStyles = {
   },
 };
 
-export default withAuthSync(Stock);
+export default withAuth(Stock);

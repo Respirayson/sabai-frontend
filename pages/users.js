@@ -7,11 +7,6 @@ import withAuth from "../utils/auth";
 Modal.setAppElement("#__next");
 
 class Users extends React.Component {
-  static async getInitialProps(ctx) {
-    let authentication = await logInCheck(ctx);
-    return authentication;
-  }
-
   constructor() {
     super();
 
@@ -222,4 +217,4 @@ const userModalStyles = {
 //   }
 // }
 
-export default withAuthSync(Users);
+export default withAuth(Users);

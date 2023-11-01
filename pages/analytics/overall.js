@@ -2,10 +2,6 @@ import React from "react";
 import withAuth from "../../utils/auth";
 
 class Overall extends React.Component {
-  static async getInitialProps(ctx) {
-    let authentication = await logInCheck(ctx);
-    return authentication;
-  }
 
   render() {
     return (

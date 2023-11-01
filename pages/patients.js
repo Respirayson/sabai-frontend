@@ -7,7 +7,6 @@ import Webcam from "react-webcam";
 import moment from "moment";
 import { API_URL, CLOUDINARY_URL } from "../utils/constants";
 import { urltoFile } from "../utils/helpers";
-import record from "./record";
 import withAuth from "../utils/auth";
 
 // put id
@@ -15,14 +14,7 @@ import withAuth from "../utils/auth";
 Modal.setAppElement("#__next");
 
 class Patients extends React.Component {
-  static async getInitialProps(ctx) {
-    let authentication = await logInCheck(ctx);
-
-    let { query } = ctx;
-
-    return { query };
-  }
-
+ 
   constructor() {
     super();
 

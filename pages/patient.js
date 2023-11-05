@@ -21,7 +21,6 @@ import withAuth from "../utils/auth";
 Modal.setAppElement("#__next");
 
 class Patient extends React.Component {
-
   constructor() {
     super();
 
@@ -280,7 +279,7 @@ class Patient extends React.Component {
     switch (form) {
       case "vitals":
         await axios.post(`${API_URL}/vitals`, formPayload);
-        alert("Vitals completed!");
+        toast.success("Vitals completed!");
         break;
       case "medical":
         let { data: medicalConsult } = await axios.post(`${API_URL}/consults`, {
@@ -302,7 +301,7 @@ class Patient extends React.Component {
         });
 
         await Promise.all(orderPromises);
-        alert("Medical Consult Completed!");
+        toast.success("Medical Consult Completed!");
         break;
     }
 

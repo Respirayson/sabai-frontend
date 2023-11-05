@@ -1,5 +1,4 @@
 import React from "react";
-import { withAuthSync, logInCheck } from "../utils/auth";
 import axios from "axios";
 import _ from "lodash";
 import Router from "next/router";
@@ -17,16 +16,11 @@ import {
   VisitPrescriptionsTable,
 } from "../components/views/patient";
 import { API_URL, CLOUDINARY_URL } from "../utils/constants";
+import withAuth from "../utils/auth";
 
 Modal.setAppElement("#__next");
 
 class Patient extends React.Component {
-  static async getInitialProps(ctx) {
-    let authentication = await logInCheck(ctx);
-    let { query } = ctx;
-
-    return { query };
-  }
 
   constructor() {
     super();
@@ -625,4 +619,4 @@ const viewModalStyles = {
   },
 };
 
-export default withAuthSync(Patient);
+export default withAuth(Patient);

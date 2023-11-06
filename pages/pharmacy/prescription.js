@@ -9,7 +9,6 @@ import withAuth from "../../utils/auth";
 Modal.setAppElement("#__next");
 
 class Prescription extends React.Component {
-
   constructor() {
     super();
 
@@ -117,11 +116,11 @@ class Prescription extends React.Component {
     Promise.all(medicationUpdates.map((x) => x()))
       .then(() => Promise.all(orderUpdates.map((x) => x())))
       .then(() => {
-        alert("Order Completed!");
+        toast.success("Order Completed!");
         Router.push("/pharmacy/orders");
       })
       .catch(() => {
-        alert("Insufficient medication!");
+        toast.error("Insufficient medication!");
       });
   }
 
